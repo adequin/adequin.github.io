@@ -1,0 +1,140 @@
+<!DOCTYPE HTML>
+<!--
+	Phantom by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+
+<html>
+	<head>
+		<link rel="icon" href="images/logo.svg">
+		<title>HTMAA Final Project</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<div class="inner">
+
+							<!-- Logo -->
+								<a href="index.html" class="logo">
+									<span class="symbol"><img src="images/logo.svg" alt="" /></span><span class="title">Andy Dequin</span>
+								</a>
+
+							<!-- Nav -->
+								<nav>
+									<ul>
+										<li><a href="#menu">Menu</a></li>
+									</ul>
+								</nav>
+
+						</div>
+					</header>
+
+				<!-- Menu -->
+					<nav id="menu">
+						<h2>Menu</h2>
+						<ul>
+							<li><a href="index.html">Home</a></li>
+							<li><a href="FinalProject.html">Final Project</a></li>
+							<li><a href="elements.html">About</a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+				<div id="main">
+					<div class="inner">
+						<h1> Final Project </h1>
+						<p>
+						My goal for how to make is to reproduce these blocks from Castle in the Sky:</p>
+						<span class="image main">
+							<div style = "text-align:center;">
+							<video width="auto" height="680" loop autoplay muted>
+							<source src="References/trimmed.mov" type="video/mp4" center>
+							Your browser does not support the video tag.
+						</video></span></div>
+						In the movie, these blocks represent the computational mechanisms that excute the remote commands. 
+						They are magical, unaffected by gravity, and supposedly represent the height of technology of an ancient civilization. 
+						For the scope of my goal, I would like to create an array of blocks ~maybe 3x3 or 2x2x2, that can move relative to each other and are programmable. <br> 
+							<h1>Inspirations</h1>
+						The idea came about from a bunch of sources. 
+						I love clean designs with beautiful mechanisms. When I first saw Miana's self replicating robots during a CBA lab meeting, the idea of simple geometric cells with controllable embeded circuits really got my attention, and
+						of course the self replication so amazing and brain numbing, I was really captivated. <br>
+						<div style = "text-align:center;">
+						<span class="image">
+							<img src="images/SelfRepRobots.jpg" alt="" width="400" 
+							height="400" />
+						</span>
+					</div><br>
+						As a side project to learn more about milling, I had planned to mill out the design of one of these cubes out of aluminum. Seperately, during freshman year, I took a seminar on making things and made a brushless motor. 
+						At the same time, I have taken a bunch of classes on basic circuits building and analysis, but I don't feel like I have much practical design knowledge or experience. 
+						All of these came together when I was brainstorming for final projects and I thought, what if I could make the cubes, add a linear version of the magnetic actuators from the brushless motor, and control everything using embeded systems<br> 
+						
+						<br>
+						The general idea is to create cm scale cubes with mounted electromagnets and perment magnets that can move each other around.<br>
+						Beyond the hardware and fabrication, I have a couple ideas:<br>
+						<p style = "margin-left:25px;" >
+						- Create an interactable setup to control the blocks position<br>
+						- 15 block puzzle solver, the blocks flash a sequence corresponding to an initial state of the 15 block puzzle and solve it(some graph search approach)<br>
+						- Generalize 15 block solver to 3D (stretch goal)<br>
+						- Create a declining system where the blocks rearrange themselves to charge the most depleted cell until it stops working<br>
+						- some kind of assembly into interesting geometry (more vague).<br>
+						</p>
+						<h1> progress so far </h1>
+						<h2>Simulation</h2>
+						
+						<span class="image main">
+							<video width="auto" height="600" loop autoplay muted>
+							<source src="Week1/CubeAnimationLoop.mp4" type="video/mp4">
+							Your browser does not support the video tag.
+						</video></span><br>
+						<h2>Models</h2>
+						<span class="image">
+							<img src="Week1/RhinoDocumentation/FinalRender.jpg" alt="" height="500" />
+						</span>
+						<span class="image">
+							<img src="Week4/HousingModeling/CurrentModel.jpg" alt=""  
+							height="400"/><br>
+						</span>
+						<h2>Prototypes</h2>
+						<div style = "text-align:center;">
+						<span class="image">
+							<img src="Week2/lasercut/cardboardPrototypes.jpeg" alt="" 
+							/>
+						</span></div><br>
+						<h2>Electronics</h2>
+						<div style = "text-align:center;">
+							<span class="image">
+								<img src="Week5/eagle_pcb/trimedboard.jpg" alt="" 
+								/>
+							</span></div><br>
+
+
+
+							
+					</div>
+				</div>
+				<!-- Footer -->
+					<footer id="footer">
+						<div class="inner">
+							</ul>
+						</div>
+					</footer>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>

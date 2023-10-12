@@ -1,0 +1,313 @@
+<!DOCTYPE HTML>
+<!--
+	Phantom by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<link rel="icon" href="images/logo.svg">
+		<title>HTMAA Week 4</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<div class="inner">
+
+							<!-- Logo -->
+								<a href="index.html" class="logo">
+									<span class="symbol"><img src="images/logo.svg" alt="" /></span><span class="title">Week 3</span>
+								</a>
+
+							<!-- Nav -->
+								<nav>
+									<ul>
+										<li><a href="#menu">Menu</a></li>
+									</ul>
+								</nav>
+
+						</div>
+					</header>
+
+				<!-- Menu -->
+					<nav id="menu">
+						<h2>Menu</h2>
+						<ul>
+							<li><a href="index.html">Home</a></li>
+							<li><a href="FinalProject.html">Final Project</a></li>
+							<li><a href="elements.html">About</a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+				<div id="main">
+					<div class="inner">
+						<h1>Week 4 documentation</h1>
+						<!-- 3Dscan -->
+						<span class="image">
+							<img src="Week4/3D_scanning/ExportedScan.jpg" alt="" width="400" 
+							height="auto" />
+						</span>
+						<!-- polyhedra -->
+						<span class="image">
+							<img src="Week4/SLS_polyhedra/icododeca_earring.jpeg" alt="" width="400" 
+							height="auto"/>
+						</span>
+						<span class="image">
+							<img src="Week4/SLS_polyhedra/Processed.jpeg" alt="" width="400" 
+							height="auto"/>
+						</span>
+						<span class="image">
+							<img src="Week4/HousingModeling/CurrentModel.jpg" alt="" width="400" 
+							height="auto"/>
+						</span>
+						<h2>goals for the week</h2>
+						<p>
+							1. 3D scan an origami piece<br>
+							2. 3D print tiny linked polyhedra<br>
+							3. CAD my prototype parametrically<br>
+							4. 3D print and test housing for components<br>
+							</p>
+							
+
+						<h2>Part 1: 3D scan an origami piece</h2>
+
+						The quick training at the lab shows a very straightforward process for 3D scanning:<br>
+						1. place part on a flat surface with black guide lines (take extra precaution if black or reflective)<br>
+						2. take out the scanner, turn it on, and create a new project<br>
+						3. press start and walk around the object while keeping in range (the object should be highlighted in green, not red)<br>
+						4. save the project to SD<br>
+						5. open it on a computer with artec studio (the processing software for the scanner)<br>
+						6. right click the object in the hierarchy and click show<br>
+						7. check for damaged frames and delete them<br>
+						8. click autopilot and follow the directions<br>
+						9. export to stl or wlt with png texture for printing on the Strataysis<br>
+						<br>
+
+						For my scan I want to scan this black flying turtle I designed 2 years ago:<br>
+							<span class="image">
+								<img src="Week4/3D_scanning/origami_turtle.jpeg" alt="" width="400" 
+								height="auto" />
+							</span><br>
+						Following the steps: <br>
+						My setup:<br>
+							<span class="image">
+								<img src="Week4/3D_scanning/ScanSetup2.jpeg" alt="" width="400" 
+								height="auto" />
+							</span><br>
+						Bringing out the scanner:<br>
+						<span class="image">
+							<img src="Week4/3D_scanning/3Dscanner.jpeg" alt="" width="400" 
+							height="auto" />
+						</span><br>
+						RawScan openned in artec studio:<br>
+						<span class="image">
+							<img src="Week4/3D_scanning/RawScan.jpeg" alt="" width="400" 
+							height="auto" />
+						</span><br>
+						After some trimming and using autopilot:<br>
+						<span class="image">
+							<img src="Week4/3D_scanning/TrimmedData.jpeg" alt="" width="400" 
+							height="auto" />
+						</span>
+						<span class="image">
+							<img src="Week4/3D_scanning/ProcessedMesh.jpeg" alt="" width="400" 
+							height="auto" />
+						</span><br>
+						And the final exported mesh:<br>
+						<span class="image">
+							<img src="Week4/3D_scanning/ExportedScan.jpg" alt="" width="400" 
+							height="auto" />
+						</span><br>
+						Its better than I was expecting! especially for a black flat surfaced object, although a lot of the crisp folds
+						were smoothed out. <br><br>
+
+
+						<h2>Part 2: 3D print tiny linked polyhedra</h2>
+						This is a projected that I started just before the semester. Since I didnt get into the class last year, I
+						started this in case I did get in. This project has a few parts:<br>
+						- Finding which polyhedra to use and how to construct them<br>
+						- Designing the polyhedra in CAD<br>
+						- Printing and processing<br>
+						- Iterating to find good tolerances<br>
+						<br>
+
+						For the types of polyhedra, I already had the icosahedron in mind. I knew that I wanted to learn sls printing and that printing an 
+						small scale icosahedron frame would work better with having to risk removing supports. To expand on the icosahedron, I also modeled and printed
+						the other platonic solids: tetrahedron, dedecahedron, octohedron, and some variation of a cube. 
+						<br>
+						Additionally, I wanted to experiment with filling in the interior verticies using a script in grasshopper so that it would definitely
+						not be easy to do subtractively. For that part of the assignement I ended up creating an icosahedron that could wiggle around in a dodecahedron, as well
+						as the interior icosahedron of a cube that has all of its verticies connected (as well as the mid points):
+						
+						<br>
+						<span class="image">
+							<img src="Week4/SLS_polyhedra/deca-ico.jpeg" alt="" width="400" 
+							height="auto"/>
+						</span><br>
+						<span class="image">
+							<img src="Week4/SLS_polyhedra/octohedron.jpeg" alt="" width="400" 
+							height="auto"/>
+						</span><br>
+
+						To model the icosahedron, the wiki page had a helpful reference that it can be constructed using intersecting golden ratio rectangles. I then wrote a script that takes 
+						in points and returns all of the interior connecting lines. If I only want the exterior lines I can check that each line width is the expected size. 
+							To create the dodecahedrons, I wrote a script that creates the surfaces of the icosahedron so that I can find the centroids using grasshopper's area component, 
+							and finally run my script to generate the frame. 
+						 <br>
+
+						 <span class="image">
+							<img src="Week4/grasshopper_polyhedra/icosahedron_components.jpg" alt="" width="400" 
+							height="auto"/>
+						</span><br>
+						After some experimenting with shapes and intersections, and reorienting to be level with the bed, I had these geometries:<br>
+						<span class="image">
+							<img src="Week4/grasshopper_polyhedra/finalPrintRender.jpg" alt="" width="400" 
+							height="auto"/>
+						</span><br>
+						After slicing in formlabs slicer:<br>
+						<span class="image">
+							<img src="Week4/grasshopper_polyhedra/FinalPrintSetup.jpg" alt="" width="400" 
+							height="auto"/>
+						</span><br>
+						Since the actual printing process was in a bit messy and required masks, gloves, etc. I didnt actually record much of it.
+						Once the parts were printed and excavated, I had to clean out the remaining powder in a sandblaster:<br>
+						<span class="image">
+							<img src="Week4/SLS_polyhedra/SandBlasting.jpeg" alt="" width="400" 
+							height="auto"/>
+						</span><br>
+						Once that was done (after an hour of handling tiny parts through thick gloves), I was left with these parts:<br>
+						<span class="image">
+							<img src="Week4/SLS_polyhedra/Processed.jpeg" alt="" width="400" 
+							height="auto"/>
+						</span><br>
+						After repeating this process a first time to find what the tolerances where for the smallest print possible: (about .8mm linkage diameter)
+						I decided to make earrings out of them as a gift(this was also the plan all along):<br>
+						<span class="image">
+							<img src="Week4/SLS_polyhedra/FinalEarrings.jpeg" alt="" width="400" 
+							height="auto"/>
+						</span><br>
+						<span class="image">
+							<img src="Week4/SLS_polyhedra/earrings_box.jpeg" alt="" width="400" 
+							height="auto"/>
+						</span><br>
+						<span class="image">
+							<img src="Week4/SLS_polyhedra/icododeca_earring.jpeg" alt="" width="400" 
+							height="auto"/>
+						</span><br>
+					
+
+						
+						<h2>Part 3: Cading the prototype </h2>
+						Step 1: Measuring all the parameters</h2>
+						These are all the parts that I've been using for my prototype:</h2>
+						<br>
+						<span class="image">
+							<img src="finalproject/allParts.jpeg" alt="" width="400" 
+							height="auto"/>
+						</span><br><br>
+						I started by measuring all of the dimensions and storing them as parameters in Fusion (with very apt names)</h2>
+						<br>
+						<span class="image">
+							<img src="Week4/HousingModeling/parameters.jpg" alt="" width="400" 
+							height="auto"/>
+						</span><br><br>
+
+						Since this CAD process to a lot of trial and error, and finally getting around to following very helpful tutorials 
+						(like this series recommended by Alfonso https://www.youtube.com/watch?v=d3qGQ2utl2A)</h2>
+						I will try to keep it straightforward. Here is the overall process:<br>
+						<br>
+						First, I create the component of the frame of my cube. <br>
+						Then, create the brackets by extruding rectangles and mirroring along the diagonal plane.<br>
+						<span class="image">
+							<img src="Week4/HousingModeling/CreateBracket.jpg" alt="" width="400" 
+							height="auto"/>
+						</span><br><br>
+						Make the holes using rectangular array and calculating the distances from the edges. <br>
+						I used something like ratio*(cube_side-2*(outer_thickness+inner_thickness)), with the ratio as 1/4 or 1/3.<br>
+
+						Assemble the brackets with the holes by snapping them.<br>
+						<span class="image">
+							<img src="Week4/HousingModeling/AssembleBrackets.jpg" alt="" width="400" 
+							height="auto"/>
+						</span><br><br>
+						Create the coils: Create a cylinder and add a tight coil around it with the coil radius and height parameters.<br>
+						<span class="image">
+							<img src="Week4/HousingModeling/AssembleCoil.jpg" alt="" width="400" 
+							height="auto"/>
+						</span><br><br>
+						Adding some materials<br>
+						<span class="image">
+							<img src="Week4/HousingModeling/AssignMaterials.jpg" alt="" width="400" 
+							height="auto"/>
+						</span><br><br>
+						Create the screw by extruding circles<br>
+						<span class="image">
+							<img src="Week4/HousingModeling/CreateScrew.jpg" alt="" width="400" 
+							height="auto"/>
+						</span><br><br>
+						Import the cube design and place on a face of the frame.<br>
+						<span class="image">
+							<img src="Week4/HousingModeling/LaputDesign.jpg" alt="" width="400" 
+							height="auto"/>
+						</span><br><br>
+						Some of the things I had to debug were: .<br>
+						- figuring out how to keep things organzied and compatible with assembly (this is explained very well in the tutorial series).<br>
+						- finding the right plane for mirroring the brackets (I extruded triangles drawn on the side planes and used those).<br>
+						- how to move components relative to each other (create joints).<br>
+						- constraining holes to the middle of a rectangle (create construction lines).<br>
+						- missalignment, I found a mistake while trying to change a parameter. <br>
+						It turns out one of the dimension was an aribtrary number instead of a paramenter :/<br><br>
+						<span class="image">
+							<img src="Week4/HousingModeling/FixParameter.jpg" alt="" width="400" 
+							height="auto"/>
+						</span><br>
+						<span class="image">
+							<img src="Week4/HousingModeling/FixedParameters.jpg" alt="" width="400" 
+							height="auto"/>
+						</span><br><br>
+						
+						The final assembly with all the materials is very satifying.
+						I was very impress at how straigthforward things were after figuring out the mechanics.<br><br>
+						<span class="image">
+							<img src="Week4/HousingModeling/AssembleScrew.jpg" alt="" width="400" 
+							height="auto"/>
+						</span><br>
+						Here is the final design for now:<br>
+						<span class="image">
+							<img src="Week4/HousingModeling/CurrentModel.jpg" alt="" width="400" 
+							height="auto"/>
+						</span><br><br>
+						In the future here are the features I will add:<br>
+						- sliding feature for joining with the second half of the frame<br>
+						- battery holder<br>
+						- magnet holders in the wall for the opposing side of the coils<br>
+						- locking mechanism once the second half slides all the way download<br>
+						- rp2040 placeholder<br>		
+					</div>
+				</div>
+				<!-- Footer -->
+					<footer id="footer">
+						<div class="inner">
+							</ul>
+						</div>
+					</footer>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>

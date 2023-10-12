@@ -1,0 +1,313 @@
+<!DOCTYPE HTML>
+<!--
+	Phantom by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<link rel="icon" href="images/logo.svg">
+		<title>HTMAA Week 3</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<div class="inner">
+
+							<!-- Logo -->
+								<a href="index.html" class="logo">
+									<span class="symbol"><img src="images/logo.svg" alt="" /></span><span class="title">Week 3</span>
+								</a>
+
+							<!-- Nav -->
+								<nav>
+									<ul>
+										<li><a href="#menu">Menu</a></li>
+									</ul>
+								</nav>
+
+						</div>
+					</header>
+
+				<!-- Menu -->
+					<nav id="menu">
+						<h2>Menu</h2>
+						<ul>
+							<li><a href="index.html">Home</a></li>
+							<li><a href="FinalProject.html">Final Project</a></li>
+							<li><a href="elements.html">About</a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+				<div id="main">
+					<div class="inner">
+						<article class="style1">
+							<span class="image">
+								<img src="Week3/rp2040/test_layout.jpeg" alt="" width="400" 
+								height="auto" />
+							</span>
+							<span class="image">
+								<img src="Week3/rp2040/double_layout.jpeg" alt="" width="400" 
+								height="auto" />
+							</span>
+							<span class="image">
+								<img src="Week3/rp2040/board_pins.jpeg" alt="" width="400" 
+								height="auto" />
+							</span>
+							<span class="image">
+								<img src="Week3/rp2040/IMG_4522.jpeg" alt="" width="400" 
+								height="auto" />
+							</span>
+							<span class="image">
+								<img src="Week3/rp2040/IMG_4553.jpeg" alt="" width="400" 
+								height="auto" />
+							</span>
+							
+						
+						<h1>Week 3 documentation </h1>>
+						<h2>Overview</h2>
+
+						- What is my goal<br>
+							- get rp2040 connected and interfaced<br>
+							- embedded in cube, talk to solenoids and lights<br>
+							<!-- - wifi with esp32<br> -->
+						- get the rp2040<br>
+							<!-- - image of lighting up<br> -->
+						- get arduino <br>
+						- make it compatible with the rp2040<br>
+							- look up seeed xiao rp2040 ardunio core<br>
+							- follow the instructions<br>
+							- image of package manager<br>
+							- change port and board type under tools<br>
+						- making light blink<br>
+							- find example code<br>
+							- find pinout<br>
+							- use schematics since pinouts didn't help<br>
+							- replace the numbers<br>
+						- connect to external actuator<br>
+							- find analog pins and ground from schematic<br>
+							
+						<h2>Getting Started</h2>
+						To get started, I need to somehow get my arduino software to talk to the rp2040. To do that, I need to plug in the xiao rp2040, 
+						and download the pico core by following the steps on the xiao page: https://wiki.seeedstudio.com/XIAO-RP2040-with-Arduino/ <br>
+						all the information is there. Once I changed to the port that is being used and the board type to pico under the "tools" tab I should be able to run things now. <br>
+						<br>
+						<span class="image">
+							<img src="Week3/rp2040setup/adding_arduinocore.jpg alt="" width="400" 
+							 />
+						</span><br>
+						To make sure things work, I'll try to make one of the lights blink. To do this, I need to find the GPIO pin number that refers to the embedded leds in the board. 
+						I didn't find these in the datasheet and instead found these by looking at the schematics: GPIO17 for the red LED. <br>
+						<span class="image">
+							<img src="Week3/rp2040setup/schematic.jpg" alt="" width="400" 
+							 />
+						</span><br>
+						After running the sample blink code from one of the arduino tabs it looks like it works!<br>
+						<span class="image">
+							<img src="Week3/arduino/blink alt=" width="400" 
+							 />
+						</span><br>
+
+						<h2>Getting things to work</h2>
+						Testing the coils<br>
+						- finding which pins are the analog outputs<br>
+							- read the data sheet or look at schematics<br>
+							GPIO: general purpose input, output<br>
+							QSPI: talking to the flash memory (usb interface)<br>
+							ADC: analog to digital<br>
+
+						not sure how i can power my coil<br>
+						maybe try connecting both wires to gpio and setting one high and the other low<br>
+
+						Ill try with pin1 and pin 2.<br>
+					</p>
+<!-- 
+						#define AIN1 1               
+						// H-bridge A, input pin 1
+						#define AIN2 2               
+						// H-bridge A, input pin 2
+						int timer,start_time,flip_time,first_pin,second_pin;
+
+						void setup() {
+						// put your setup code here, to run once:
+						pinMode(AIN1,OUTPUT);
+						pinMode(AIN2,OUTPUT);
+						}
+
+						void set_coil(int pin1,int pin2){
+						digitalWrite(pin2,LOW);     // turn first control pin off
+						digitalWrite(pin1,HIGH);    // then turn second control pin on
+						}
+						void loop() {
+						set_coil(AIN1, AIN2); -->
+
+						<p> 
+							after simplifying and fixing some syntax errors... it didnt work. <br>
+							I did get an "eject before removing message" although that just happens when uploading code.<br>
+							To make sure everything was working I added some blinking of the red led:<br>
+
+							<!-- #define AIN1 1               // H-bridge A, input pin 1
+							#define AIN2 2               // H-bridge A, input pin 2
+							#define led 17
+							int timer,start_time,flip_time,first_pin,second_pin;
+
+
+							void setup() {
+							// put your setup code here, to run once:
+							pinMode(AIN1,OUTPUT);
+							pinMode(AIN2,OUTPUT);
+							//  Serial.begin(9600);
+							//  start_time = millis();
+							//  flip_time = 1000;
+							//  first_pin = AIN1;
+							//  second_pin = AIN2;
+
+							}
+
+							void set_coil(int pin1,int pin2){
+							digitalWrite(pin2,LOW);     // turn first control pin off
+							digitalWrite(pin1,HIGH);    // then turn second control pin on
+							pinMode(led, OUTPUT);
+							}
+							void loop() {
+							set_coil(AIN1, AIN2);
+							digitalWrite(led, HIGH);   // turn the LED on (HIGH is the voltage level)
+							delay(1000);
+							set_coil(AIN2, AIN1);
+							digitalWrite(led, LOW);    // turn the LED off by making the voltage LOW
+							delay(1000); -->
+
+							<!-- insert video of red lights blinking -->
+							It looks like just the coil isnt working. Maybe its not connecting to output pins well. Lets test with an external led
+							<br>
+								VCC: external power input if not using usb<br>
+								3V3, powered by usb port<br>
+
+							The light isnt turning on, so time to check the voltages using a multimeter.
+							The voltage is 3.3v so it works fine. I must have too much resistance or the circuit isnt completing
+							Ah. I confused where the high vs the low voltage was and swapped the leads of the led
+							Maybe 3.3V just isnt enough make any significant field. 
+							Ill test this by directly connecting the leads to the 3V and ground.<br>
+							alright there was an attraction. <br>
+							I do remember it being able to lift up a screw however, like it generated a lot more force.
+							<br>
+							Lets compare to the voltage coming out of the TB6612. Nevermind I dont remember 
+							what the board type is and the port isnt connecting. 
+							<br>
+							Lets see if its actually ouputing anything through the gpio pins... Not getting anything.
+							- turns out the GPIO number referenced in ardunio is different than the pinboard number.(this makes sense since theres ~30 GPIO pins on the schematic)
+							I have no idea how to find what the board pin numbers correspond to however, even after staring at the schematic and pinout in the datasheet
+							<br>
+							Im still suspicous of which number is which since sometimes LOW and HIGH are swapped for different boards, 
+							so I only wrote to one pin number.<br>
+							It looks like:<br>
+							Since on the schematic GPIO17 controlled the led and number 17 corresponded to the led in arduino, 
+							I assumed that the GPIOX pins were what the code talks to.<br>
+							GPIO 1 -> 7 <br>
+							GPIO 2 -> 8<br>
+							Lets test all of them<br>
+							GPIO0 -> 6<br>
+							GPIO3 -> 10<br>
+							GPIO4 ->9<br>
+							GPIO5 -> nothing<br>
+							Now that I have some information I looked around more and found the actual board pin outputs
+							it looks "D1" (digital) is the port number written on the board and "P1" is what the code talks to (labeled as micropython)
+							It also makes more sense to find which number controls the board port numbers instead of what each arduino number controls.<br>
+							D0 : P26<br>
+							D1 : P27<br>
+							D2 : P28<br>
+							D3 : P29<br>
+							D4 : P6<br>
+							D5 : P7<br>
+							D6 : P0<br>
+							D7 : P1<br>
+							D8 : P2<br>
+							D9 : P4<br>
+							D10 : P3<br>
+							It looks like there are also analog pins, supposedly for pwm? I'll try to see if I can get those to work:<br>
+<!-- 
+							#define AIN1 A0               // H-bridge A, input pin 1
+							// H-bridge A, input pin 2
+							#define led 17
+							
+							
+							void setup() {
+								// put your setup code here, to run once:
+								pinMode(AIN1,OUTPUT);
+							//  pinMode(led, OUTPUT);
+							
+							}
+							
+							void loop() {
+								analogWrite(AIN1, 127);     // turn first control pin off
+							} -->
+							It works! Since the value range is from 0 to 255, 127 sets it to about half the output voltage of 3.3V<br>
+							The maping also works where:<br>
+							 A0 : D0<br>
+							 A1 : D1<br>
+							 A2 : D2<br>
+							 A3 : D3<br>
+							 I don't really know what I can do with the SPI and IIC so I will leave that for now.<br>
+							
+
+							Making a prototype:<br>
+							By leaving the coil on and moving the magnets around it I can find a good distance to place embedd the magnets.<br>
+							<h2>Taking some data measurements</h2>
+							<!-- Image with Lines -->
+							Test with no current:<br>
+							1cm distance for 1 block of magnet<br>
+							<br>
+							Test with forward current:<br>
+							1.25cm<br>
+							<br>
+							Test with flipped polarity:<br>
+							no attraction threshold, but the magnet is still held.<br>
+							<br>
+							Test with 9v: <br>
+							1.5 attraction<br>
+							<br>
+							Test with 9v flipped polarity<br>
+							repels to 1.25cm<br>
+							<br>
+							Pulling force with no current : ~23Ge-3 Newtons (G=9.81m/s^2)<br>
+							with current: ~37Ge-3 Newtons<br>
+							with reversed current: pushing ~10Ge-3 Newtons<br>
+							<br>
+							It looks like I will have to use a stronger power supply. <br>
+							I might try exploring using micropython during the communciations week but that it for now!<br>
+
+						</p>
+
+
+
+						
+						
+							
+					</div>
+				</div>
+				<!-- Footer -->
+					<footer id="footer">
+						<div class="inner">
+							</ul>
+						</div>
+					</footer>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>

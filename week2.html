@@ -1,0 +1,186 @@
+<!DOCTYPE HTML>
+<!--
+	Phantom by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<link rel="icon" href="images/logo.svg">
+		<title>HTMAA Week 2</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<div class="inner">
+
+							<!-- Logo -->
+								<a href="index.html" class="logo">
+									<span class="symbol"><img src="images/logo.svg" alt="" /></span><span class="title">Week 2</span>
+								</a>
+
+							<!-- Nav -->
+								<nav>
+									<ul>
+										<li><a href="#menu">Menu</a></li>
+									</ul>
+								</nav>
+
+						</div>
+					</header>
+
+				<!-- Menu -->
+					<nav id="menu">
+						<h2>Menu</h2>
+						<ul>
+							<li><a href="index.html">Home</a></li>
+							<li><a href="FinalProject.html">Final Project</a></li>
+							<li><a href="elements.html">About</a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+							<p> Cutting</p>
+							<article class="style1">
+								<span class="image">
+									<img src="Week2/vinyl/cube_sticker.jpg" alt="" width="400" 
+									height="auto" />
+								</span>
+								<span class="image">
+									<img src="Week2/vinyl/phone_case.jpg" alt="" width="400" 
+									height="auto" />
+								</span>
+								<span class="image">
+									<img src="Week2/vinyl/final_fingerbox.jpg" alt="" width="400" 
+									height="auto" />
+								</span>
+								<span class="image">
+									<img src="Week2/Logo_tracing/editing_svg.jpg" alt="" width="400" 
+									height="auto" />
+								</span>
+								<span class="image">
+									<img src="Week2/Logo_tracing/CubeLines.jpg" alt="" width="400" 
+									height="auto" />
+								</span>
+								<span class="image">
+									<img src="Week2/Laputa_logo_projection/CubeRender.jpg" alt="" width="400" 
+									height="auto" />
+								</span>
+								<h1>Week 2: Vinyl and Laser Cutting</h1>
+							<p>Documentation outline<br>
+							- What is my goal<br>
+								- get a box to house electronics<br>
+								- slice a geometry<br>
+								- make a looks like model<br>
+							- sketch<br>
+								-image<br>
+							- download fusion<br>
+								- update mac<br>
+								- clear 30Gb of storage<br>
+								- wait 3h in limbo<br>
+								- get through a bunch of pop ups<br>
+							- create box<br>
+							- lose patience and go to a finger box generator<br>
+							- learn how to manipulate parameters<br>
+							- take measurements to reference<br>
+							- create constrained parametric geometry for each piece<br>
+							- create brackets to model the layout and figure out the clearances<br>
+							- export as svg<br>
+							- add 2d engraving for fun<br>
+							- TO DO use fusion slicer to make sliced sphere<br><br>
+
+							- cutting<br>
+								- test cut for kerf<br>
+								- test design on carboard<br>
+								- make looks-like using acrylic<br>
+								- acrylic glue for the finger joint box?
+
+							</p>
+								
+							<h1>Making prototypes that I can rapidly test with.</h1>
+							<p> Ok. The first attempt was a little cluttered, I would like to generate the box more cleanly and 
+								add an engraving and some evenly spaced holes.
+								Ill start by sketching a square on the xy plane. for time I simply decided to insert the dxf of the fingbox design I used and add on the engraving pattern that I made previously.
+
+								While trying to drag around the color ordering, I used control alt click and it closed the software with no warning. Luckily it saved a backup.
+								It looks like the engraving goes before any vector cuts by default, regardless of color arrangement.<br>
+								<span class="image">
+									<img src="Week2/lasercut/corel/failed_engrave.jpeg" alt="" width="400" 
+									height="auto"/>
+								</span><br><br>
+								oops, looks like the cutting bed was different than the actual bed for some reason. It looks like I actually ignored a warning that the print settings raised.
+								Instead of fixing the problem of the bed, I simply shift it over by some margin in corel draw and click print preview to verify.
+								All good now! I repeat the 2 sides that didn't make it on the first cut and cut out panels for 2 more boxes. This should be enough for more prototyping.<br>
+								<span class="image">
+									<img src="Week2/lasercut/corel/more_boxes_top.jpeg" alt="" width="400" 
+									height="auto"/>
+								</span><br><br>
+								
+								And that's it for now! I have a looks like model and some more boxes that I can put holes and to arrange my screws and stick things to.<br>
+								<span class="image">
+									<img src="Week2/lasercut/engraved.jpeg" alt="" width="400" 
+									height="auto"/>
+								</span><br><br>
+								<span class="image">
+									<img src="Week2/lasercut/allParts.jpeg" alt="" width="400" 
+									height="auto"/>
+								</span><br><br>
+									<br>
+
+								<h1>back to the cad</h1>
+								<h2>Deriving parameters</h2>
+								I would like to clean up the drawing for my own satisfaction. 
+								The first step is to somehow import all the parameters from my previous drawing. 
+								There is a derive feature, but it looks like I can't use it for a seperate document, I'll just screenshot and do it by hand this time.
+								<!-- <deriv image> -->
+								Nevermind I got it to work! Although it looks like the parameters are linked to the original document which makes me uncomfortable.
+								<!-- <favorite image> -->
+								Maybe I can get around this by favoriting the parameters.
+								<!-- <deleting paraemtric box image> -->
+								maybe not. Instead, I copied them by referencing the derived parameters, just in case. I found the derive feature in the timeline of the new document and deleted it.
+								<!-- <deleting derive feature> -->
+								Now the parameters are not linked.
+
+								Now, I'll start by creating a component and sketching a square. Next, remove the holes for the finger joints. I'll make a square that I dimension (shortcut d) using my thickness and fingerlength parameters.
+								Then, using the rectangular pattern in one direction I can create a row of joints that I control with an integer parameter for the number of fingers, in the other
+								I'll make 2 copies so that I get a second row along the bottom edge. 
+								<!-- <image of rectangular pattern> -->
+								<!-- <checking rectangular pattern works> -->
+								Create a mirror copy along the diagonal so that everything is symmetric. Do this by creating a construction line along the diagonal and using the mirror function.
+								<!-- <construction line>
+								<mirror> -->
+								I suspect theres a better way to do this, but I don't know it.
+								After extruding it by the thickness parameter, I got the base in a slightly less cluttered way!
+									
+							</p>
+							</p>
+						</div>
+					</div>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<div class="inner">
+							</ul>
+						</div>
+					</footer>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
