@@ -1,0 +1,221 @@
+<!DOCTYPE HTML>
+<!--
+	Phantom by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<link rel="icon" href="images/logo.svg">
+		<title>Project Closed Loop Shape Control</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<div class="inner">
+
+							<!-- Logo -->
+								<a href="index.html" class="logo">
+									<span class="symbol"><img src="images/logo.svg" alt="" /></span><span class="title">Phantom</span>
+								</a>
+
+							<!-- Nav -->
+								<nav>
+									<ul>
+										<li><a href="#menu">Menu</a></li>
+									</ul>
+								</nav>
+
+						</div>
+					</header>
+
+				<!-- Menu -->
+					<nav id="menu">
+						<h2>Menu</h2>
+						<ul>
+							<li><a href="index.html">Home</a></li>
+							<li><a href="index_projects.html">Projects</a></li>
+							<li><a href="https://fab.cba.mit.edu/classes/863.23/CBA/people/Andy/index.html">How To Make Almost Anything</a></li>
+							<li><a href="index_studies.html">Studies</a></li>
+							<li><a href="index_origami.html">Origami</a></li>
+							<li><a href="aboutme.html">About</a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+							<h1>Project Closed Loop Shape Control</h1>
+							<p>
+							This is my UROP research project for IAP 2023.
+							The goal is to explore sensing deformations in a plate-like structure to construct a digital twin. 
+							Additionally, we aim to have the structure be closely integrated with the sensing components and pcb 
+							and to eventually actuate and control the shape directly.
+							The first step is to see if we can use resistors as cheap sensors.
+							</p>
+							
+							<h3 style="text-align:left">WEEK 1 Jan 8-12</h3>
+							<p>
+							As a first step, I will be learning strain sensing circuits and implementing them on a breadboard
+							using a xiao samd21. </p>
+							
+							<p>
+							This first test is to use a strain gauge (25k ohms unstrained) as a resistor in a voltage divider configuration and to measure the change in voltage
+							at the output node. <br></p>
+							
+							<p></p>
+							To setup the xiao samd21 I found the arduino core url from within <a href="https://diyelectromusic.wordpress.com/2023/03/12/xiao-samd21-arduino-and-midi/">this documentation </a>
+							To install Arduino>Settings> Additional Board Manager URLs:https://files.seeedstudio.com/arduino/package_seeeduino_boards_index.json<br>
+							And then in Tools>Board>Boards Manager find Seeed SAMD Boards and install. I made the mistake of removing the json file for the esp32 cores which take forever to download. Apparently you can just have multiple urls seperated by commas. 
+						</p>
+						<p>
+							Before I run anything, I need to have the circuit ready. Since my usbc cable is pulling the arduino for the header pins I'm going to solder them. Soldering these was very satisifying. Then to complete the voltage divider, I use a 10k resistor connected to ground
+							while the strain gauge is connected to the 3.3V output of the xiao. According to the voltage divider formula the voltage should be Vin*R2/(R1+R2) = 3.3*10k/26k = 1.27V 
+							From initial tests it looks like the readings are fairly unreliable since they change when I touch parts of the board or the amount of pressure on the breadboard, but 
+							it doesn't actually measure a change when going from ground to 3.3V. The change to 5V is pretty noticeable and the strain gauge seemed to show some change in the reading when bending it, but I can't be sure that it isn't just from the pressure on the gauge or contact with my hand.
+							</p>
+							<p>
+							It looks like using "A7" for the D7 pin compiled but was not actually being used and the readings were just stray voltage. I confirmed this by switching to the A0 pin and reading ground and 3.3V values and it changed from ~0 to ~1023.
+							I'm not sure why A7 doesn't work since it was referenced <a href="https://wiki.seeedstudio.com/Seeeduino-XIAO/">here</a>, but I will just use A0 for now.
+						</p>
+						<p></p>
+							With a 10k resistor the analogRead values ranged from 100/1023 when bending backwards 180degrees to 250/1023 when left unstrained to 325/1023 when bent forward; a range of about 225<br>
+							With a 20k resistor the analogRead values are 185, 415, and, 490, a range of about 300.
+							With a 30k resistor the analogRead values are 200, 510, and, 600, a range of about 400.
+							With a 40k resistor the analogRead values are 240, 580, and, 670, a range of about 430.
+							With a 50k resistor the analogRead values are 290, 630, and, 720, a range of about 430.
+							Using a multimeter it looks like the gauge is actually 30k ohms when flat, 20k when bent forward and 100k when bent backwards.
+						</p>
+						<p>
+							Wheatstone Bridge for strain gauges 
+							After <a href="https://www.omega.com/en-us/resources/wheatstone-bridge">reading </a>a bit, wheatstone bridges sense a relative voltage, making the circuit less susceptible to noise, and letting 0V be the balance point.
+							The wheatstone bridge is really just the voltage divider with another voltage divider in parallel as a reference. 
+						</p>
+					<p>
+							For some reason the pin next to A0 is A10 and not A1 like in the documentaion. also D3->A8
+							Using A0 and A8 for the wheatstone bridge, I end up with this configuration. <insert image>
+							I'm also reading the values using  <a href="strain_test/strain_test.ino">this code</a>
+						</p>
+					<p>
+							Next, I'll move on to testing on a pcb board using some resistors instead of strain gauges
+							<circuit image>
+							Here is the initial test. This should let me reuse the same xiao breakout board to test different setups.
+							The first test is to see if the resistors react differently in tension vs compression and to see if I can maybe
+							read the values without an amplifier.
+						</p>
+					<p>
+							To mill the board I'll be figuring out how to use V-bits.
+							Just by using the v-bit calculator in https://modsproject.org/ instead of the 1/64 module things worked out fine.
+							I also soldered everything and added a few connectors.</p>
+							<soldered board with connector>
+							<p>
+							Now back to arduino code. Here is what I got when printing the variables A0-A9: <br>
+							
+							<pre><code>
+19:00:16.809 -> HELLO
+19:00:16.809 -> 14
+19:00:16.809 -> 15
+19:00:16.809 -> 16
+19:00:16.809 -> 17
+19:00:16.809 -> 18
+19:00:16.809 -> 19
+19:00:16.809 -> 20
+19:00:16.809 -> 21
+19:00:16.809 -> 22
+19:00:16.809 -> 23
+						</code>
+						</pre>
+						</p>
+					<p>
+							Since I used a pin that doesn't have a name, I simply used a jumper to a different pin. With this setup, I tested to see
+							if there was a noticeable difference in the analog read output. There was not. Based on Miana's feedback, I tested to see if the resistance changed 
+							using a multimeter when bending. There was a variation of about 1 ohm. As the next step, I made an amplifier circuit that would
+							amplify the difference between the nodes of a wheatstone bridge.</p>
+
+							<circuit design>
+							<pcb eagle >
+							<soldered>
+							<p>
+							While the nodes of the wheatstone bridge should have the same reading since they use the same resistor values, when connected to the differential amplifier
+							the reading of one of the nodes is 2.1V instead of 2.6V. Since the amplification is of about 820x, 0.5V differnet quickly gets amplified beyond the cap of 5V.
+							Maybe I'll try a lower value than 800k to see if that changes anything. I tried 499k and it didn't change anything. One thing I noticed is that 
+							when measuring ohmic resistance of some of the 1k resistors, some of them had 664 ohm resistance instead of 1k. Looking at the skematic it looks like 
+							that resistor is in parallel with 2 1k resistors in series which give it an equivalent resistance of 666 ohms. Since this is due to the grounds being connected, 
+							I'm not sure if this contributed to the issue.</p>
+
+							<simulation>
+							<p>
+							After trying to formulate my problem to ask for help I realized that I can try simulating it. In this simulation, its clear that the different values was not a mechanical 
+							or noise issue but just the circuit was wrong. by drawing it up like this it was clear that the ground connections changed the resistance in the wheatsone bridge and no longer made it balanced. 
+						</p>
+					<p>
+							To fix this issue I thought of different solutions. Maybe it would be possible to add the same impedance to the other leg of the wheatstone bridge, or to read the output of the bridge 
+							and use a microcontroller to replicate the signal into the differential amplifier circuit. I good suggestion from GPT was to use a unity gain buffer. I never really understood what they were for 
+							but now that I'm in this situation it makes a lot of sense. I redesigned the circuit in eagle with 2 unity gain buffers at the outputs of the wheatstone bridge to isolate them.
+						</p>
+							<edesign>
+							<new pcb>
+							<p>
+							Upon further recommendation from gpt, I added capacitors before all the op amps to clean up the signal potentially, using 1microF ceramic bypassing capacitors in parallel 
+							to filter out any ac noise that might occur. Since this was a very enlightening use of capacitors I took some time to read about typical usages and values and positioned 
+							them in my design accordingly. It looks like decoupling and bypassing have similar implementation but decoupling is a term used for smoothing out low frequency noise from dc
+							while bypassing is used when filter high frequency noise from a dc signal.</p>
+
+
+
+
+
+
+
+
+							
+							
+							
+
+
+								
+
+
+
+
+
+
+
+						
+
+
+							</p>
+
+							<downloading image>
+
+
+
+							
+						</div>
+					</div>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<div class="inner">
+
+						</div>
+					</footer>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
