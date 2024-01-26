@@ -103,6 +103,8 @@
 							Using A0 and A8 for the wheatstone bridge, I end up with this configuration. <insert image>
 							I'm also reading the values using  <a href="strain_test/strain_test.ino">this code</a>
 						</p>
+						
+						<h3 style="text-align:left">WEEK 2 Jan 16-19</h3>
 					<p>
 							Next, I'll move on to testing on a pcb board using some resistors instead of strain gauges
 							<circuit image>
@@ -136,7 +138,9 @@
 					<p>
 							Since I used a pin that doesn't have a name, I simply used a jumper to a different pin. With this setup, I tested to see
 							if there was a noticeable difference in the analog read output. There was not. Based on Miana's feedback, I tested to see if the resistance changed 
-							using a multimeter when bending. There was a variation of about 1 ohm. As the next step, I made an amplifier circuit that would
+							using a multimeter when bending. There was a variation of about 1 ohm. 
+
+							As the next step, I made an amplifier circuit that would
 							amplify the difference between the nodes of a wheatstone bridge.</p>
 
 							<circuit design>
@@ -148,8 +152,10 @@
 							Maybe I'll try a lower value than 800k to see if that changes anything. I tried 499k and it didn't change anything. One thing I noticed is that 
 							when measuring ohmic resistance of some of the 1k resistors, some of them had 664 ohm resistance instead of 1k. Looking at the skematic it looks like 
 							that resistor is in parallel with 2 1k resistors in series which give it an equivalent resistance of 666 ohms. Since this is due to the grounds being connected, 
-							I'm not sure if this contributed to the issue.</p>
-
+							I'm not sure if this contributed to the issue. Thats all for this week</p>
+							
+							
+							<h3 style="text-align:left">WEEK 3 Jan 22-26</h3>
 							<simulation>
 							<p>
 							After trying to formulate my problem to ask for help I realized that I can try simulating it. In this simulation, its clear that the different values was not a mechanical 
@@ -163,10 +169,64 @@
 							<edesign>
 							<new pcb>
 							<p>
-							Upon further recommendation from gpt, I added capacitors before all the op amps to clean up the signal potentially, using 1microF ceramic bypassing capacitors in parallel 
-							to filter out any ac noise that might occur. Since this was a very enlightening use of capacitors I took some time to read about typical usages and values and positioned 
+							Upon further recommendation from gpt, I added capacitors before all the op amps to clean up the signal potentially, using 0.1 microF ceramic bypassing capacitors in parallel 
+							to filter out any ac noise that might occur, as well as a 10microF capacitor at the pcb power inputs for good measure. Since this was a very enlightening use of capacitors I took some time to read about typical usages and values and positioned 
 							them in my design accordingly. It looks like decoupling and bypassing have similar implementation but decoupling is a term used for smoothing out low frequency noise from dc
 							while bypassing is used when filter high frequency noise from a dc signal.</p>
+							</p>
+							<edesign>
+							<new pcb>
+							<milled board>
+							<p>
+							After some inital tests its clear that there are still issues. After spending some time simulating in circuit lab, talking to gpt and reading datasheets, (and debugging my simulations)
+							it looks like the main issues are that I didn't account for the CMRR, common mode rejection ratio, and that my forumla for the diff amp was wrong. 
+							</p>
+							<p>
+							The CMRR is a ratio in decibells that follow this formula: 20log(gain_cm/gain_diff) with common values of 70-80 db. Higher value means better rejection
+							Since this ratio scales with the gain factor of my setup, maybe I can minimize the common mode voltage gain by maximizing the gain of the diff amp circuit.
+						</p>
+							<graph>
+							<p>
+							Reading the datasheet of the ad8605 it looks like the gain for dc cm voltage is 90db. using the formula I found that at 800 A_diff (A for gain), A_cm becomes 0.0253 and at 500, A_cm becomes 0.016.
+							So the scaling is actually directly affected by the differential voltage gain, so maximizing the gain would actually increase the cm gain, my previous statement is wrong.
+							</p>
+							<p>
+							In my notes I only set 1 resistor to set the gain when I need to set 2 of them, there should be 2 pairs of resistor values. Now that I fixed this in the simulations it looks like things
+							are working as expected. I just need to switch out some resistor values and my setup should work.
+							</p>
+							<p>
+							Final fix (hopefully), since I'm using 5V and ground for VCC, I need to swap the values of vin- and vin+ in the diff amp circuit since the voltage at the leg of the wheatstone brige decrease when the resistor is strained, thus it needs
+							to go to the inverting input so that the total stays positive.
+							</p>
+							<p>
+							Ok I made a mistake and just swapped the inputs to the op amp, but that wouldn't work since the feedback would be going into the non inverting input which is illegal.
+							So I swapped the inputs before the resistors by adding a couple jumpers and doing some surgery. It looks terrible, but it works!
+							</p>
+
+							<p>
+							Now that I can measure the signal of the deformation I have a few objectives to think about:
+							<ul>
+								<li>Determining direction</li>
+								<li>Scaling Efficiently</li>
+								<li>Creating a model with the data</li>
+							</ul>
+
+							I'll start by thinking about these seperately and seeing whats possible. For determining the direction, Alfonso showed me a useful 
+							circuit, the full bridge version of the wheatstone bridge where all the resistors are used as sensors. While I havent read into this, 
+							I'm not sure if this is possible with resistors that can't tell which direction they are being bent in, although it does look like that 
+							bending in one direction yields a higher change in resistance than bending in the other direction (at least when on a pcb). 
+
+
+
+						</p>
+
+
+
+
+							
+						
+
+
 
 
 

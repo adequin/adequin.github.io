@@ -63,6 +63,8 @@
 								<li>The esp32 might not be fried and just needs a hard reboot. Although blasting it with heat gun may have ruined it anyway.</li>
 							</ul>
 
+							Nevermind, after looking at the datasheet for the hbridge there is no mention of a diode but a warning on inductive loads. I flyback diode is probably a good idea.
+							To pick a diode I need to consider the coil driving voltage and current which is about 12V and 0.4A. 
 
 
 
