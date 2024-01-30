@@ -103,7 +103,7 @@
 							Using A0 and A8 for the wheatstone bridge, I end up with this configuration. <insert image>
 							I'm also reading the values using  <a href="strain_test/strain_test.ino">this code</a>
 						</p>
-						
+
 						<h3 style="text-align:left">WEEK 2 Jan 16-19</h3>
 					<p>
 							Next, I'll move on to testing on a pcb board using some resistors instead of strain gauges
@@ -208,6 +208,7 @@
 							<ul>
 								<li>Determining direction</li>
 								<li>Scaling Efficiently</li>
+								<li>Interpret Reading as Strain Measurement</li>
 								<li>Creating a model with the data</li>
 							</ul>
 
@@ -216,8 +217,22 @@
 							I'm not sure if this is possible with resistors that can't tell which direction they are being bent in, although it does look like that 
 							bending in one direction yields a higher change in resistance than bending in the other direction (at least when on a pcb). 
 
+							I need to verify if the resistors do actually act differently depending on orientation and what the actual range of value is. I broke the board at around 0.6V reading. 
+							Definitely not near the 4ohm difference from Miana's test. 
+
+							Ok after some tests using the ohmeter and bending resistors with pliers, it looks like the resistance increases when the bending is concave and increases when the bending is convex (~4ohms max for both). (black side up)
+							It is still interesting to verify the readings from bending resistors on the pcb since it might have different compression/tension strain due to the solder holding it in place.
+
+							For the next boards I'll make a board that is simply the diff amplifier with the buffers and other boards to test different bridge configurations. 
 
 
+						</p>
+						<h3 style="text-align:left">WEEK 4 Jan 29-Feb 2</h3>
+
+						<p>
+							This is the last week for this project. As the first step, I made the isolated diff amp circuit and a new sensing board that is a half wheatstone bridge
+							configuration instead of the quarter version from before. The difference is that I am straining two resistors, from opposite sides of the wheatstone bridge diamond, 
+							which doubles the signal. One thing I didn't expect is how well the direction of bending is captured. I think I need to isolate the VCC- for the op amp to capture both bending directions.
 						</p>
 
 

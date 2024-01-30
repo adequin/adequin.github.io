@@ -63,8 +63,18 @@
 								<li>The esp32 might not be fried and just needs a hard reboot. Although blasting it with heat gun may have ruined it anyway.</li>
 							</ul>
 
-							Nevermind, after looking at the datasheet for the hbridge there is no mention of a diode but a warning on inductive loads. I flyback diode is probably a good idea.
+							After looking at the datasheet for the hbridge there is no mention of a diode but a warning on inductive loads. A flyback diode is probably a good idea.
 							To pick a diode I need to consider the coil driving voltage and current which is about 12V and 0.4A. 
+							Upon further inspection the equivalent ciruict diagrams show flyback diodes across all the gates of the h-bridge. This makes sense.
+							<warning>
+							<image>
+
+							After consulting with Miana about the power supply issue from the end of HTMAA, it looks like it was probably just an issue with the multimeter that shorted something. 
+							I tested it with a 20V battery connecting the grounds and Vm trace and it worked fine! I can finally move on. 
+
+							The next steps would be to make a new pcb with a better layout for the connectors, add capacitors and experiment with the sequence. 
+
+
 
 
 
