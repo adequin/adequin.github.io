@@ -25,8 +25,7 @@ void loop() {
   if (Index == maxCount){
     Serial.println("Stored Data");
     for(int i = 0; i<maxCount; i++){
-      Serial.print(sensorVals[i]);
-      Serial.print(", ");
+      Serial.println(sensorVals[i]);
       delay(100);
     }
     Index++;
