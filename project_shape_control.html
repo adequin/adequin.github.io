@@ -144,8 +144,10 @@
 							amplify the difference between the nodes of a wheatstone bridge.</p>
 
 							<circuit design>
-							<pcb eagle >
-							<soldered>
+								<span class="image">
+									<img src="shape_control_files/documentation_images/amp_bridge_pcb.jpg" alt="" 
+									height = '400'> 
+								</span>
 							<p>
 							While the nodes of the wheatstone bridge should have the same reading since they use the same resistor values, when connected to the differential amplifier
 							the reading of one of the nodes is 2.1V instead of 2.6V. Since the amplification is of about 820x, 0.5V differnet quickly gets amplified beyond the cap of 5V.
@@ -156,7 +158,6 @@
 							
 							
 							<h3 style="text-align:left">WEEK 3 Jan 22-26</h3>
-							<simulation>
 							<p>
 							After trying to formulate my problem to ask for help I realized that I can try simulating it. In this simulation, its clear that the different values was not a mechanical 
 							or noise issue but just the circuit was wrong. by drawing it up like this it was clear that the ground connections changed the resistance in the wheatsone bridge and no longer made it balanced. 
@@ -166,26 +167,57 @@
 							and use a microcontroller to replicate the signal into the differential amplifier circuit. I good suggestion from GPT was to use a unity gain buffer. I never really understood what they were for 
 							but now that I'm in this situation it makes a lot of sense. I redesigned the circuit in eagle with 2 unity gain buffers at the outputs of the wheatstone bridge to isolate them.
 						</p>
-							<edesign>
-							<new pcb>
+						<div style="text-align:center;">
+							<span class="image" >
+								<img src="shape_control_files/documentation_images/amp_bridge_schem.jpg" alt="" 
+								height = '400'> 
+							</span>
+						</div>
 							<p>
 							Upon further recommendation from gpt, I added capacitors before all the op amps to clean up the signal potentially, using 0.1 microF ceramic bypassing capacitors in parallel 
 							to filter out any ac noise that might occur, as well as a 10microF capacitor at the pcb power inputs for good measure. Since this was a very enlightening use of capacitors I took some time to read about typical usages and values and positioned 
 							them in my design accordingly. It looks like decoupling and bypassing have similar implementation but decoupling is a term used for smoothing out low frequency noise from dc
 							while bypassing is used when filter high frequency noise from a dc signal.</p>
 							</p>
-							<edesign>
-							<new pcb>
-							<milled board>
+							<div style="text-align:center;">
+								<span class="image">
+									<img src="shape_control_files/documentation_images/amp_bridge_cap_pcb.jpg" alt="" 
+									height = '400'> 
+								</span>
+								<span class="image" >
+									<img src="shape_control_files/documentation_images/amp_bridge_cap_schem.jpg" alt="" 
+									height = '400'> 
+								</span>
+							</div>
+							<div style="text-align:center;">
+								<span class="image">
+									<img src="shape_control_files/documentation_images/boards/amp_board_milled.jpeg" alt="" 
+									height = '400'> 
+								</span>
+								<span class="image" >
+									<img src="shape_control_files/documentation_images/boards/amp_board_soldered.jpeg" alt="" 
+									height = '400'> 
+								</span>
+							</div>
 							<p>
 							After some inital tests its clear that there are still issues. After spending some time simulating in circuit lab, talking to gpt and reading datasheets, (and debugging my simulations)
 							it looks like the main issues are that I didn't account for the CMRR, common mode rejection ratio, and that my forumla for the diff amp was wrong. 
 							</p>
-							<p>
+							
+						<div style="text-align:center;">
+							<span class="image">
+								<img src="shape_control_files/documentation_images/circuitlab_sim.jpg" alt="" 
+								height = '400'> 
+							</span>
+							<span class="image" >
+								<img src="shape_control_files/documentation_images/datasheet_CMRR_opamp.jpg" alt="" 
+								height = '400'> 
+							</span>
+						</div>
+						<p>
 							The CMRR is a ratio in decibells that follow this formula: 20log(gain_cm/gain_diff) with common values of 70-80 db. Higher value means better rejection
 							Since this ratio scales with the gain factor of my setup, maybe I can minimize the common mode voltage gain by maximizing the gain of the diff amp circuit.
 						</p>
-							<graph>
 							<p>
 							Reading the datasheet of the ad8605 it looks like the gain for dc cm voltage is 90db. using the formula I found that at 800 A_diff (A for gain), A_cm becomes 0.0253 and at 500, A_cm becomes 0.016.
 							So the scaling is actually directly affected by the differential voltage gain, so maximizing the gain would actually increase the cm gain, my previous statement is wrong.
@@ -234,6 +266,12 @@
 							configuration instead of the quarter version from before. The difference is that I am straining two resistors, from opposite sides of the wheatstone bridge diamond, 
 							which doubles the signal. One thing I didn't expect is how well the direction of bending is captured. I think I need to isolate the VCC- for the op amp to capture both bending directions.
 						</p>
+						<div style="text-align:center;">
+							<span class="image">
+								<img src="shape_control_files/documentation_images/boards/amp_board2.jpeg" alt="" 
+								height = '400'> 
+							</span>
+						</div>
 
 						<p>
 							Once I isolated the negative VCC input to the differential amplifier, I realized I could just flip the inputs for now.
@@ -242,6 +280,16 @@
 							I suspect that since the gcode file has an origin that is a pretty far, I zeroed it at a much different height then the cutting region. I since learned that by right clicking in the simulation you can set 
 							the work offset so that where ever the endmill is corresponds to where you want it to be in the simulation (although the zeros might get messed up once the job is done if its too far from the bed).
 						</p>
+						<div style="text-align:center;">
+							<span class="image">
+								<img src="shape_control_files/documentation_images/boards/instron_board_fail.jpeg" alt="" 
+								height = '400'> 
+							</span>
+							<span class="image" >
+								<img src="shape_control_files/documentation_images/boards/instron_test_pcb.jpeg" alt="" 
+								height = '400'> 
+							</span>
+						</div>
 
 						<p>
 							For the instron testing, I plan to synchronize the instron measurements with the data from the xiao samd21 analog read. It looks like that with the longer test board, there is a lot more noise in the signal, so the votage difference actually starts at 1.2V and goes to 4.7 when strained.
@@ -249,8 +297,16 @@
 
 						</p>
 
-							<instron setup>
-							<instron control setup>
+						<div style="text-align:center;">
+							<span class="image">
+								<img src="shape_control_files/documentation_images/tests/instron_pcb_setup2.jpeg" alt="" 
+								height = '400'> 
+							</span>
+							<span class="image" >
+								<img src="shape_control_files/documentation_images/tests/instron_test_interface.jpeg" alt="" 
+								height = '400'> 
+							</span>
+						</div>
 
 							<p>
 							For the instron test, we used a 3 point bending setup and place the pcb with the resistors on the bottom, directly centered with the middle bending rod. 
@@ -259,14 +315,21 @@
 							Since the rate of data collection was the same for both, I simply plotted them against each other in matlab to compare the voltage and displacement or force. 
 							I scaled the data from arduino by 3.3/1024 to get the voltage, and flipped the force and displacement signs so that it moves in the positive direction. 
 							</p>
-							<force plot>
-							<displacement plot>
-								
+							<div style="text-align:center;">
+								<span class="image">
+									<img src="shape_control_files/documentation_images/volts_vs_displacement.png" alt="" 
+									height = '400'> 
+								</span>
+								<span class="image" >
+									<img src="shape_control_files/documentation_images/volts_vs_force.png" alt="" 
+									height = '400'> 
+								</span>
+							</div>
 
+						<p>
+							To wrap up the IAP term, I can work on making a model to make a flex pcb/scale up.
+						</p>
 
-
-
-							
 						</div>
 					</div>
 

@@ -177,10 +177,10 @@ scaled_voltage = trimmed_voltage*(3.3/1024);
 plot(Force,scaled_voltage)
 title('Voltage Response of PCB Wheatstone Bridge to Applied Force During a 3-Point Bending Test')
 xlabel('Force (N)') 
-ylabel('Voltage (V)') 
+ylabel('Bridge Voltage (V)') 
 
 plot(Force,scaled_voltage)
 title('Voltage Response of PCB Wheatstone Bridge to Displacement During a 3-Point Bending Test')
-xlabel('Force (N)') 
-ylabel('Displacement (mm)')
+xlabel('Displacement (mm)') 
+ylabel('Bridge Voltage (V)')
 
