@@ -58,7 +58,7 @@
 							The goal is to explore sensing deformations in a plate-like structure to construct a digital twin. 
 							Additionally, we aim to have the structure be closely integrated with the sensing components and pcb 
 							and to eventually actuate and control the shape directly.
-							The first step is to see if we can use resistors as cheap sensors.
+							The first step is to see if we can use resistors as cost-efficient strain sensors.
 							</p>
 							
 							<h3 style="text-align:left">WEEK 1 Jan 8-12</h3>
@@ -75,12 +75,19 @@
 							To install Arduino>Settings> Additional Board Manager URLs:https://files.seeedstudio.com/arduino/package_seeeduino_boards_index.json<br>
 							And then in Tools>Board>Boards Manager find Seeed SAMD Boards and install. I made the mistake of removing the json file for the esp32 cores which take forever to download. Apparently you can just have multiple urls seperated by commas. 
 						</p>
+						<h4>voltage divider strain sensing </h4>
 						<p>
-							Before I run anything, I need to have the circuit ready. Since my usbc cable is pulling the arduino for the header pins I'm going to solder them. Soldering these was very satisifying. Then to complete the voltage divider, I use a 10k resistor connected to ground
+							Before I run anything, I need to have the circuit ready. Since my usbc cable is pulling the arduino from the header pins I'm going to solder them. Soldering these was very satisifying. Then to complete the voltage divider, I use a 10k resistor connected to ground
 							while the strain gauge is connected to the 3.3V output of the xiao. According to the voltage divider formula the voltage should be Vin*R2/(R1+R2) = 3.3*10k/26k = 1.27V 
 							From initial tests it looks like the readings are fairly unreliable since they change when I touch parts of the board or the amount of pressure on the breadboard, but 
 							it doesn't actually measure a change when going from ground to 3.3V. The change to 5V is pretty noticeable and the strain gauge seemed to show some change in the reading when bending it, but I can't be sure that it isn't just from the pressure on the gauge or contact with my hand.
 							</p>
+							<div style="text-align:center;">
+								<span class="image" >
+									<img src="shape_control_files/documentation_images/boards/voltage_divider_breadboard.jpeg" alt="" 
+									height = '400'> 
+								</span>
+							</div>
 							<p>
 							It looks like using "A7" for the D7 pin compiled but was not actually being used and the readings were just stray voltage. I confirmed this by switching to the A0 pin and reading ground and 3.3V values and it changed from ~0 to ~1023.
 							I'm not sure why A7 doesn't work since it was referenced <a href="https://wiki.seeedstudio.com/Seeeduino-XIAO/">here</a>, but I will just use A0 for now.
@@ -94,20 +101,42 @@
 							Using a multimeter it looks like the gauge is actually 30k ohms when flat, 20k when bent forward and 100k when bent backwards.
 						</p>
 						<p>
-							Wheatstone Bridge for strain gauges 
+							<h4>Wheatstone Bridge strain sensing </h4>
 							After <a href="https://www.omega.com/en-us/resources/wheatstone-bridge">reading </a>a bit, wheatstone bridges sense a relative voltage, making the circuit less susceptible to noise, and letting 0V be the balance point.
 							The wheatstone bridge is really just the voltage divider with another voltage divider in parallel as a reference. 
 						</p>
+						<div style="text-align:center;">
+							<span class="image" >
+								<img src="shape_control_files/documentation_images/strain_wheatstone_bridge_circuit.jpg" alt="" 
+								height = '400'> 
+							</span>
+						</div>
 					<p>
+							I used 3 100ohm resisitors in series to get closer to the resistivity of the strain gauge. 
 							For some reason the pin next to A0 is A10 and not A1 like in the documentaion. also D3->A8
-							Using A0 and A8 for the wheatstone bridge, I end up with this configuration. <insert image>
-							I'm also reading the values using  <a href="strain_test/strain_test.ino">this code</a>
+							Using A0 and A8 for the wheatstone bridge, I end up with this configuration. 
 						</p>
+						<div style="text-align:center;">
+							<span class="image" >
+								<img src="shape_control_files/documentation_images/boards/wheatstone_breadboard.jpeg" alt="" 
+								height = '400'> 
+							</span>
+						</div>
+						<video width="auto" height="600" controls="" muted="">
+							<source src="shape_control_files/documentation_images/tests/wheatstone_breadboard_test.mp4" type="video/mp4">
+							Your browser does not support the video tag.
+						</video>
+						
 
 						<h3 style="text-align:left">WEEK 2 Jan 16-19</h3>
 					<p>
-							Next, I'll move on to testing on a pcb board using some resistors instead of strain gauges
-							<circuit image>
+							Next, I'll move on to testing on a pcb board using some resistors instead of strain gauges.
+							<div style="text-align:center;">
+								<span class="image" >
+									<img src="shape_control_files/documentation_images/samd21_breakout_bridge_pcb.jpg" alt="" 
+									height = '400'> 
+								</span>
+							</div>
 							Here is the initial test. This should let me reuse the same xiao breakout board to test different setups.
 							The first test is to see if the resistors react differently in tension vs compression and to see if I can maybe
 							read the values without an amplifier.
@@ -116,7 +145,20 @@
 							To mill the board I'll be figuring out how to use V-bits.
 							Just by using the v-bit calculator in https://modsproject.org/ instead of the 1/64 module things worked out fine.
 							I also soldered everything and added a few connectors.</p>
-							<soldered board with connector>
+							<div style="text-align:center;">
+								<span class="image" >
+									<img src="shape_control_files/documentation_images/boards/samd21_breakout_mill.jpeg" alt="" 
+									height = '400'> 
+								</span>
+								<span class="image" >
+									<img src="shape_control_files/documentation_images/boards/samd21_breakout.jpeg" alt="" 
+									height = '400'> 
+								</span>
+								<span class="image" >
+									<img src="shape_control_files/documentation_images/boards/strain_gauge_pcb.jpeg" alt="" 
+									height = '400'> 
+								</span>
+							</div>
 							<p>
 							Now back to arduino code. Here is what I got when printing the variables A0-A9: <br>
 							
@@ -143,21 +185,31 @@
 							As the next step, I made an amplifier circuit that would
 							amplify the difference between the nodes of a wheatstone bridge.</p>
 
-							<circuit design>
-								<span class="image">
-									<img src="shape_control_files/documentation_images/amp_bridge_pcb.jpg" alt="" 
-									height = '400'> 
-								</span>
+								<div style="text-align:center;">
+									<span class="image" >
+										<img src="shape_control_files/documentation_images/amp_bridge_pcb.jpg" alt="" 
+										width = '600'> 
+									</span>
+									<span class="image" >
+										<img src="shape_control_files/documentation_images/amp_circuit.jpg" alt="" 
+										height = '400'> 
+									</span>
+								</div>
+								
 							<p>
-							While the nodes of the wheatstone bridge should have the same reading since they use the same resistor values, when connected to the differential amplifier
-							the reading of one of the nodes is 2.1V instead of 2.6V. Since the amplification is of about 820x, 0.5V differnet quickly gets amplified beyond the cap of 5V.
+							
+								<h4> issue: weird values </h4>
+							After making the board, I started probing it to test voltages at different points. While the nodes of the wheatstone bridge should have the same reading since they use the same resistor values, when connected to the differential amplifier
+							the reading of one of the nodes is 2.1V instead of 2.6V. Since the amplification is of about 820x, 0.5V difference quickly gets amplified beyond the cap of 5V.
 							Maybe I'll try a lower value than 800k to see if that changes anything. I tried 499k and it didn't change anything. One thing I noticed is that 
 							when measuring ohmic resistance of some of the 1k resistors, some of them had 664 ohm resistance instead of 1k. Looking at the skematic it looks like 
 							that resistor is in parallel with 2 1k resistors in series which give it an equivalent resistance of 666 ohms. Since this is due to the grounds being connected, 
-							I'm not sure if this contributed to the issue. Thats all for this week</p>
+							I'm not sure if this contributed to the issue, but that doesn't really make sense to me. That's all for this week.</p>
 							
 							
 							<h3 style="text-align:left">WEEK 3 Jan 22-26</h3>
+
+							<h4> debugging with simulation </h4>
 							<p>
 							After trying to formulate my problem to ask for help I realized that I can try simulating it. In this simulation, its clear that the different values was not a mechanical 
 							or noise issue but just the circuit was wrong. by drawing it up like this it was clear that the ground connections changed the resistance in the wheatsone bridge and no longer made it balanced. 
@@ -173,6 +225,8 @@
 								height = '400'> 
 							</span>
 						</div>
+
+							<h4> adding capacitors, unity gain buffer, fixing resistor values, calculating CMRR </h4>
 							<p>
 							Upon further recommendation from gpt, I added capacitors before all the op amps to clean up the signal potentially, using 0.1 microF ceramic bypassing capacitors in parallel 
 							to filter out any ac noise that might occur, as well as a 10microF capacitor at the pcb power inputs for good measure. Since this was a very enlightening use of capacitors I took some time to read about typical usages and values and positioned 
@@ -234,7 +288,7 @@
 							Ok I made a mistake and just swapped the inputs to the op amp, but that wouldn't work since the feedback would be going into the non inverting input which is illegal.
 							So I swapped the inputs before the resistors by adding a couple jumpers and doing some surgery. It looks terrible, but it works!
 							</p>
-
+							<h4> next steps </h4>
 							<p>
 							Now that I can measure the signal of the deformation I have a few objectives to think about:
 							<ul>
@@ -244,15 +298,24 @@
 								<li>Creating a model with the data</li>
 							</ul>
 
+							<h4> determining directionality </h4>
+
 							I'll start by thinking about these seperately and seeing whats possible. For determining the direction, Alfonso showed me a useful 
 							circuit, the full bridge version of the wheatstone bridge where all the resistors are used as sensors. While I havent read into this, 
 							I'm not sure if this is possible with resistors that can't tell which direction they are being bent in, although it does look like that 
-							bending in one direction yields a higher change in resistance than bending in the other direction (at least when on a pcb). 
-
+							bending in one direction yields a higher change in resistance than bending in the other direction (at least when on a pcb).
+						</p>
+							<div style="text-align:center;">
+								<span class="image" >
+									<img src="shape_control_files/documentation_images/full_bridge.jpg" alt="" 
+									height = '400'> 
+								</span>
+							</div> 
+							<p>
 							I need to verify if the resistors do actually act differently depending on orientation and what the actual range of value is. I broke the board at around 0.6V reading. 
 							Definitely not near the 4ohm difference from Miana's test. 
 
-							Ok after some tests using the ohmeter and bending resistors with pliers, it looks like the resistance increases when the bending is concave and increases when the bending is convex (~4ohms max for both). (black side up)
+							Ok after some tests using the ohmeter and bending resistors with pliers, it looks like the resistance increases when the bending is concave and increases when the bending is convex (~4ohms max for both, black side up).
 							It is still interesting to verify the readings from bending resistors on the pcb since it might have different compression/tension strain due to the solder holding it in place.
 
 							For the next boards I'll make a board that is simply the diff amplifier with the buffers and other boards to test different bridge configurations. 
@@ -266,13 +329,17 @@
 							configuration instead of the quarter version from before. The difference is that I am straining two resistors, from opposite sides of the wheatstone bridge diamond, 
 							which doubles the signal. One thing I didn't expect is how well the direction of bending is captured. I think I need to isolate the VCC- for the op amp to capture both bending directions.
 						</p>
+						<video width="auto" height="600" controls="" muted="">
+							<source src="shape_control_files/documentation_images/tests/testing_bridge.mp4" type="video/mp4">
+							Your browser does not support the video tag.
+						</video>
 						<div style="text-align:center;">
 							<span class="image">
 								<img src="shape_control_files/documentation_images/boards/amp_board2.jpeg" alt="" 
 								height = '400'> 
 							</span>
 						</div>
-
+							<h4> instron testing </h4>
 						<p>
 							Once I isolated the negative VCC input to the differential amplifier, I realized I could just flip the inputs for now.
 							For the next step, I made a board to be tested with a 3 point bending setup. To minimize the bending of the reference resistors, I used an L shaped board and put them 
@@ -309,11 +376,12 @@
 						</div>
 
 							<p>
-							For the instron test, we used a 3 point bending setup and place the pcb with the resistors on the bottom, directly centered with the middle bending rod. 
+							We used a 3 point bending setup and place the pcb with the resistors on the bottom, directly centered with the middle bending rod. 
 							To collect data, I used <a href="shape_control_files/strain_test/strain_test.ino">this</a> arduino script, and opened the serial monitor at the same time as I clicked start on the instron interface.
 							I did a bit of processing in python and then copied the analogRead() data to matlab. 
-							Since the rate of data collection was the same for both, I simply plotted them against each other in matlab to compare the voltage and displacement or force. 
+							Since the rate of data collection was the same for both, I simply plotted them against each other in matlab to compare the voltage and displacement or force (<a href="shape_control_files/strain_pcb_data.mlx">script</a>). 
 							I scaled the data from arduino by 3.3/1024 to get the voltage, and flipped the force and displacement signs so that it moves in the positive direction. 
+							It looks very linear!
 							</p>
 							<div style="text-align:center;">
 								<span class="image">
