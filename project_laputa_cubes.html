@@ -54,7 +54,7 @@
 						<div class="inner">
 							<h1>Project Laputa Blocks</h1>
 							<p>
-							This is the continuation of my HTMAA culminating project. You can read about it <a href="https://fab.cba.mit.edu/classes/863.23/CBA/people/Andy/FinalProject.html"> here </a>.
+							This is the continuation of my HTMAA final project. You can read about it <a href="https://fab.cba.mit.edu/classes/863.23/CBA/people/Andy/FinalProject.html"> here </a>.
 							Here are some notes that I've gathered before I start trying things again:
 							<ul>
 								<li>Flyback diode for inductors, potentially included in the TB451 hbridge </li>
@@ -62,18 +62,64 @@
 								<li>There should be no issues connecting battery power to the hbridge vm input, the frying was probably due to missuse of multimeter.</li>
 								<li>The esp32 might not be fried and just needs a hard reboot. Although blasting it with heat gun may have ruined it anyway.</li>
 							</ul>
-
+						
+							<h3>Flyback Diode</h3>
+						<p>
 							After looking at the datasheet for the hbridge there is no mention of a diode but a warning on inductive loads. A flyback diode is probably a good idea.
 							To pick a diode I need to consider the coil driving voltage and current which is about 12V and 0.4A. 
 							Upon further inspection the equivalent ciruict diagrams show flyback diodes across all the gates of the h-bridge. This makes sense.
+						</p>
 							<warning>
 							<image>
 
+						<p>
 							After consulting with Miana about the power supply issue from the end of HTMAA, it looks like it was probably just an issue with the multimeter that shorted something. 
 							I tested it with a 20V battery connecting the grounds and Vm trace and it worked fine! I can finally move on. 
-
+							<br>
 							The next steps would be to make a new pcb with a better layout for the connectors, add capacitors and experiment with the sequence. 
 
+						</p>
+						<h2>Measurement and Instrumentation</h2>
+						<p>
+							I've integrated this project into my 2.671 Measurements and Instrumentation class final project: Go Forth and Measure. I will be designing experiments to study the behavior of the linear actuation system based on
+							the input current, phase, and geometry of electromagnets to compute suitable design parameters and create a control scheme for the system 
+						</p>
+							After doing some background research on different types of linear motors and actuation systems, I learned some basics related to electric motors:
+						<ul>
+							<li>thrust ripple</li>
+							<li>AC motors: synchronous and inductive</li>
+							<li>actuation phases</li>
+						</ul>
+
+							I did an initial analysis to model of the system dynamics in order to get some intuition before reading about them in papers:
+							
+							<div style="text-align:center;">
+								<span class="image">
+									<img src="laputa_files/Dynamics_analysis.jpg" alt="" 
+									height = '600'> 
+								</span>
+							</div>
+							<p>
+								<b>Figure 1:</b> Derived simplified equation of motion for single electromagnet facing two opposite polarity permanent magnets. 
+								Includes electromagnetic forces based on distance x and friction due to gravity. A more accurate model would included
+								friction at the contact point of the magnet faces relative to normal force. </p>
+							
+							Notes from papers on analysis and controls of linear motors: <br>
+							<br>
+							Nonlinear electromagnetic force analysis and compensation control of electromagnetic linear actuator
+							<ul>
+								<li> halbach magnet configuration <a href ="https://en.wikipedia.org/wiki/Halbach_array#/media/File:HallbachArrayField.jpg">amplifies single side of magnetic field array</a>
+								<li> use array of <a href="https://totalelement.com/collections/cube-magnets/products/totalelement-64-neodymium-magnets-3-16-inch-cube-n52">cube magnets </a>
+								<li> arctan(v) function used as smooth sign function for differentiability, velocity is scaled by a large enough constant to keep characteristic of sign function
+								<li> friction modeled as a nonlinear function of velocity
+								<li> determine backEMF coefficient to compensate current 
+								<li> Bessel functions for modeling magnetic field from coils in an airgap
+								<li> the proposed controller is for high preciesion, look for simpler one for now</li>
+								
+							</ul>
+
+
+							
 
 
 

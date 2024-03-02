@@ -127,7 +127,6 @@
 							Your browser does not support the video tag.
 						</video>
 						
-
 						<h3 style="text-align:left">WEEK 2 Jan 16-19</h3>
 					<p>
 							Next, I'll move on to testing on a pcb board using some resistors instead of strain gauges.
@@ -161,7 +160,6 @@
 							</div>
 							<p>
 							Now back to arduino code. Here is what I got when printing the variables A0-A9: <br>
-							
 							<pre><code>
 19:00:16.809 -> HELLO
 19:00:16.809 -> 14
@@ -178,6 +176,7 @@
 						</pre>
 						</p>
 					<p>
+							After further testing, the A2 and A4 pins are the only ones without a mapping.
 							Since I used a pin that doesn't have a name, I simply used a jumper to a different pin. With this setup, I tested to see
 							if there was a noticeable difference in the analog read output. There was not. Based on Miana's feedback, I tested to see if the resistance changed 
 							using a multimeter when bending. There was a variation of about 1 ohm. 
@@ -395,7 +394,29 @@
 							</div>
 
 						<p>
-							To wrap up the IAP term, I can work on making a model to make a flex pcb/scale up.
+							To wrap up the IAP term, I can work on making a model to make a flex pcb/scale up. The idea is to make a bunch of small flex boards that can be glued to a 
+							surface to measure the strain at that point. The flex boards would consist of 2 resistors and a flat flex connector from molex. I would also have regular boards for the microcontroller 
+							with connectors for the input data, gound, and power, as well as the amp board with the other 2 resistors of the wheatstone bridge. 
+
+							The remaining that needs to be resolved is how to power all the microcontrollers, if it is possible to isolate the amp boards or to merge them with the remaining resistors of the wheatstone bridge.
+							Additional considerations: 
+								use a ground plane for the pcbs since they can be multilayered, 
+								pick a microcontroller with a higher or controllable vref for analogRead(), 
+								use the bare chip instead of the xiao packaging for access to additional pins (although the 1:1 ratio of amp boards to reading pins is a constraint anyway), 
+								The flex boards would have arrows to indicate directions normal to the resistors.
+								Save the I2C pins for networking between the microcontrollers. 
+								multiplex the amp boards to reduce the number of components.
+
+							Since today is the last day, I'm just gonna repurpose the boards into an arrangement that can be used for this inital test. But here are some notes for the futur/scaling up.
+								Look into instrumentation amplifiers, there may be some that can take in multiple inputs.
+								Look into multiplexing further reduce the number of inputs. 
+								Look into using the bare samd21 chip or other chips that can take in analog inputs to maximize pin inputs.
+								For a higher range of values it would also be good to figure out how to set a reference voltage. 
+
+							For this inital test, I will make 1 board with a micro controller, a usb port for the -5V input to the amplifier circuits and 10 amplfication circuits, 1 for each pin input (excluding the nameless one). 
+							I'm going to ignore the I2c for now since I don't intend to scale up without a different layout.
+
+						
 						</p>
 
 						</div>
