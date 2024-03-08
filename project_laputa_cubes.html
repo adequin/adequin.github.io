@@ -71,7 +71,6 @@
 						</p>
 							<warning>
 							<image>
-
 						<p>
 							After consulting with Miana about the power supply issue from the end of HTMAA, it looks like it was probably just an issue with the multimeter that shorted something. 
 							I tested it with a 20V battery connecting the grounds and Vm trace and it worked fine! I can finally move on. 
@@ -80,6 +79,8 @@
 
 						</p>
 						<h2>Measurement and Instrumentation</h2>
+
+						<h3>Initial model, lit review, and tests</h3>
 						<p>
 							I've integrated this project into my 2.671 Measurements and Instrumentation class final project: Go Forth and Measure. I will be designing experiments to study the behavior of the linear actuation system based on
 							the input current, phase, and geometry of electromagnets to compute suitable design parameters and create a control scheme for the system 
@@ -117,6 +118,25 @@
 								<li> the proposed controller is for high preciesion, look for simpler one for now</li>
 								
 							</ul>
+
+							<p> To get started on the physical test setup I need to make sure that I have all the sensors I need and 
+								that my power input in controllers are working properly. 
+
+								Here is the summary
+								<ul>
+									<li> Sensors: using DC current sensor, differential voltage probe, lab quest mini for data collection, gaussmeter, video
+									<li> Generators options: Function generator, 10x power amplifier, custom controller pcb + battery, DC power supply
+								</ul>
+
+								After several hours of different test configurations: <br>
+									Arduino issues (use digitalwrite, triple check the code and port)<br>
+									low resolution sensor corrupting data<br>
+									controller output issues: very noisy response when connected to coil, could be due to a number of reasons<br>
+								
+								As a solution, function generator and power amplifier combination is very promising, although the battery powered pcb controller would be the end goal
+
+
+
 
 
 							
