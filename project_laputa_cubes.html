@@ -41,10 +41,7 @@
 						<h2>Menu</h2>
 						<ul>
 							<li><a href="index.html">Home</a></li>
-							<li><a href="index_projects.html">Projects</a></li>
-							<li><a href="https://fab.cba.mit.edu/classes/863.23/CBA/people/Andy/index.html">How To Make Almost Anything</a></li>
-							<li><a href="index_studies.html">Studies</a></li>
-							<li><a href="index_origami.html">Origami</a></li>
+							<li><a href="https://fab.cba.mit.edu/classes/863.23/CBA/people/Andy/index.html">HTMAA</a></li>
 							<li><a href="aboutme.html">About</a></li>
 						</ul>
 					</nav>
@@ -80,7 +77,7 @@
 						</p>
 						<h2>Measurement and Instrumentation</h2>
 
-						<h3>Initial model, lit review, and tests</h3>
+						<h3>Initial model and paper review</h3>
 						<p>
 							I've integrated this project into my 2.671 Measurements and Instrumentation class final project: Go Forth and Measure. I will be designing experiments to study the behavior of the linear actuation system based on
 							the input current, phase, and geometry of electromagnets to compute suitable design parameters and create a control scheme for the system 
@@ -105,9 +102,9 @@
 								Includes electromagnetic forces based on distance x and friction due to gravity. A more accurate model would included
 								friction at the contact point of the magnet faces relative to normal force. </p>
 							
-							Notes from papers on analysis and controls of linear motors: <br>
+							Notes from a paper on analysis and controls of linear motors: <br>
 							<br>
-							Nonlinear electromagnetic force analysis and compensation control of electromagnetic linear actuator
+							Nonlinear electromagnetic force analysis and compensation control of electromagnetic linear actuator, Peng Yu et al 2023 Phys. Scr. 98 105507
 							<ul>
 								<li> halbach magnet configuration <a href ="https://en.wikipedia.org/wiki/Halbach_array#/media/File:HallbachArrayField.jpg">amplifies single side of magnetic field array</a>
 								<li> use array of <a href="https://totalelement.com/collections/cube-magnets/products/totalelement-64-neodymium-magnets-3-16-inch-cube-n52">cube magnets </a>
@@ -116,9 +113,13 @@
 								<li> determine backEMF coefficient to compensate current 
 								<li> Bessel functions for modeling magnetic field from coils in an airgap
 								<li> the proposed controller is for high preciesion, look for simpler one for now</li>
-								
 							</ul>
-
+							Note: The halbach magnet configuration will be useful for heavier iterations containing multiple directions and for continuous motion (use cube mangnets)
+							<br>
+							Additionally, the passage on motors in the Feedback Controls Text book ([8 ed] Gene F. Franklin, J. David Powell, Abbas) seems like a particularly good starting point for making a basic model. 
+						
+						</p>
+							<h3>Electronics Setup Testing</h3>
 							<p> To get started on the physical test setup I need to make sure that I have all the sensors I need and 
 								that my power input in controllers are working properly. 
 
@@ -134,6 +135,53 @@
 									controller output issues: very noisy response when connected to coil, could be due to a number of reasons<br>
 								
 								As a solution, function generator and power amplifier combination is very promising, although the battery powered pcb controller would be the end goal
+								<br>
+
+								<h3>Initial tests</h3>
+								<p>
+								Some notes from initial 1Hz square wave tests:
+								<ul>
+									<li> the power amplifier actually amplifies 20x despite the 10x specification, and has a range of 12 to -12V output (not 10 to -10)
+									<li> The main issue testing the motor with a single power source is that when one electromagnet perfectly lines up with the magnet, any input acts purely
+											in the direction perpendicular to the supposed motion, either pushing the blocks away from each other or increasing the contact force. 
+								</ul>
+								</p>
+								<p>
+								Solutions: find a way to cancel the induced polarity in the iron core or figure out how to get the controller to work or get a second FG and power amp.<br>
+								It looks like there is some weird interaction where the attraction between the core and magnet is stronger in between cycles then at rest. 
+								Another solution is to wire both coils in parallel and connect diodes to them so that only one turns on at a time. I happen to have some 1N4146 signal diodes to use. 
+								While this is a signal diode, the datasheet says that it can handle up to 3amps and can block up to 1200V DC! We only need up to 1amp and 10V so this is fine.
+								<br><br>
+								The diodes worked as expected, but I was wrong about what control inputs I need. The coils actually need alternating opposing current inputs.. which is really easy!
+								By simply wiring the coils in parallel and flipping the direction of one, I actually got it to work with the function generator and power amp! After a test with nylon cores, I also realized how important the induced
+								magnetism in the iron cores is for keeping the blocks aligned. It would be possible to add weaker magnets along the frame of the cubes, but that would be an additional detail 
+								to fine too and keep track of, so I will be sticking with iron cores for now. </p>
+
+								Now that I got it to work, I decided to test some different setting to qualitatively gauge the response. It looks like between sine, square and ramp inputs, square wave and sine are the most promising. The lower bound for 
+								activating the full range of motion seems to be around 700mV for moving the 44g load, approximately 0.027 amps
+								The next steps will be to get the controller working by asking Professor Steve Banzaert, get started on modeling the system with help from Professor Harrison Chin, and to build a simplified test model. 
+
+								<p>
+									I now have a working setup and confirmation that 180degree out of phase inputs can drive the system. The subsequent tests
+									will be to determine if this is the optimal phase and to model as a function of spacing and current. 
+								</p>
+
+								<h3> Physical Setup</h3>
+								<p>
+								While I have the working system, it would be more convenient to measure things with an overhead camera setup and a free moving magnet to 
+								control for friction and center of mass in the acceleration response.  </p>
+
+
+
+
+
+
+
+						
+								
+
+								
+
 
 
 
