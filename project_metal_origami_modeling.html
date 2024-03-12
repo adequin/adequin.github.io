@@ -22,9 +22,9 @@
 						<div class="inner">
 
 							<!-- Logo -->
-								<a href="index.html" class="logo">
-									<span class="symbol"><img src="images/logo.svg" alt="" /></span><span class="title">Andy Dequin</span>
-								</a>
+							<a href="index.html" class="logo">
+								<span class="symbol"><img src="images/logo.svg" alt="" /></span><span class="title">Andy Dequin</span>
+							</a>
 
 							<!-- Nav -->
 								<nav>
@@ -45,19 +45,117 @@
 							<li><a href="aboutme.html">About</a></li>
 						</ul>
 					</nav>
+				<!-- Side navigation -->
+				<div class="sidenav">
+					
+						  <a href="#intro">
+							Introduction
+						  </a>
+						  <a href="#overview">
+							Project Statement
+						  </a>
+						  <a href="#objective">
+							Objectives
+						  </a>
+						  <a href="#cell_design">
+							Single Cell Design
+						</a>
+						<a href="#connectors">
+							Connector Design
+						  </a>
+						  <a href="#boundary">
+							Boundary Edge Cases
+						  </a>
+						  <a href="#cube_sphere">
+							Cube and Sphere Examples
+						  </a>
+						  <a href="#bcc">
+							Alternate Geometry
+						  </a>
+						  <a href="#exporting">
+							Exporting to 2D
+						  </a>
+						  <a href="#conclusion">
+							Conclusion
+						  </a>
+				</div>
 
 				<!-- Main -->
+
 					<div id="main">
 						<div class="inner">
-							<h1>Designing of Modeling Algorithm for Folded Plate Lattice</h1>
-						<p>
-							THIS PAGE IS UNDER CONSTRUCTION
-							This page summarizes my work as an undergraduate researcher through Spring 2023 for the Center for Bits and Atoms lab in the MIT Media Lab.<br>
+							<h1 id="intro">Designing of Modeling Algorithm for Folded Plate Lattice</h1>
+						<p class= "indent">
+							This page summarizes my work as an undergraduate researcher through Spring 2023 for the Center for Bits and Atoms lab in the MIT Media Lab.
 							I worked on developing a modeling for a novel plate-lattice geometry macro-meso metallic foam designed by my supervisor Alfonso Parra Rubio. 
 							Read about his prior work on folded structures previously featured on the<a href="https://news.mit.edu/2023/using-kirigami-ultrastrong-lightweight-structures-0822"> MIT frontpage</a>
 						</p>
+						<h2 id="overview"> Project Statement </h2>
+						<p class= "indent">This project stems from the intersection of three main ideas: discrete structural origami, architected cellular solids, and plate lattices.
+						</p>
+						<p class= "indent">
+							Origami is the inspiration for using sheet stock material to create high load-bearing structures. Manufacturing-wise, the idea of using a 2-D single layer process with embedded 3 dimensional information shows significant potential. With rapid manufacturing, exploring structural origami as an architected cellular solids is achievable as well.
+						</p>
+						<p class= "indent">
+						Industry and researchers' interest in low-density, yet high-specific stiffness materials has generated consistent work on architected cellular solids. It has been proven that discreetly assembled cellular solids can perform as ultra light materials with record-setting density-stiffness ratios1. Many of these studies, however, only consider beam lattices.
+						</p>
+						<p class= "indent">
+						Besides, beam lattices maintain a lower ratio of stiffness to strength than plate lattices at the same relative density. They also show inflexibilities on generating geometries out of a greater range of materials. A different approach is to consider the less-researched plate lattices. Plate lattices with the same relative density to beam lattices have an increased specific stiffness 2.5 times that of their beam lattice counterpart.
+					</p>
+						<p class= "indent">For the scope of the UROP, we will be leveraging prior research by implementing a specific lattice geometry that can adapt to any outer mold target surface and bears advantageous mechanical properties.
+						I will be working under the guidance of graduate researcher Alfonso Parra Rubio and Professor Neil Gershenfeld.
+						</p>
+						<h2 id="objective">Objectives</h2>
+						<p>
+						For this project, I plan to focus on creating a script that generates a 3D structure of plate lattices from an input outer mold surface and to prepare it for manufacturing. This task can be broken down into several segments:
+						<ul>
+						<li>Learning to Interface with a CAD software like Rhino using python scripting
+						<li>Designing an algorithm to populate a target surface geometry
+						<li>Implement the algorithm into an actionable script
+						<li>Unraveling the CAD model into specific 2D surfaces with their generating crease lines
+						<li>Translate the 2D files into G-code for CNC milling.
+						</ul>
+							The goal by the end of this UROP opportunity would be to have the working parametric models and a strong grasp of the workflow, including the necessary integrations for all the steps from design to prototype.
+						</p>
+						<h2 id="cell_design">Cell Design</h2>
 
-						<!-- <p>add mold grasshopper thing</p> -->
+						<div style="text-align:center;">
+							<span class="image">
+								<img src="Cells_models/Cell+IntersectionArray.jpg" alt="" 
+								height = '400'> 
+							</span>
+						</div>
+						<div style="text-align:center;">
+							<span class="image">
+								<img src="Cells_models/ParametricCell.jpg" alt="" 
+								height = '400'> 
+							</span>
+						</div>
+						<h2 id="cube_sphere"> Cube and Sphere Examples </h2>
+						<div style="text-align:center;">
+							<span class="image">
+								<img src="Cells_models/CAD_project_ref.jpg" alt="" 
+								height = '600'> 
+							</span>
+						</div>
+						<div style="text-align:center;">
+							<span class="image">
+								<img src="Cells_models/CubeArray.jpg" alt="" 
+								height = '600'> 
+							</span>
+						</div>
+						<div style="text-align:center;">
+							<span class="image">
+								<img src="Cells_models/CubeArraySide.jpg" alt="" 
+								height = '600'> 
+							</span>
+						</div>
+						<h2 id="connectors">Connector Design</h2>
+						<h2 id="boundary">Boundary Edge Cases</h2>
+						<object data= "Cells_models/BoundaryCellScratch.pdf" width="800"
+                		height="500"> 
+        				</object> 
+						<h2 id="bcc"> Alternate Geometry </h2>
 						<div style="text-align:center;">
 							<span class="image">
 								<img src="Cells_models/BCC_nosidecells.jpg" alt="" 
@@ -76,36 +174,9 @@
 								height = '600'> 
 							</span>
 						</div>
-						<div style="text-align:center;">
-							<span class="image">
-								<img src="Cells_models/CAD_project_ref.jpg" alt="" 
-								height = '600'> 
-							</span>
-						</div>
-						<div style="text-align:center;">
-							<span class="image">
-								<img src="Cells_models/Cell+IntersectionArray.jpg" alt="" 
-								height = '600'> 
-							</span>
-						</div>
-						<div style="text-align:center;">
-							<span class="image">
-								<img src="Cells_models/CNClines.jpg" alt="" 
-								height = '600'> 
-							</span>
-						</div>
-						<div style="text-align:center;">
-							<span class="image">
-								<img src="Cells_models/CubeArray.jpg" alt="" 
-								height = '600'> 
-							</span>
-						</div>
-						<div style="text-align:center;">
-							<span class="image">
-								<img src="Cells_models/CubeArraySide.jpg" alt="" 
-								height = '600'> 
-							</span>
-						</div>
+
+						<h2 id="exporting">Exporting to 2D</h2>
+
 						<div style="text-align:center;">
 							<span class="image">
 								<img src="Cells_models/CubeArrayUnfolded.jpg" alt="" 
@@ -114,13 +185,7 @@
 						</div>
 						<div style="text-align:center;">
 							<span class="image">
-								<img src="Cells_models/MoldModel.jpg" alt="" 
-								height = '600'> 
-							</span>
-						</div>
-						<div style="text-align:center;">
-							<span class="image">
-								<img src="Cells_models/ParametricCell.jpg" alt="" 
+								<img src="Cells_models/SphereArrUnfolded.jpg" alt="" 
 								height = '600'> 
 							</span>
 						</div>
@@ -144,12 +209,15 @@
 						</div>
 						<div style="text-align:center;">
 							<span class="image">
-								<img src="Cells_models/SphereArrUnfolded.jpg" alt="" 
+								<img src="Cells_models/CNClines.jpg" alt="" 
 								height = '600'> 
 							</span>
 						</div>
+						<h2 id="conclusion">Conclusion</h2>
+
 						</div>
 					</div>
+
 
 				<!-- Footer -->
 					<footer id="footer">

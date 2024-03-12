@@ -168,7 +168,11 @@ input, select, textarea {
 
 	p {
 		margin: 0 0 2em 0;
+
 	}
+		.indent {
+			text-indent: 1.5em; /* Adjust the value as needed */
+		}
 
 	h1 {
 		font-size: 2.75em;
@@ -2329,6 +2333,7 @@ input, select, textarea {
 		border: 0;
 		display: inline-block;
 		position: relative;
+		text-align: center;
 	}
 
 		.image img {
@@ -2975,6 +2980,41 @@ input, select, textarea {
 					}
 
 		}
+/* The sidebar menu */
+.sidenav {
+	height: 100%; /* Full-height: remove this if you want "auto" height */
+	width: 15em; /* Set the width of the sidebar */
+	position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+	z-index: 1; /* Stay on top */
+	top: 0; /* Stay at the top */
+	left: 0;
+	background-color: #ffffff; 
+	overflow-x: hidden; /* Disable horizontal scroll */
+	padding-top: 20px;
+	padding-left: 10px;
+  }
+  
+  /* The navigation menu links */
+  .sidenav a {
+	padding: 6px 8px 6px 16px;
+	text-decoration: none;
+	font-size: 20px;
+	color: #585858;
+	display: block;
+  }
+  
+  /* When you mouse over the navigation links, change their color */
+  .sidenav a:hover {
+	color: #f1f1f1;
+  }
+  
+  
+  /* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
+  @media screen and (max-height: 450px) {
+	.sidenav {padding-top: 15px;}
+	.sidenav a {font-size: 18px;}
+  }
+
 
 /* Menu */
 
@@ -3330,8 +3370,10 @@ input, select, textarea {
 	#wrapper > * > .inner {
 		width: 100%;
 		max-width: 68em;
-		margin: 0 auto;
-		padding: 0 2.5em;
+		/* margin: 0 auto; */
+		padding: 0 10em;
+		margin-left: 160px; /* Same as the width of the sidebar */
+
 	}
 
 		@media screen and (max-width: 736px) {
