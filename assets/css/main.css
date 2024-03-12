@@ -2983,7 +2983,7 @@ input, select, textarea {
 /* The sidebar menu */
 .sidenav {
 	height: 100%; /* Full-height: remove this if you want "auto" height */
-	width: 15em; /* Set the width of the sidebar */
+	width: 15.5em; /* Set the width of the sidebar */
 	position: fixed; /* Fixed Sidebar (stay in place on scroll) */
 	z-index: 1; /* Stay on top */
 	top: 0; /* Stay at the top */
@@ -2992,7 +2992,33 @@ input, select, textarea {
 	overflow-x: hidden; /* Disable horizontal scroll */
 	padding-top: 20px;
 	padding-left: 10px;
-  }
+  }	
+  	.logo {
+	display: block;
+	border-bottom: 0;
+	color: inherit;
+	font-weight: 900;
+	letter-spacing: 0.35em;
+	margin: 0 0 2.5em 0;
+	text-decoration: none;
+	text-transform: uppercase;
+	display: inline-block;
+}
+
+	.logo > * {
+		display: inline-block;
+		vertical-align: middle;
+	}
+
+	.logo .symbol {
+		margin-right: 0.65em;
+	}
+
+		.logo .symbol img {
+			display: block;
+			width: 2em;
+			height: 2em;
+		}
   
   /* The navigation menu links */
   .sidenav a {

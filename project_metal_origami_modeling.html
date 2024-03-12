@@ -21,18 +21,12 @@
 					<header id="header">
 						<div class="inner">
 
-							<!-- Logo -->
-							<a href="index.html" class="logo">
-								<span class="symbol"><img src="images/logo.svg" alt="" /></span><span class="title">Andy Dequin</span>
-							</a>
-
 							<!-- Nav -->
 								<nav>
 									<ul>
 										<li><a href="#menu">Menu</a></li>
 									</ul>
 								</nav>
-
 						</div>
 					</header>
 
@@ -47,11 +41,13 @@
 					</nav>
 				<!-- Side navigation -->
 				<div class="sidenav">
-					
+					<a href="index.html" class="logo">
+						<span class="symbol"><img src="images/logo.svg" alt="" /></span><span class="title">Andy Dequin</span>
+					</a>
 						  <a href="#intro">
 							Introduction
 						  </a>
-						  <a href="#overview">
+						  <a href="#context">
 							Project Statement
 						  </a>
 						  <a href="#objective">
@@ -81,16 +77,19 @@
 				</div>
 
 				<!-- Main -->
-
 					<div id="main">
 						<div class="inner">
 							<h1 id="intro">Designing of Modeling Algorithm for Folded Plate Lattice</h1>
+								<span class="image fit">
+									<img src="Cells_models/SphereArr+UnfoldSide.jpg" alt="" >
+								</span>
+							
 						<p class= "indent">
 							This page summarizes my work as an undergraduate researcher through Spring 2023 for the Center for Bits and Atoms lab in the MIT Media Lab.
 							I worked on developing a modeling for a novel plate-lattice geometry macro-meso metallic foam designed by my supervisor Alfonso Parra Rubio. 
 							Read about his prior work on folded structures previously featured on the<a href="https://news.mit.edu/2023/using-kirigami-ultrastrong-lightweight-structures-0822"> MIT frontpage</a>
 						</p>
-						<h2 id="overview"> Project Statement </h2>
+						<h2 id="context"> Project Statement </h2>
 						<p class= "indent">This project stems from the intersection of three main ideas: discrete structural origami, architected cellular solids, and plate lattices.
 						</p>
 						<p class= "indent">
@@ -106,6 +105,13 @@
 						I will be working under the guidance of graduate researcher Alfonso Parra Rubio and Professor Neil Gershenfeld.
 						</p>
 						<h2 id="objective">Objectives</h2>
+						<p>TLDR; This research project is to model the geometry below in order to rapidly iterate over different parameters and features before manufacturing</p> 
+						<div style="text-align:center;">
+							<span class="image">
+								<img src="Cells_final/Cells_Ref.jpg" alt="" 
+								height = '400'> 
+							</span>
+						</div>
 						<p>
 						For this project, I plan to focus on creating a script that generates a 3D structure of plate lattices from an input outer mold surface and to prepare it for manufacturing. This task can be broken down into several segments:
 						<ul>
@@ -115,7 +121,7 @@
 						<li>Unraveling the CAD model into specific 2D surfaces with their generating crease lines
 						<li>Translate the 2D files into G-code for CNC milling.
 						</ul>
-							The goal by the end of this UROP opportunity would be to have the working parametric models and a strong grasp of the workflow, including the necessary integrations for all the steps from design to prototype.
+							The goal by the end of this UROP opportunity would be to have a working parametric model of the cell geometry and a strong grasp of the workflow
 						</p>
 						<h2 id="cell_design">Cell Design</h2>
 						<p>
@@ -198,12 +204,6 @@
 						<div style="text-align:center;">
 							<span class="image">
 								<img src="Cells_models/SphereArrUnfolded.jpg" alt="" 
-								height = '600'> 
-							</span>
-						</div>
-						<div style="text-align:center;">
-							<span class="image">
-								<img src="Cells_models/SphereArr+UnfoldSide.jpg" alt="" 
 								height = '600'> 
 							</span>
 						</div>

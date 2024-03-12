@@ -21,11 +21,6 @@
 					<header id="header">
 						<div class="inner">
 
-							<!-- Logo -->
-								<a href="index.html" class="logo">
-									<span class="symbol"><img src="images/logo.svg" alt="" /></span><span class="title">Andy Dequin</span>
-								</a>
-
 							<!-- Nav -->
 								<nav>
 									<ul>
@@ -48,26 +43,66 @@
 				
 				<!-- Side navigation -->
 				<div class="sidenav">
-					<a href="#">About</a>
-					<a href="#">Services</a>
-					<a href="#">Clients</a>
-					<a href="#">Contact</a>
-				</div>
+					<!-- Logo -->
+					<a href="index.html" class="logo">
+						<span class="symbol"><img src="images/logo.svg" alt="" /></span><span class="title">Andy Dequin</span>
+					</a>
+					
+					<a href="#intro">
+					  Introduction
+					</a>
+					<a href="#overview">
+					  Project Statement
+					</a>
+					<a href="#objective">
+					  Objectives
+					</a>
+					<a href="#conclusion">
+					  Conclusion
+					</a>
+		  </div>
+
 				<!-- Main -->
 					<div id="main">
 						<div class="inner">
 							<h1>Manufacturing of Folded Plate Lattice</h1>
-						<p>
-							THIS PAGE IS UNDER CONSTRUCTION
+								<span class="image fit">
+									<img src="Cells_final/AssembledSteelPlate.jpg" alt="" >
+								</span>
+							
+						<p class="indent">
+							This is the continuation of my work during the Spring where I worked on <a href="project_metal_origami_modeling.html"> modeling the geometry</a> in Rhino and Grasshopper.
+							<br>
 							This page summarizes my work as an undergraduate researcher through Summer 2023 for the Center for Bits and Atoms lab in the MIT Media Lab.<br>
-							This is the continuation of my work during the Spring where I worked on <a href="project_metal_origami_modeling.html"> modeling the geometry</a> in Rhino and Grasshopper
 							I worked on developing a manufacturing method for a novel plate-lattice geometry macro-meso metallic foam designed by my supervisor Alfonso Parra Rubio. 
 							Read about his prior work on folded structures previously featured on the<a href="https://news.mit.edu/2023/using-kirigami-ultrastrong-lightweight-structures-0822"> MIT frontpage</a>
 						</p>
-
-						<h2>Objective</h2>
+						<h2 id ="context">Project Statement</h2>
 
 						
+						<h2 id ="objectives">Objectives</h2>
+						This project can be broken down into three objectives:
+						<ul>
+							<li>Creating a parametric CAD representation of the cell array with variable fold
+								angle and dimensions. Finding a solution to formulate irregular cells intersecting
+								the surface
+							<li>Creating an appropriate manufacturing technique and cell design for integration
+							<li>Testing and iterating with different parameters to optimize the performance
+								<p class="indent"> Previously, I focused on the first objective: creating a script that generates a 3D structure of plate lattices from an input target surface and to prepare it for manufacturing.
+								</p>
+								<p class="indent">As of now, I created a script that can generate an array that fits a bounding box of the target surface, and then trims all the cells to be contained inside the surface. Since I had to learn grasshopper functionalities as well as develop and debug an implementation method, this took a month of gradual development.
+								</p>
+								<p class="indent">As the next step, I moved on to recreate the same process using a single Python module and Rhino API to interface with Rhino. The idea is to create code that is exportable, give me finer control of the Rhino objects as well as develop my understanding of the implementation. Over the course of a few weeks, I have recreated all the vertices of a single cell and the folding constraints by manipulating the vertex coordinates and thoughtful use of geometry. I have also managed to generate the cell surfaces and points in Rhino using Rhino geometry functions, then generate an array of these cells to populate the bounding box of the target surface.
+								</p>
+								<p class="indent">I am now working on creating a test array of points that will sort which cells will be included or bound to the target surface. This will hopefully improve the time complexity when generating cells subsequently. Before the end of the Spring semester, I plan to complete the creation of irregular boundary cells and move on to the next component of the project.
+								</p>
+									For this summer UROP, I aim to work on the manufacturing and potentially the testing part of the project. This involves a few possible pieces:
+							<ul>
+								<li> Writing a script to extract the 2D geometry from the parametric CAD model
+								<li>Designing cells that can lock with each other instead of using large sheets of
+								metal to connect each cell with many rivets
+								<li>Creating or modifying manufacturing techniques in order to produce an entire
+								cell by stamping sheet metal or eventually some other method
 						<div style="text-align:center;">
 							<span class="image">
 								<img src="Cells_final/AluminumTests.jpg" alt="" 
@@ -108,19 +143,13 @@
 						<div style="text-align:center;">
 							<span class="image">
 								<img src="Cells_final/CellOutlineProgression.jpg" alt="" 
-								height = '600'> 
-							</span>
-						</div>
-						<div style="text-align:center;">
-							<span class="image">
-								<img src="Cells_final/CellOutlineProgression.jpg" alt="" 
-								height = '600'> 
+								height = '400'> 
 							</span>
 						</div>
 						<div style="text-align:center;">
 							<span class="image">
 								<img src="Cells_final/CellProgression.jpg" alt="" 
-								height = '600'> 
+								height = '400'> 
 							</span>
 						</div>
 
@@ -133,7 +162,7 @@
 						<div style="text-align:center;">
 							<span class="image">
 								<img src="Cells_final/ProgressiveMolds.jpg" alt="" 
-								height = '600'> 
+								height = '400'> 
 							</span>
 						</div>
 						<div style="text-align:center;">
