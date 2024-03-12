@@ -49,13 +49,22 @@
 					</a>
 					
 					<a href="#intro">
-					  Introduction
+					Introduction
 					</a>
-					<a href="#overview">
-					  Project Statement
+					<a href="#context">
+					Project Statement
 					</a>
-					<a href="#objective">
-					  Objectives
+					<a href="#objectives">
+					Objectives
+					</a>
+					<a href="#stamping">
+					Stamping process
+					</a>
+					<a href="#molds">
+					Designing Molds
+					</a>
+					<a href="#assembly">
+					Assembly process
 					</a>
 					<a href="#conclusion">
 					  Conclusion
@@ -78,7 +87,10 @@
 							Read about his prior work on folded structures previously featured on the<a href="https://news.mit.edu/2023/using-kirigami-ultrastrong-lightweight-structures-0822"> MIT frontpage</a>
 						</p>
 						<h2 id ="context">Project Statement</h2>
-
+						<div style="text-align:center">
+							<object data= "Cells_final/SummerUROP2023Proposal.pdf" width="800"
+							height="700"></object>
+							</div>
 						
 						<h2 id ="objectives">Objectives</h2>
 						This project can be broken down into three objectives:
@@ -103,12 +115,40 @@
 								metal to connect each cell with many rivets
 								<li>Creating or modifying manufacturing techniques in order to produce an entire
 								cell by stamping sheet metal or eventually some other method
+						<h2 id ="stamping">Stamping</h2>
+						<p>
+						Stamping allows the use of material stronger than aluminum such as stainless steel, and is more suitable for larger scale rapid manufacturing. 
+						</p>
 						<div style="text-align:center;">
 							<span class="image">
 								<img src="Cells_final/AluminumTests.jpg" alt="" 
 								height = '600'> 
 							</span>
 						</div>
+						
+						<figcaption> <b>Figure:</b> Inital tests made from aluminium foam material creased by large format CNC machine (Zünd), folded by hand and assembled with rivets.</figcaption><br>
+						<p>Considerations:<br>
+							To accommodate the relatively complex vertex geometry of the cells, it is practical to use thinner sheets to avoid self intersection of the material and other smoothing behavior at the vertices. To mitigate these issues, a small hole is cut out of each vertex. 
+						</p>
+						<p>
+						We observed that the sheet metal was not adequately constrained to the mold shape when stamping to the final geometry in a single step. The steep angle of the mold allowed the material to wander into different configurations (such as a saddle shape) that would prevent the forming of the desired geometry. Attempts to smooth out the mold or create a deeper mold with ramps to guide the faces of the material also failed. This is why we chose a progressive stamping process. By using an additional step with a shallow mold to lightly crease the material, creases form to guide the folding process in later steps. A second in-between step helps to accentuate the creases and constrain all the faces to fold simultaneously before the final forming step. 
+						</p>
+						<h2 id="molds">Designing Molds</h2>
+						<div style="text-align:center;">
+							<span class="image">
+								<img src="Cells_final/ProgressiveMolds.jpg" alt="" 
+								height = '400'> 
+							</span>
+						</div>
+						<div style="text-align:center;">
+							<span class="image">
+								<img src="Cells_final/SingleStamping.jpg" alt="" 
+								height = '600'> 
+							</span>
+						</div>
+						<h2 id="assembly">Assembly Process</h2>
+
+						
 						<div style="text-align:center;">
 							<span class="image">
 								<img src="Cells_final/AssembledSteelPlate.jpg" alt="" 
@@ -149,7 +189,7 @@
 						<div style="text-align:center;">
 							<span class="image">
 								<img src="Cells_final/CellProgression.jpg" alt="" 
-								height = '400'> 
+								height = '310'> 
 							</span>
 						</div>
 
@@ -159,21 +199,18 @@
 								height = '600'> 
 							</span>
 						</div>
-						<div style="text-align:center;">
-							<span class="image">
-								<img src="Cells_final/ProgressiveMolds.jpg" alt="" 
-								height = '400'> 
-							</span>
-						</div>
-						<div style="text-align:center;">
-							<span class="image">
-								<img src="Cells_final/SingleStamping.jpg" alt="" 
-								height = '600'> 
-							</span>
-						</div>
+						
+						
 						<div style="text-align:center;">
 							<span class="image">
 								<img src="Cells_final/WeldingTestJoint.jpg" alt="" 
+								height = '600'> 
+							</span>
+						</div>
+						<h2 id="conclusion">Conclusion</h2>
+						<div style="text-align:center;">
+							<span class="image">
+								<img src="Cells_final/everythin.jpeg" alt="" 
 								height = '600'> 
 							</span>
 						</div>
