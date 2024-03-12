@@ -42,10 +42,46 @@
 						</ul>
 					</nav>
 
+				<!-- Side navigation -->
+				<div class="sidenav">
+					<!-- Logo -->
+					<a href="index.html" class="logo">
+						<span class="symbol"><img src="images/logo.svg" alt="" /></span><span class="title">Andy Dequin</span>
+					</a>
+					
+					<a href="#intro">
+					Introduction
+					</a>
+					<a href="#flyback_diode">
+					Flyback Diode
+					</a>
+					<a href="#model_paper">
+					Inital Model and Paper review
+					</a>
+					<a href="#setup_test">
+					Electronics Setup Test
+					</a>
+					<a href="#initial_tests">
+					Initial Experiments
+					</a>
+					<a href="#physical_setup">
+					Physical Setup
+					</a>
+					<!-- <a href="#conclusion">
+					  Conclusion
+					</a> -->
+		  </div>
+
 				<!-- Main -->
 					<div id="main">
 						<div class="inner with-sidebar">
-							<h1>Project Laputa Blocks</h1>
+							<h1 id="intro">Project Laputa Blocks</h1>
+							<div style="text-align:center">
+								<span class="image">
+									<img src="laputa_files/cover_ref.JPG" alt=""
+									height="700"> 
+								</span>
+								</div>
 							<p>
 							This is the continuation of my HTMAA final project. You can read about it <a href="https://fab.cba.mit.edu/classes/863.23/CBA/people/Andy/FinalProject.html"> here </a>.
 							Here are some notes that I've gathered before I start trying things again:
@@ -56,7 +92,7 @@
 								<li>The esp32 might not be fried and just needs a hard reboot. Although blasting it with heat gun may have ruined it anyway.</li>
 							</ul>
 						
-							<h3>Flyback Diode</h3>
+							<h3 id="flyback_diode">Flyback Diode</h3>
 						<p>
 							After looking at the datasheet for the hbridge there is no mention of a diode but a warning on inductive loads. A flyback diode is probably a good idea.
 							To pick a diode I need to consider the coil driving voltage and current which is about 12V and 0.4A. 
@@ -73,7 +109,7 @@
 						</p>
 						<h2>Measurement and Instrumentation</h2>
 
-						<h3>Initial model and paper review</h3>
+						<h3 id="model_paper">Initial model and paper review</h3>
 						<p>
 							I've integrated this project into my 2.671 Measurements and Instrumentation class final project: Go Forth and Measure. I will be designing experiments to study the behavior of the linear actuation system based on
 							the input current, phase, and geometry of electromagnets to compute suitable design parameters and create a control scheme for the system 
@@ -115,7 +151,7 @@
 							Additionally, the passage on motors in the Feedback Controls Text book ([8 ed] Gene F. Franklin, J. David Powell, Abbas) seems like a particularly good starting point for making a basic model. 
 						
 						</p>
-							<h3>Electronics Setup Testing</h3>
+							<h3 id="setup_test">Electronics Setup Testing</h3>
 							<p> To get started on the physical test setup I need to make sure that I have all the sensors I need and 
 								that my power input in controllers are working properly. 
 
@@ -133,7 +169,7 @@
 								As a solution, function generator and power amplifier combination is very promising, although the battery powered pcb controller would be the end goal
 								<br>
 
-								<h3>Initial tests</h3>
+								<h3 id="initial_tests">Initial experiments</h3>
 								<p>
 								Some notes from initial 1Hz square wave tests:
 								<ul>
@@ -152,6 +188,12 @@
 								By simply wiring the coils in parallel and flipping the direction of one, I actually got it to work with the function generator and power amp! After a test with nylon cores, I also realized how important the induced
 								magnetism in the iron cores is for keeping the blocks aligned. It would be possible to add weaker magnets along the frame of the cubes, but that would be an additional detail 
 								to fine too and keep track of, so I will be sticking with iron cores for now. </p>
+								
+								<div style = "text-align:center;">
+									<video width="auto" height="500" controls>
+									<source src="laputa_files/it_works.mp4" type="video/mp4" center>
+									Your browser does not support the video tag.
+								</video></span></div>
 
 								Now that I got it to work, I decided to test some different setting to qualitatively gauge the response. It looks like between sine, square and ramp inputs, square wave and sine are the most promising. The lower bound for 
 								activating the full range of motion seems to be around 700mV for moving the 44g load, approximately 0.027 amps
@@ -162,54 +204,14 @@
 									will be to determine if this is the optimal phase and to model as a function of spacing and current. 
 								</p>
 
-								<h3> Physical Setup</h3>
+								<h3 id="physical_setup"> Physical Setup</h3>
 								<p>
 								While I have the working system, it would be more convenient to measure things with an overhead camera setup and a free moving magnet to 
 								control for friction and center of mass in the acceleration response.  </p>
 
 
 
-
-
-
-
-						
-								
-
-								
-
-
-
-
-
-
-							
-
-
-
-
-
-							
-							
-							
-
-
-								
-
-
-
-
-
-
-
-						
-
-
 							</p>
-
-							<downloading image>
-
-
 
 							
 						</div>
