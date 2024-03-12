@@ -21,11 +21,6 @@
 					<header id="header">
 						<div class="inner">
 
-							<!-- Logo -->
-								<a href="index.html" class="logo">
-									<span class="symbol"><img src="images/logo.svg" alt="" /></span><span class="title">Andy Dequin</span>
-								</a>
-
 							<!-- Nav -->
 								<nav>
 									<ul>
@@ -54,29 +49,41 @@
 						  <a href="#intro">
 							Introduction
 						  </a>
-						  <a href="#context">
-							Project Statement
+						  <!-- <a href="#week1">
+							Week 1
+						  </a> -->
+						  <a href="#voltage_divider">
+							Voltage divider strain sensing
 						  </a>
-						  <a href="#objective">
-							Objectives
-						  </a>
-						  <a href="#cell_design">
-							Single Cell Design
+						  <a href="#wheatstone">
+							Wheatstone bridge
 						</a>
-						<a href="#connectors">
-							Connector Design
+						<!-- <a href="#week2">
+							Week 2
+						  </a> -->
+						  <a href="#issues">
+							PCB Issues
 						  </a>
-						  <a href="#boundary">
-							Boundary Edge Cases
+						  <!-- <a href="#week3">
+							Week3
+						  </a> -->
+						  <a href="#circuitlab">
+							Debugging with Circuilab simulation 
 						  </a>
-						  <a href="#cube_sphere">
-							Cube and Sphere Examples
+						  <a href="#add_components">
+							Capacitors, buffers, fixing R
 						  </a>
-						  <a href="#bcc">
-							Alternate Geometry
+						  <a href="#next_steps">
+							Steps after working prototype
 						  </a>
-						  <a href="#exporting">
-							Exporting to 2D
+						  <a href="#directionality">
+							Determining directionality
+						  </a>
+						  <!-- <a href="#week4">
+							Week4
+						  </a> -->
+						  <a href="#instron">
+							Instron testing
 						  </a>
 						  <a href="#conclusion">
 							Conclusion
@@ -85,8 +92,11 @@
 
 				<!-- Main -->
 					<div id="main">
-						<div class="inner">
-							<h1>Project Closed Loop Shape Control</h1>
+						<div class="inner with-sidebar">
+							<h1 id="intro">Project Closed Loop Shape Control</h1>
+								<span class="image fit">
+									<img src="shape_control_files/documentation_images/tests/instron_pcb_setup2.jpeg" alt="" > 
+								</span>
 							<p>
 							This is my UROP research project for IAP 2023.
 							The goal is to explore sensing deformations in a plate-like structure to construct a digital twin. 
@@ -95,7 +105,7 @@
 							The first step is to see if we can use resistors as cost-efficient strain sensors.
 							</p>
 							
-							<h3 style="text-align:left">WEEK 1 Jan 8-12</h3>
+							<h3 style="text-align:left" id="week1">WEEK 1 Jan 8-12</h3>
 							<p>
 							As a first step, I will be learning strain sensing circuits and implementing them on a breadboard
 							using a xiao samd21. </p>
@@ -109,7 +119,7 @@
 							To install Arduino>Settings> Additional Board Manager URLs:https://files.seeedstudio.com/arduino/package_seeeduino_boards_index.json<br>
 							And then in Tools>Board>Boards Manager find Seeed SAMD Boards and install. I made the mistake of removing the json file for the esp32 cores which take forever to download. Apparently you can just have multiple urls seperated by commas. 
 						</p>
-						<h4>voltage divider strain sensing </h4>
+						<h4 id="voltage_divider">voltage divider strain sensing </h4>
 						<p>
 							Before I run anything, I need to have the circuit ready. Since my usbc cable is pulling the arduino from the header pins I'm going to solder them. Soldering these was very satisifying. Then to complete the voltage divider, I use a 10k resistor connected to ground
 							while the strain gauge is connected to the 3.3V output of the xiao. According to the voltage divider formula the voltage should be Vin*R2/(R1+R2) = 3.3*10k/26k = 1.27V 
@@ -135,7 +145,7 @@
 							Using a multimeter it looks like the gauge is actually 30k ohms when flat, 20k when bent forward and 100k when bent backwards.
 						</p>
 						<p>
-							<h4>Wheatstone Bridge strain sensing </h4>
+							<h4 id="wheatstone">Wheatstone Bridge strain sensing </h4>
 							After <a href="https://www.omega.com/en-us/resources/wheatstone-bridge">reading </a>a bit, wheatstone bridges sense a relative voltage, making the circuit less susceptible to noise, and letting 0V be the balance point.
 							The wheatstone bridge is really just the voltage divider with another voltage divider in parallel as a reference. 
 						</p>
@@ -161,7 +171,7 @@
 							Your browser does not support the video tag.
 						</video>
 						
-						<h3 style="text-align:left">WEEK 2 Jan 16-19</h3>
+						<h3 style="text-align:left" id="week2">WEEK 2 Jan 16-19</h3>
 					<p>
 							Next, I'll move on to testing on a pcb board using some resistors instead of strain gauges.
 							<div style="text-align:center;">
@@ -231,7 +241,7 @@
 								
 							<p>
 							
-								<h4> issue: weird values </h4>
+								<h4 id="issues"> issue: weird values </h4>
 							After making the board, I started probing it to test voltages at different points. While the nodes of the wheatstone bridge should have the same reading since they use the same resistor values, when connected to the differential amplifier
 							the reading of one of the nodes is 2.1V instead of 2.6V. Since the amplification is of about 820x, 0.5V difference quickly gets amplified beyond the cap of 5V.
 							Maybe I'll try a lower value than 800k to see if that changes anything. I tried 499k and it didn't change anything. One thing I noticed is that 
@@ -240,9 +250,9 @@
 							I'm not sure if this contributed to the issue, but that doesn't really make sense to me. That's all for this week.</p>
 							
 							
-							<h3 style="text-align:left">WEEK 3 Jan 22-26</h3>
+							<h3 style="text-align:left" id="week3">WEEK 3 Jan 22-26</h3>
 
-							<h4> debugging with simulation </h4>
+							<h4 id="circuitlab"> debugging with simulation </h4>
 							<p>
 							After trying to formulate my problem to ask for help I realized that I can try simulating it. In this simulation, its clear that the different values was not a mechanical 
 							or noise issue but just the circuit was wrong. by drawing it up like this it was clear that the ground connections changed the resistance in the wheatsone bridge and no longer made it balanced. 
@@ -259,7 +269,7 @@
 							</span>
 						</div>
 
-							<h4> adding capacitors, unity gain buffer, fixing resistor values, calculating CMRR </h4>
+							<h4 id="add_components"> adding capacitors, unity gain buffer, fixing resistor values, calculating CMRR </h4>
 							<p>
 							Upon further recommendation from gpt, I added capacitors before all the op amps to clean up the signal potentially, using 0.1 microF ceramic bypassing capacitors in parallel 
 							to filter out any ac noise that might occur, as well as a 10microF capacitor at the pcb power inputs for good measure. Since this was a very enlightening use of capacitors I took some time to read about typical usages and values and positioned 
@@ -321,7 +331,7 @@
 							Ok I made a mistake and just swapped the inputs to the op amp, but that wouldn't work since the feedback would be going into the non inverting input which is illegal.
 							So I swapped the inputs before the resistors by adding a couple jumpers and doing some surgery. It looks terrible, but it works!
 							</p>
-							<h4> next steps </h4>
+							<h4 id="next_steps"> next steps </h4>
 							<p>
 							Now that I can measure the signal of the deformation I have a few objectives to think about:
 							<ul>
@@ -331,7 +341,7 @@
 								<li>Creating a model with the data</li>
 							</ul>
 
-							<h4> determining directionality </h4>
+							<h4 id="directionality"> determining directionality </h4>
 
 							I'll start by thinking about these seperately and seeing whats possible. For determining the direction, Alfonso showed me a useful 
 							circuit, the full bridge version of the wheatstone bridge where all the resistors are used as sensors. While I havent read into this, 
@@ -355,7 +365,7 @@
 
 
 						</p>
-						<h3 style="text-align:left">WEEK 4 Jan 29-Feb 2</h3>
+						<h3 style="text-align:left" id="week4">WEEK 4 Jan 29-Feb 2</h3>
 
 						<p>
 							This is the last week for this project. As the first step, I made the isolated diff amp circuit and a new sensing board that is a half wheatstone bridge
@@ -372,7 +382,7 @@
 								height = '400'> 
 							</span>
 						</div>
-							<h4> instron testing </h4>
+							<h4 id="instron"> instron testing </h4>
 						<p>
 							Once I isolated the negative VCC input to the differential amplifier, I realized I could just flip the inputs for now.
 							For the next step, I made a board to be tested with a 3 point bending setup. To minimize the bending of the reference resistors, I used an L shaped board and put them 
@@ -427,6 +437,7 @@
 								</span>
 							</div>
 
+							<h3 id="conclusion"> Conclusion</h3>
 						<p>
 							To wrap up the IAP term, I can work on making a model to make a flex pcb/scale up. The idea is to make a bunch of small flex boards that can be glued to a 
 							surface to measure the strain at that point. The flex boards would consist of 2 resistors and a flat flex connector from molex. I would also have regular boards for the microcontroller 
@@ -436,7 +447,6 @@
 							The remaining that needs to be resolved is how to power all the microcontrollers, if it is possible to isolate the amp boards or to merge them with the remaining resistors of the wheatstone bridge.
 							<ul>
 							Additional considerations: 
-
 								<li>use a ground plane for the pcbs since they can be multilayered, 
 								<li>pick a microcontroller with a higher or controllable vref for analogRead(), 
 								<li>use the bare chip instead of the xiao packaging for access to additional pins (although the 1:1 ratio of amp boards to reading pins is a constraint anyway), 
@@ -455,14 +465,30 @@
 								<li>For a higher range of values it would also be good to figure out how to set a reference voltage. 
 							</ul>
 							</p>
-
 							<p>
 							For this inital test, I will make 1 board with a micro controller, a usb port for the -5V input to the amplifier circuits and 10 amplfication circuits, 1 for each pin input (excluding the nameless one). 
 							I'm going to ignore the I2c for now since I don't intend to scale up without a different layout.
 								</p>
-						
-						</p>
 
+						<div style="text-align:center;">
+								<span class="image">
+									<img src="shape_control_files/documentation_images/flex_pcb_sensor.jpg" alt="" 
+									height = '400'> 
+								</span>
+							</div>
+							<p>
+								The design of the strain sensor flex pcb was fairly straight forward since the amount of components is minimal. 
+								The processing of the signal however, requires passing through the amplifier before going into one of the SAMD21 controller inputs. 
+								Since I realized that there is no simple way to duplicate designs in fusion into a single board, I decided to hold off for now. 
+						</p>
+						<div style="text-align:center;">
+							<span class="image">
+								<img src="shape_control_files/documentation_images/amp_board_duplication.jpg" alt="" 
+								height = '400'> 
+							</span>
+							</div>
+							For future reference, the general design involved an external -5V rail with a ribon cable port for the amp inputs, and the outputs connecting to one of the SAMD21 ports. 
+						</div>
 						</div>
 					</div>
 

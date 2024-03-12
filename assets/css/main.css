@@ -3384,20 +3384,23 @@ input, select, textarea {
 
 		}
 
-/* Wrapper */
+/* Reset for .inner class to ensure it applies universally */
+#wrapper > * > .inner {
+    width: 100%;
+    max-width: 68em;
+    margin: 0 auto;
+    padding: 0 2.5em; /* Default padding */
+}
 
-	#wrapper > * > .inner {
-		width: 100%;
-		max-width: 68em;
-		/* margin: 0 auto; */
-		padding: 0 2.5em;
-		padding-left: 22em; /* Same as the width of the sidebar */
-	}
+/* Specific styles for when sidebar is present */
+#wrapper .with-sidebar{
+    padding-left: 14em; /* Adjust for sidebar */
+}
 
-		@media screen and (max-width: 736px) {
-
-			#wrapper > * > .inner {
-				padding: 0 1.25em;
-			}
-
-		}
+/* Adjustments for mobile views */
+@media screen and (max-width: 736px) {
+    #wrapper > * > .inner, .with-sidebar > .inner {
+        padding: 0 1.25em;
+        padding-left: 1.25em; /* Adjust if needed for mobile */
+    }
+}
