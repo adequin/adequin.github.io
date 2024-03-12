@@ -3035,6 +3035,11 @@ input, select, textarea {
 	.sidenav a {font-size: 18px;}
   }
 
+  @media screen and (max-width: 768px) {
+	.sidenav {
+		display: none;
+  }
+}
 /* Menu */
 
 	#wrapper {
@@ -3394,13 +3399,14 @@ input, select, textarea {
 
 /* Specific styles for when sidebar is present */
 #wrapper .with-sidebar{
-    padding-left: 14em; /* Adjust for sidebar */
+    padding-left: 16em; /* Adjust for sidebar */
 }
 
 /* Adjustments for mobile views */
-@media screen and (max-width: 736px) {
+@media screen and (max-width: 768px) {
     #wrapper > * > .inner, .with-sidebar > .inner {
         padding: 0 1.25em;
-        padding-left: 1.25em; /* Adjust if needed for mobile */
+		
+         /* Adjust if needed for mobile */
     }
 }
