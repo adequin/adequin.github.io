@@ -3391,7 +3391,7 @@ input, select, textarea {
 		max-width: 68em;
 		/* margin: 0 auto; */
 		padding: 0 2.5em;
-		margin-left: 22em; /* Same as the width of the sidebar */
+		padding-left: 22em; /* Same as the width of the sidebar */
 	}
 
 		@media screen and (max-width: 736px) {
