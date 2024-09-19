@@ -61,12 +61,12 @@
 					<a href="#stamping">
 					Stamping process
 					</a>
-					<a href="#molds">
-					Designing Molds
-					</a>
 					<a href="#assembly">
 					Assembly process
 					</a>
+					<a href="#results">
+						Results
+					  </a>
 					<a href="#conclusion">
 					  Conclusion
 					</a>
@@ -81,7 +81,6 @@
 								</span>
 							
 						<p class="indent">
-							DOCUMENTATION IN PROGRESS<br>
 							This is the continuation of my work during the Spring where I worked on <a href="project_metal_origami_modeling.html"> modeling the geometry</a> in Rhino and Grasshopper.
 							<br>
 							This page summarizes my work as an undergraduate researcher through Summer 2023 for the Center for Bits and Atoms lab in the MIT Media Lab.<br>
@@ -102,6 +101,7 @@
 								the surface
 							<li>Creating an appropriate manufacturing technique and cell design for integration
 							<li>Testing and iterating with different parameters to optimize the performance
+							</ul>
 								<p class="indent"> Previously, I focused on the first objective: creating a script that generates a 3D structure of plate lattices from an input target surface and to prepare it for manufacturing.
 								</p>
 								<p class="indent">As of now, I created a script that can generate an array that fits a bounding box of the target surface, and then trims all the cells to be contained inside the surface. Since I had to learn grasshopper functionalities as well as develop and debug an implementation method, this took a month of gradual development.
@@ -117,6 +117,7 @@
 								metal to connect each cell with many rivets
 								<li>Creating or modifying manufacturing techniques in order to produce an entire
 								cell by stamping sheet metal or eventually some other method
+								</ul>
 						<h2 id ="stamping">Stamping</h2>
 						<p>
 						Stamping allows the use of material stronger than aluminum such as stainless steel, and is more suitable for larger scale rapid manufacturing. 
@@ -128,80 +129,78 @@
 							</span>
 						</div>
 						
-						<figcaption> <b>Figure:</b> Inital tests made from aluminium foam material creased by large format CNC machine (Zünd), folded by hand and assembled with rivets.</figcaption><br>
-						<p>Considerations:<br>
-							To accommodate the relatively complex vertex geometry of the cells, it is practical to use thinner sheets to avoid self intersection of the material and other smoothing behavior at the vertices. To mitigate these issues, a small hole is cut out of each vertex. 
+						<figcaption style="text-align:center;"> <b>Figure:</b> Inital tests made from aluminium foam material creased by large format CNC machine (Zünd), folded by hand and assembled with rivets.</figcaption><br>
+						<p>To accommodate the relatively complex vertex geometry of the cells, it is practical to use thinner sheets to avoid self intersection of the material and other smoothing behavior at the vertices. To mitigate these issues, a small hole is cut out of each vertex. 
 						</p>
-						<p>
-						We observed that the sheet metal was not adequately constrained to the mold shape when stamping to the final geometry in a single step. The steep angle of the mold allowed the material to wander into different configurations (such as a saddle shape) that would prevent the forming of the desired geometry. Attempts to smooth out the mold or create a deeper mold with ramps to guide the faces of the material also failed. This is why we chose a progressive stamping process. By using an additional step with a shallow mold to lightly crease the material, creases form to guide the folding process in later steps. A second in-between step helps to accentuate the creases and constrain all the faces to fold simultaneously before the final forming step. 
-						</p>
-						<h2 id="molds">Designing Molds</h2>
-						<div style="text-align:center;">
-							<span class="image">
-								<img src="Cells_final/ProgressiveMolds.jpg" alt="" 
-								height = '400'> 
-							</span>
-						</div>
 						<div style="text-align:center;">
 							<span class="image">
 								<img src="Cells_final/SingleStamping.jpg" alt="" 
 								height = '600'> 
 							</span>
 						</div>
-						<h2 id="assembly">Assembly Process</h2>
-
+						<figcaption style="text-align:center;"> <b>Figure:</b> Initial test molds. These were designed by intersecting a cube with the folded cell geometry and adding a hole for the press to fit into.</figcaption><br>
 						
-						<div style="text-align:center;">
-							<span class="image">
-								<img src="Cells_final/AssembledSteelPlate.jpg" alt="" 
-								height = '600'> 
-							</span>
-						</div>
-						<div style="text-align:center;">
-							<span class="image">
-								<img src="Cells_final/BCC_HookCellArray.jpg" alt="" 
-								height = '600'> 
-							</span>
-						</div>
-						<div style="text-align:center;">
-							<span class="image">
-								<img src="Cells_final/CellArrayComparisonSide.jpg" alt="" 
-								height = '600'> 
-							</span>
-						</div>
-						<div style="text-align:center;">
-							<span class="image">
-								<img src="Cells_final/CellComparisonAngle.jpg" alt="" 
-								height = '600'> 
-							</span>
-						</div>
+						<p>
+						We observed that the sheet metal was not adequately constrained to the mold shape when stamping to the final geometry in a single step. The steep angle of the mold allowed the material to wander into different configurations (such as a saddle shape) that would prevent the forming of the desired geometry. Attempts to smooth out the mold or create a deeper mold with ramps to guide the faces of the material also failed. This is why we chose a progressive stamping process.  
+						</p>
 
 						<div style="text-align:center;">
 							<span class="image">
-								<img src="Cells_final/CellComparisonTop.jpg" alt="" 
-								height = '600'> 
-							</span>
-						</div>
-						<div style="text-align:center;">
-							<span class="image">
-								<img src="Cells_final/CellOutlineProgression.jpg" alt="" 
+								<img src="Cells_final/ProgressiveMolds.jpg" alt="" 
 								height = '400'> 
 							</span>
 						</div>
+
+						<figcaption style="text-align:center;"> <b>Figure:</b> Progressive molds with step increments of about 0.1 radian were printed out of ~80% density PLA. Alignment and clearance features were added from the initial test.
+						These yielded much crisper results. We noticed that only three of the molds were required for stamping the cell.</figcaption><br>
+						<p>By using an additional step with a shallow mold to lightly crease the material, the creases that are formed help guide the folding process in later steps. A second in-between step helps to accentuate the creases and constrain all the faces to fold simultaneously before the final forming step.</p>
+						
 						<div style="text-align:center;">
 							<span class="image">
 								<img src="Cells_final/CellProgression.jpg" alt="" 
 								height = '310'> 
 							</span>
 						</div>
+						<figcaption style="text-align:center;"> <b>Figure:</b> Progression of cell quality as more improvement were made in the stamping process and features were added.</figcaption>
+						<br>
+						<h2 id="assembly">Assembly Process</h2>
 
+						<p>There were several things to consider when exploring the assembly process</p>
+						<ul>
+							<li>Fastening: rivets and welding</li>
+							<li>Connectors: support plates or integrated</li>
+							<li>Configuration: cube array or body centered cubic (additonal cell in the middle)</li>
+						</ul>
+						<p>
+							The idea is that rivet assembly or a cube array with support plates is the most sure way to assemble everything. However, the alternative options each have something to potentially offer
+							in terms of manufacturability or performance. 
+						</p>
+						<div style="text-align:center;">
+							<span class="image">
+								<img src="Cells_final/AssembledSteelPlate.jpg" alt="" 
+								height = '600'> 
+							</span>
+						</div>
+						<figcaption style="text-align:center;"><b>Figure:</b> Cube array with rivets and support plates. The result was rigid and could be tested immediately.</figcaption>
+						<br>
+						<div style="text-align:center;">
+							<span class="image">
+								<img src="Cells_final/CellOutlineProgression.jpg" alt="" 
+								height = '400'> 
+							</span>
+						</div>
+						<figcaption style="text-align:center;"><b>Figure:</b> Progression of different attachement tab design. Progressively more overlap was introduced.</figcaption><br>
+						<p>Using integrated tabs could make the support plate unnecessary, which would reduce the weight and improve the scalability of the overall design.</p>
+						
 						<div style="text-align:center;">
 							<span class="image">
 								<img src="Cells_final/HookCellSideTop.jpg" alt="" 
 								height = '600'> 
 							</span>
 						</div>
-						
+						<figcaption style="text-align:center;"><b>Figure:</b> Rivet assembled array with integrated tabs.</figcaption>
+						<p>While assembly without support plates was indeed possible, the structure was much more flexible and more difficult to assemble.
+						</p>
 						
 						<div style="text-align:center;">
 							<span class="image">
@@ -209,10 +208,48 @@
 								height = '600'> 
 							</span>
 						</div>
-						<h2 id="conclusion">Conclusion</h2>
+						<figcaption style="text-align:center;"><b>Figure:</b> Pulse arc welding test. </figcaption><br>
+						<p>Welding could allow easier modeling, better performance and potential for automation.</p>
+
+						<h2 id ="results"> Results </h2>
+						<p>As the final deliverables for the summer, we ended with one assembled cube array with rivets and support plates, as well as 
+							one bcc array with integrated connectors. Additionally, single layered square arrays were made for further development.
+						</p>
+						
 						<div style="text-align:center;">
 							<span class="image">
-								<img src="Cells_final/everythin.jpeg" alt="" 
+								<img src="Cells_final/CellComparisonAngle.jpg" alt="" 
+								height = '600'> 
+							</span>
+						</div>
+						<figcaption style="text-align:center;" ><b>Figure:</b> Side by side comparison of final arrays (front view)</figcaption>
+
+						<div style="text-align:center;">
+							<span class="image">
+								<img src="Cells_final/CellComparisonTop.jpg" alt="" 
+								height = '600'> 
+							</span>
+						</div>
+						<figcaption style="text-align:center;" ><b>Figure:</b> Side by side comparison of final arrays (top view)</figcaption>
+						<br>
+
+						<h2 id="conclusion">Conclusion</h2>
+						<p>In summary,
+							<ol>
+								<li>Progressive stamping was selected after initial tests and molds were designed parametrically</li>
+								<li>Alignment and folding features were added to get a crisp and accurate cell</li>
+								<li>Different fastening methods were explored, rivets and pulse arc welding</li>
+								<li>Different attachement features were explored, support plate or integrated tabs</li>
+								<li>Two geometries were implemented, simple cubic and body centered cubic</li>
+							</ol>
+							In the end, the support plate geometry with rivet assembly seems the most promising for now. The summer ended with 
+							two deliverables, a simple cubic array with rivet fasteners and support plates, as well as a bcc array with rivets and integrated tabs.
+							Further characterisation and optimisation of the cells has since been carried out by Alfonso Parra Rubio, my supervisor, and the results were 
+							published in the summer of 2024 8OSME conference.
+						<p>
+						<div style="text-align:center;">
+							<span class="image">
+								<img src="Cells_final/everything.jpeg" alt="" 
 								height = '600'> 
 							</span>
 						</div>
