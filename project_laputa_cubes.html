@@ -52,18 +52,21 @@
 					<a href="#intro">
 					Introduction
 					</a>
+					<a href="#model_paper">
+						Inital Model and Paper review
+						</a>
 					<a href="#flyback_diode">
 					Flyback Diode
 					</a>
-					<a href="#model_paper">
-					Inital Model and Paper review
-					</a>
+					
 					<a href="#setup_test">
 					Electronics Setup Test
 					</a>
+
 					<a href="#initial_tests">
 					Initial Experiments
 					</a>
+					
 					<a href="#physical_setup">
 					Physical Setup
 					</a>
@@ -75,45 +78,41 @@
 				<!-- Main -->
 					<div id="main">
 						<div class="inner with-sidebar">
-							<h1 id="intro">Project Laputa Blocks</h1>
+							<h1 id="intro">Project Modular Motors II</h1>
 							<div style="text-align:center">
-								<span class="image fit">
-									<img src="laputa_files/cover_ref.JPG" alt=""
+								<span class="image ">
+									<img src="laputa_files/T_23_Dequin_A_LinearMotor.jpg" alt=""
 									height="700"> 
 								</span>
 								</div>
 							<p>
-							This is the continuation of my HTMAA final project. You can read about it <a href="https://fab.cba.mit.edu/classes/863.23/CBA/people/Andy/FinalProject.html"> here </a>.
-							Here are some notes that I've gathered before I start trying things again:
-							<ul>
-								<li>Flyback diode for inductors, potentially included in the TB451 hbridge </li>
-								<li>Add bypass capacitor before hbridge and dc motor, electorlytic capacitor for low fq switching effects from the bridge</li>
-								<li>There should be no issues connecting battery power to the hbridge vm input, the frying was probably due to missuse of multimeter.</li>
-								<li>The esp32 might not be fried and just needs a hard reboot. Although blasting it with heat gun may have ruined it anyway.</li>
-							</ul>
-						
-							<h3 id="flyback_diode">Flyback Diode</h3>
-						<p>
-							After looking at the datasheet for the hbridge there is no mention of a diode but a warning on inductive loads. A flyback diode is probably a good idea.
-							To pick a diode I need to consider the coil driving voltage and current which is about 12V and 0.4A. 
-							Upon further inspection the equivalent ciruict diagrams show flyback diodes across all the gates of the h-bridge. This makes sense.
-						</p>
-							<warning>
-							<image>
-						<p>
-							After consulting with Miana about the power supply issue from the end of HTMAA, it looks like it was probably just an issue with the multimeter that shorted something. 
-							I tested it with a 20V battery connecting the grounds and Vm trace and it worked fine! I can finally move on. 
-							<br>
-							The next steps would be to make a new pcb with a better layout for the connectors, add capacitors and experiment with the sequence. 
+						This is the continuation of my HTMAA final project. You can read about it <a href="https://fab.cba.mit.edu/classes/863.23/CBA/people/Andy/FinalProject.html"> here </a>.
 
-						</p>
 						<h2>Measurement and Instrumentation</h2>
-
+					<p>
+						I've integrated this project into my 2.671 Measurements and Instrumentation class final project: Go Forth and Measure. I will be designing experiments to study the force response of the linear actuation system based on
+						the input current and position of the electromagnets to create a suitable model to design a controller.
+					</p>
+						<h3 id="model_paper">Final poster and paper</h3>
+						<p>
+						The final deliverables for this class is a poster and a paper. As a showcase that spans the whole project, these two documents are probably more clear than in progress documentation so I included them here.
+							</p>
+							<div style="text-align:center">
+								<object data= "laputa_files/Dequin_A_FinalPaper_2col.pdf" width="800"
+								height="700"></object>
+							</div>
+							<div style="text-align:center;">
+								<span class="image">
+									<img src="laputa_files/T_23_Dequin_A_LinearMotor.jpg" alt="" 
+									height = '600'> 
+								</span>
+							</div>
+							
+						<p> Everything beyond this point is early documentation that I had going into this class. Since 2.671 is less focused on hardware development and requires maintaining lab notebooks, the remaining documentation here is less relevant. 
+						</p>
+						
 						<h3 id="model_paper">Initial model and paper review</h3>
 						<p>
-							I've integrated this project into my 2.671 Measurements and Instrumentation class final project: Go Forth and Measure. I will be designing experiments to study the behavior of the linear actuation system based on
-							the input current, phase, and geometry of electromagnets to compute suitable design parameters and create a control scheme for the system 
-						</p>
 							After doing some background research on different types of linear motors and actuation systems, I learned some basics related to electric motors:
 						<ul>
 							<li>thrust ripple</li>
@@ -203,8 +202,7 @@
 
 								Now that I got it to work, I decided to test some different setting to qualitatively gauge the response. It looks like between sine, square and ramp inputs, square wave and sine are the most promising. The lower bound for 
 								activating the full range of motion seems to be around 700mV for moving the 44g load, approximately 0.027 amps
-								The next steps will be to get the controller working by asking Professor Steve Banzaert, get started on modeling the system with help from Professor Harrison Chin, and to build a simplified test model. 
-
+								
 								<p>
 									I now have a working setup and confirmation that 180degree out of phase inputs can drive the system. The subsequent tests
 									will be to determine if this is the optimal phase and to model as a function of spacing and current. 
@@ -219,11 +217,29 @@
 								for each mm spacing between two magnets (20mm total). Since the block to block static friction overcomes the attraction around the magnets, the measurements started at 2mm away from the magnet.  
 								Due to the attraction to the iron core of the coil overcoming the current generated attraction, 15mm to 20mm away from the magnet (corresponding to 5mm to 0mm away from the magnet of opposite polarity)
 								were not measured either. 
+								</p>
 
-								<h3 id="physical_setup"> Revising the model</h3>
-
-
-
+								<h3 id="physical_setup"> Hardware revisions</h3>
+								Here are some notes that I've gathered before I start trying things again:
+								<ul>
+									<li>Flyback diode for inductors, potentially included in the TB451 hbridge </li>
+									<li>Add bypass capacitor before hbridge and dc motor, electorlytic capacitor for low fq switching effects from the bridge</li>
+									<li>There should be no issues connecting battery power to the hbridge vm input, the frying was probably due to missuse of multimeter.</li>
+									<li>The esp32 might not be fried and just needs a hard reboot. Although blasting it with heat gun may have ruined it anyway.</li>
+								</ul>
+							
+								<h3 id="flyback_diode">Flyback Diode</h3>
+							<p>
+								After looking at the datasheet for the hbridge there is no mention of a diode but a warning on inductive loads. A flyback diode is probably a good idea.
+								To pick a diode I need to consider the coil driving voltage and current which is about 12V and 0.4A. 
+								Upon further inspection the equivalent ciruict diagrams show flyback diodes across all the gates of the h-bridge. This makes sense.
+							</p>
+							<p>
+								After consulting with Miana about the power supply issue from the end of HTMAA, it looks like it was probably just an issue with the multimeter that shorted something. 
+								I tested it with a 20V battery connecting the grounds and Vm trace and it worked fine! I can finally move on. 
+								<br>
+								The next steps would be to make a new pcb with a better layout for the connectors, add capacitors and experiment with the sequence. 
+	
 							</p>
 
 							
