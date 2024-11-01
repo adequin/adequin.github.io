@@ -55,12 +55,11 @@
 					<a href="#model_paper">
 					Final Paper and Poster
 						</a>
-					<a href="#flyback_diode">
-					Flyback Diode
-					</a>
-					
+					<a href="#lit_review">
+					Literature Review
+						</a>
 					<a href="#setup_test">
-					Electronics Setup Test
+					Electronics Setup
 					</a>
 
 					<a href="#initial_tests">
@@ -70,6 +69,10 @@
 					<a href="#physical_setup">
 					Physical Setup
 					</a>
+
+					<a href="#hardware_revision">
+						Hardware Revisions
+						</a>
 					<!-- <a href="#conclusion">
 					  Conclusion
 					</a> -->
@@ -111,7 +114,7 @@
 						<p> Everything beyond this point is early documentation of how I stumbled around trying to figure out my experiment for this class. Since 2.671 is less focused on hardware development and requires maintaining lab notebooks, the remaining documentation here is less relevant. 
 						</p>
 						
-						<h3 id="model_paper">Initial model and paper review</h3>
+						<h3 id="lit_review">Initial model and paper review</h3>
 						<p>
 							After doing some background research on different types of linear motors and actuation systems, I learned some basics related to electric motors:
 						<ul>
@@ -219,7 +222,7 @@
 								were not measured either. 
 								</p>
 
-								<h3 id="physical_setup"> Hardware revisions</h3>
+								<h3 id="hardware_revision"> Hardware revisions</h3>
 								Here are some notes that I've gathered before I start trying things again:
 								<ul>
 									<li>Flyback diode for inductors, potentially included in the TB451 hbridge </li>
@@ -228,7 +231,6 @@
 									<li>The esp32 might not be fried and just needs a hard reboot. Although blasting it with heat gun may have ruined it anyway.</li>
 								</ul>
 							
-								<h3 id="flyback_diode">Flyback Diode</h3>
 							<p>
 								After looking at the datasheet for the hbridge there is no mention of a diode but a warning on inductive loads. A flyback diode is probably a good idea.
 								To pick a diode I need to consider the coil driving voltage and current which is about 12V and 0.4A. 
