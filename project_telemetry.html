@@ -49,103 +49,81 @@
 						<span class="symbol"><img src="images/logo.svg" alt="" /></span><span class="title">Andy Dequin</span>
 					</a>
 					
-					<a href="#material_tests">
-					Material Tests
+					<a href="#system_design">
+					System Design
 					</a>
-					<a href="#deployment">
-					Deployment
+					<a href="#components">
+					Components
 						</a>
-					<a href="#selective_hardening">
-					Selective Hardening
+						<a href="#housing_design">
+							Housing Design
+								</a>
+					<a href="#tractor_testing">
+					Tractor Testing
 					</a>
 				
 					<!-- <a href="#conclusion">
 					  Conclusion
 					</a> -->
 		  </div>
-
 				<!-- Main -->
 					<div id="main">
 						<div class="inner with-sidebar">
-							<div style="text-align:center;">
-								<span class="image">
-									<img src="4.02A/miura_crystals.jpg" alt="" height="700" >
-								</span>
-							</div>
-							<h1 id="intro">Vessel for Growth</h1>
-							<p>This page presents a summary of my final project for 4.02A Introduction to Design Intensive over January 2022.</p>
-							<p>The prompt was "Vessel for Growth". I attempted to use crystal growth as a method for solidifying origami structures in the context of 
-								"deploying" flatpacked material, and "selective hardening" to change the dynamics of folded structures". 
-							</p>
+							<video width="auto" height="500" loop autoplay muted>
+								<source src="Telemetry_System/corn_field.MOV" type="video/mp4" center>
+								Your browser does not support the video tag.
+								</video>
+							<h1 id="intro">Telemetry System</h1>
+							<p>This page presents my work designing a telemetry system as a John Deere product engineering intern in the summer of 2024.</p>
 							<p>
-								The idea for deployment is method for solidifying a structure that was tightly packed for travel or storage.
-								Selective hardening is used to change the compliance in parts of a folded structure improve their strength and versatility. The final Kresling structure demonstrates 
-								that by treating the surface of the selected paper with a rubberized coating it looks like I was able to weaken the adhesion between the crystal growths and the 
-								paper structure. In my final presentation, I collapsed the pre-scored pattern in a live demonstration to show the kresling mechanism in action. Although the pre-scored pattern was not effective, new creases were formed instead.
+								The system was constrained to fit on the 2x2 inch area of a drawbar pin and needed to cost significantly less than the current $10,000 solution. As the only person on the team working on this project, over the course of a few weeks, I did the component selection, system design, hardware integration, wrote the firmware, fixed the libraries, designed the housing, wrote 70+ pages of documentation, and validated the device by testing it on a tractor. 
+								The system used ESP32C3 for Bluetooth communication between receiver and transmitter, two HX711 amplifiers, and a Serial-CAN module to connect to the tractor’s CAN bus. </p>
+								<p>
+								My solution not only fit on the pin, but also was a 100x cost reduction from the current method. With a 10-week timeline, even with a four-week setback due to issues with ordering components and juggling multiple projects, I was able to make the system, test it, and write thorough documentation. 
 							</p>
+								<div style="text-align:center;">
+									<img src="Telemetry_System/tractor_location.jpg" alt="" height="400" > 
+								</div>
+								<h2 id="system_design">System Design</h2>
+							<div style="text-align:center;">
+								<img src="Telemetry_System/flow_diagram.jpg" alt="" height="400" > 
+							</div>
 							
-							<div>
-									<img src="4.02A/kresling_sketch.jpg" alt="" height="500" > 
+							<h2 id="components">Components</h2>
+							<div style="text-align:center;">
+								<img src="Telemetry_System/components.png" alt="" height="300" > 
 							</div>
 							<div style="text-align:center;">
-								
-									<img src="4.02A/origami_in_engineering.jpg" alt="" height="500" > 
-								
+								<img src="Telemetry_System/electronics.jpg" alt="" height="400" > 
 							</div>
-							<h2 id="material_tests">Material Tests</h2>
+							<h2 id="housing_design">Housing Design</h2>
 							<div style="text-align:center;">
-								
-									<img src="4.02A/paper_types.jpg" alt="" height="500" > 
-								
+								<img src="Telemetry_System/cad_constraints.jpg" alt="" height="300">
+								<img src="Telemetry_System/swept_blend.jpg" alt="" height="300" > 
 							</div>
 							<div style="text-align:center;">
-								
-									<img src="4.02A/treatment_types.jpg" alt="" height="500" > 
-								
-							</div>
-							<div style="text-align:center;">
-								
-									<img src="4.02A/scoring_types.jpg" alt="" height="500" > 
-								
-							</div>
-							<h2 id="deployment">Deployment</h2>
-							<div style = "text-align:center;">
-								<video width="auto" height="500" controls>
-								<source src="4.02A/Miura_Ori_mechanism.mp4" type="video/mp4" center>
+							<video width="auto" height="500" controls>
+								<source src="Telemetry_System/housing.mp4" type="video/mp4" center>
 								Your browser does not support the video tag.
-							</video></span></div>
-							<div style = "text-align:center;">
-								<video width="auto" height="500" controls>
-								<source src="4.02A/Miura_deployment.mp4" type="video/mp4" center>
-								Your browser does not support the video tag.
-							</video></span></div>
-							<div style="text-align:center;">
-								
-									<img src="4.02A/miura_crystals.jpg" alt="" height="500" > 
-								
-							</div>
-							<h2 id="selective_hardening">Selective hardening</h2>
+								</video></span></div>
+
+
+							<h2 id="tractor_testing">Tractor Testing</h2>
 							
-							<div style="text-align:center;">
-								
-									<img src="4.02A/kresling_process.jpg" alt="" height="500" > 
-								
-							</div>
-							<div style = "text-align:center;">
 								<video width="auto" height="500" controls>
-								<source src="4.02A/Laser_cutting_Kresling_pattern.mp4" type="video/mp4" center>
+								<source src="Telemetry_System/transmitter.mp4" type="video/mp4" center>
 								Your browser does not support the video tag.
-							</video></span></div>
-							<div style = "text-align:center;">
+								</video></span>
 								<video width="auto" height="500" controls>
-								<source src="4.02A/Coated_Kresling_Cristalization.mp4" type="video/mp4" center>
+								<source src="Telemetry_System/receiver.mp4" type="video/mp4" center>
 								Your browser does not support the video tag.
-							</video></span></div>
-							<div style="text-align:center;">
-								
-									<img src="4.02A/kresling_crystals.jpg" alt="" height="500" > 
-								
+								</video>
+								<video width="auto" height="500" controls>
+								<source src="Telemetry_System/testing.mp4" type="video/mp4" center>
+								Your browser does not support the video tag.
+								</video></span>
 							</div>
+						
 						
 						</div>
 					</div>
