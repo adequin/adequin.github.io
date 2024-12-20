@@ -115,7 +115,7 @@
 							</video></span></div>
 							
 							<h2 id="ellipse">Ellipse Tracking</h2>
-							<div style="text-align:center;"></div>
+							<div style="text-align:center;">
 								<img src="2.74/ellipse_tracking.jpg" alt="" height="500" > 
 							</div>
 							<div style = "text-align:center;">
@@ -128,22 +128,217 @@
 								<source src="2.74/sim_videos/sneaky_tracking.mp4" type="video/mp4" center>
 								Your browser does not support the video tag.
 							</video></span></div>
-							<div style="text-align:center;">
-								<img src="2.74/heatmap.png" alt="" height="500" > 
-							</div>
+
 							<h2 id="constraints">Defined Constraints</h2>
-							<div style="text-align:center;"></div>
-								<img src="2.74/motor_constraints.jpg" alt="" height="500" > 
+							<div style="text-align:center;">
+								<img src="2.74/motor_constraints.jpg" alt="" height="400" > 
 							</div>
 							<h2 id="plots">Results</h2>
 							<div style="text-align:center;">
 								<img src="2.74/heatmap.png" alt="" height="500" > 
 							</div>
-							<div style="text-align:center;"></div>
+							<div style="text-align:center;">
 								<img src="2.74/energyvsspeed.png" alt="" height="500" > 
 							</div>
 
 							<h2 id="sim_code">Simulation Code</h2>
+							<pre><code>
+name = 'twolegs';
+
+% Define variables for time, generalized coordinates + derivatives, controls, and parameters 
+syms t x y dx dy ddx ddy th1 th2 th3 th4 dth1 dth2 dth3 dth4 ddth1 ddth2 ddth3 ddth4 real
+syms m1 m2 m3 m4 I1 I2 I3 I4 g real
+syms l_O_m1 l_B_m2 l_A_m3 l_C_m4  real % vector lengths to CMs
+%syms l_O_m1_2 l_B_m2_2 l_A_m3_2 l_C_m4_2  real % vectors to CMs in leg 2
+syms l_OA l_OB l_AC l_DE real % vector lengths to keypoints leg 1
+% syms l_OA2 l_OB2 l_AC2 l_DE2 real % vector lengths to keypoints leg 2
+syms tau1 tau2 tau3 tau4 Fx Fy real
+syms Ir N  real
+
+% Group them
+q   = [x; y; th1  ; th2 ; th3 ; th4];      % generalized coordinates
+dq  = [dx; dy; dth1 ; dth2 ; dth3 ; dth4];   % first time derivatives
+ddq = [ddx; ddy; ddth1;ddth2;ddth3;ddth4];     % second time derivatives
+u   = [Fx; Fy; tau1 ; tau2; tau3 ; tau4];    % controls
+
+p   = [m1 m2 m3 m4 I1 I2 I3 I4 Ir N l_O_m1 l_B_m2 l_A_m3 l_C_m4 l_OA l_OB l_AC l_DE g]';        % parameters
+
+% Generate Vectors from angles (gen coords) and Derivatives
+xhat = [1; 0; 0];
+yhat = [0; 1; 0];
+
+ihat = [1; 0; 0];
+jhat = [0; 1; 0];
+khat = cross(ihat,jhat);
+ehat1 =  sin(th1)*ihat - cos(th1)*jhat;
+ehat2 =  sin(th1+th2)*ihat - cos(th1+th2)*jhat;
+ehat3 =  sin(th3)*ihat - cos(th3)*jhat;
+ehat4 =  sin(th3+th4)*ihat - cos(th3+th4)*jhat;
+
+ddt = @(r) jacobian(r,[q;dq])*[dq;ddq]; % a handy anonymous function for taking time derivatives
+rO = x*xhat + y*yhat;
+
+%leg 1 keypoints
+rOA1 = rO + l_OA * ehat1; %sin(q1)*l_OA1*ihat - cos(q1)*l_OA1*jhat; 
+rOB1 = rO+ l_OB * ehat1; %sin(q1)*l_OB1*ihat - cos(q1)*l_OB1*jhat;
+rOC1 = rOA1 + l_AC * ehat2; %rOA1 +sin(q1+q2)*l_AC1*ihat - cos(q1+q2)*l_AC1*jhat;
+rOD1 = rOB1 + l_AC * ehat2; %rOB1 +sin(q1+q2)*l_AC1*ihat - cos(q1+q2)*l_AC1*jhat;
+rOE1 = rOD1 + l_DE * ehat1; %sin(q1)*l_DE1*ihat - cos(q1)*l_DE1*jhat; % O to B + B to D + D to E 
+
+%leg 2 keypoints 
+rOA2 = rO + l_OA * ehat3;  
+rOB2 = rO + l_OB * ehat3;
+rOC2 = rOA2 + l_AC * ehat4; 
+rOD2 = rOB2 + l_AC * ehat4; 
+rOE2 = rOD2 + l_DE * ehat3;  
+
+drOA1 = ddt(rOA1);
+drOB1 = ddt(rOB1);
+drOC1 = ddt(rOC1);
+drOD1 = ddt(rOD1);
+drOE1 = ddt(rOE1);
+drOA2 = ddt(rOA2);
+drOB2 = ddt(rOB2);
+drOC2 = ddt(rOC2);
+drOD2 = ddt(rOD2);
+drOE2 = ddt(rOE2);
+
+r_m1_1 = rO + l_O_m1 * ehat1;
+r_m2_1 = rOB1 + l_B_m2 * ehat2;
+r_m3_1 = rOA1 + l_A_m3 * ehat2;
+r_m4_1 = rOC1 + l_C_m4 * ehat1;
+
+r_m1_2 = rO + l_O_m1 * ehat3;
+r_m2_2 = rOB2 + l_B_m2 * ehat4;
+r_m3_2 = rOA2 + l_A_m3 * ehat4;
+r_m4_2 = rOC2 + l_C_m4 * ehat3;
+
+dr_m1_1 = ddt(r_m1_1);
+dr_m2_1 = ddt(r_m2_1);
+dr_m3_1 = ddt(r_m3_1);
+dr_m4_1 = ddt(r_m4_1);
+dr_m1_2 = ddt(r_m1_2);
+dr_m2_2 = ddt(r_m2_2);
+dr_m3_2 = ddt(r_m3_2);
+dr_m4_2 = ddt(r_m4_2);
+
+% Calculate Kinetic Energy, Potential Energy, and Generalized Forces
+F2Q = @(F,r) simplify(jacobian(r,q)'*(F));    % force contributions to generalized forces
+M2Q = @(M,w) simplify(jacobian(w,dq)'*(M));   % moment contributions to generalized forces
+
+omega_th1 = dth1;
+omega_th1and2 = dth1 + dth2;
+omega_th3 = dth3;
+omega_th3and4 = dth3 + dth4;
+% kinetic energy of masses in motion: translational + rotational 
+T1_1 = (1/2)*m1 * dot(dr_m1_1,dr_m1_1) + (1/2) * I1 * omega_th1^2;
+T2_1 = (1/2)*m2 * dot(dr_m2_1,dr_m2_1) + (1/2) * I2 * omega_th1and2^2;
+T3_1 = (1/2)*m3 * dot(dr_m3_1,dr_m3_1) + (1/2) * I3 * omega_th1and2^2;
+T4_1 = (1/2)*m4 * dot(dr_m4_1,dr_m4_1) + (1/2) * I4 * omega_th1^2;
+T1_2 = (1/2)*m1 * dot(dr_m1_2,dr_m1_2) + (1/2) * I1 * omega_th3^2;
+T2_2 = (1/2)*m2 * dot(dr_m2_2,dr_m2_2) + (1/2) * I2 * omega_th3and4^2;
+T3_2 = (1/2)*m3 * dot(dr_m3_2,dr_m3_2) + (1/2) * I3 * omega_th3and4^2;
+T4_2 = (1/2)*m4 * dot(dr_m4_2,dr_m4_2) + (1/2) * I4 * omega_th3^2;
+% Gears
+T1r_1 = (1/2)*Ir*(N*dth1)^2;
+T2r_1 = (1/2)*Ir*(dth1 + N*dth2)^2;
+T1r_2 = (1/2)*Ir*(N*dth3)^2;
+T2r_2 = (1/2)*Ir*(dth3 + N*dth4)^2;
+
+Vg1_1 = m1*g*dot(r_m1_1, jhat); %%%% CHECK SIGNS
+Vg2_1 = m2*g*dot(r_m2_1, jhat);
+Vg3_1 = m3*g*dot(r_m3_1, jhat);
+Vg4_1 = m4*g*dot(r_m4_1, jhat);
+Vg1_2 = m1*g*dot(r_m1_2, jhat); 
+Vg2_2 = m2*g*dot(r_m2_2, jhat);
+Vg3_2 = m3*g*dot(r_m3_2, jhat);
+Vg4_2 = m4*g*dot(r_m4_2, jhat);
+
+T = simplify(T1_1 + T2_1 + T3_1 + T4_1 + T1r_1 + T2r_1 + T1_2 + T2_2 + T3_2 + T4_2 + T1r_2 + T2r_2);
+Vg = Vg1_1 + Vg2_1 + Vg3_1 + Vg4_1 + Vg1_2 + Vg2_2 + Vg3_2 + Vg4_2 ;
+Q_tau1 = M2Q(tau1*khat,omega_th1*khat);
+Q_tau2 = M2Q(tau2*khat,omega_th1and2*khat); 
+Q_tau2R= M2Q(-tau2*khat,omega_th1*khat);
+Q_tau3 = M2Q(tau3*khat,omega_th3*khat);
+Q_tau4 = M2Q(tau4*khat,omega_th3and4*khat); 
+Q_tau4R= M2Q(-tau4*khat,omega_th3*khat);
+
+Q_tau = Q_tau1 + Q_tau2 + Q_tau2R + Q_tau3 + Q_tau4 + Q_tau4R;
+
+Q_force_x = F2Q(Fx*xhat, rO.*xhat);  % Forces acting at the base
+Q_force_y = F2Q(Fy*yhat, rO.*yhat);
+Q_force = Q_force_x + Q_force_y;
+
+Q = Q_tau + Q_force;
+
+% Assemble the array of cartesian coordinates of the key points
+keypoints = [rO(1:2) rOA1(1:2) rOB1(1:2) rOC1(1:2) rOD1(1:2) rOE1(1:2) rOA2(1:2) rOB2(1:2) rOC2(1:2) rOD2(1:2) rOE2(1:2)];
+
+All the work is done! Just turn the crank...
+Derive Energy Function and Equations of Motion
+E = T+Vg;
+PE = Vg;
+L = T-Vg;
+eom = ddt(jacobian(L,dq).') - jacobian(L,q).' - Q;
+
+% Rearrange Equations of Motion
+% A = simplify(jacobian(eom,ddq));
+% b = A*ddq - eom;
+
+% % Modified code using equationsToMatrix
+[A, b] = equationsToMatrix(eom, ddq);
+
+% Equations of motion are
+% eom = A *ddq + (coriolis term) + (gravitational term) - Q = 0
+Mass_Joint_Sp = A
+Grav_Joint_Sp = simplify(jacobian(Vg, q)')
+Corr_Joint_Sp = simplify( eom + Q - Grav_Joint_Sp - A*ddq)
+
+% Compute foot jacobian
+% J = jacobian(rE,q)
+J1 = jacobian(rOE1,q)
+J2 = jacobian(rOE2,q)
+
+% Compute ddt( J )
+dJ1= reshape( ddt(J1(:)) , size(J1) )
+dJ2= reshape( ddt(J2(:)) , size(J2) )
+
+% Write Energy Function and Equations of Motion
+z  = [q ; dq]
+
+rOE1 = rOE1(1:2);
+drOE1= drOE1(1:2);
+J1  = J1(1:2,1:6);
+dJ1 = dJ1(1:2,1:6);
+
+rOE2 = rOE2(1:2);
+drOE2= drOE2(1:2);
+J2  = J2(1:2,1:6);
+dJ2 = dJ2(1:2,1:6);
+
+matlabFunction(A,'file',['A_' name],'vars',{z p});
+matlabFunction(b,'file',['b_' name],'vars',{z u p});
+matlabFunction(PE,'file',['potential_energy_' name],'vars',{z p});
+matlabFunction(rOE1,'file','position_foot1','vars',{z p});
+matlabFunction(rOE2,'file','position_foot2','vars',{z p});
+matlabFunction(q,'file',['q_' name],'vars',{z p});
+matlabFunction(dq,'file',['qdot_' name],'vars',{z p});
+% matlabFunction(rOE,'file','position_foot','vars',{z p})
+
+matlabFunction(drOE1,'file',['velocity_foot1'],'vars',{z p});
+matlabFunction(J1 ,'file',['jacobian_foot1'],'vars',{z p});
+matlabFunction(dJ1 ,'file',['jacobian_dot_foot1'],'vars',{z p});
+
+matlabFunction(drOE2,'file',['velocity_foot2'],'vars',{z p});
+matlabFunction(J2 ,'file',['jacobian_foot2'],'vars',{z p});
+matlabFunction(dJ2 ,'file',['jacobian_dot_foot2'],'vars',{z p});
+
+matlabFunction(Grav_Joint_Sp ,'file', ['Grav_' name] ,'vars',{z p});
+matlabFunction(Corr_Joint_Sp ,'file', ['Corr_' name]     ,'vars',{z p});
+matlabFunction(keypoints,'file',['keypoints_' name],'vars',{z p});
+
+								
+							</code></pre>
 						
 						</div>
 					</div>
