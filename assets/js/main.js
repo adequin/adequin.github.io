@@ -29,7 +29,7 @@
 	// Touch?
 		if (browser.mobile)
 			$body.addClass('is-touch');
-
+		
 	// Forms.
 		var $form = $('form');
 
@@ -181,5 +181,22 @@
 						$menu._hide();
 
 			});
+			$('.tiles article').hover(
+				function () {
+					var video = $(this).find('video.hidden')[0];
+					if (video) {
+						video.style.display = 'block'; // Make the video visible
+						video.play(); // Play the video
+					}
+				},
+				function () {
+					var video = $(this).find('video.hidden')[0];
+					if (video) {
+						video.pause(); // Pause the video
+						video.currentTime = 0; // Reset video to start
+						video.style.display = 'none'; // Hide the video
+					}
+				}
+			);
 
 })(jQuery);
