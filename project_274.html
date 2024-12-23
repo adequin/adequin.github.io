@@ -102,39 +102,19 @@
 							<h2 id="setup">Simulation Setup</h2>
 							<div style = "text-align:center;">
 								<video width="auto" height="400" controls>
-								<source src="2.74/sim_videos/free_base+joints.mp4" type="video/mp4" >
-								Your browser does not support the video tag.
-							</video>
-								<video width="auto" height="400" controls>
 								<source src="2.74/sim_videos/stair_constraint+2legs.mp4" type="video/mp4" >
 								Your browser does not support the video tag.
-							</video></div>
-							
-							<h2 id="ellipse">Ellipse Tracking</h2>
-							<div style="text-align:center;">
-								<img src="2.74/ellipse_tracking.jpg" alt="" height="500" > 
-							</div>
-							<div style = "text-align:center;">
-								<video width="auto" height="350" controls>
-								<source src="2.74/sim_videos/ellipse_tracking.mp4" type="video/mp4" >
-								Your browser does not support the video tag.
 							</video>
-								<video width="auto" height="350" controls>
-								<source src="2.74/sim_videos/sneaky_tracking.mp4" type="video/mp4" >
+							<video width="auto" height="400" controls>
+								<source src="2.74/sim_videos/free_base+joints.mp4" type="video/mp4" >
 								Your browser does not support the video tag.
 							</video></div>
-
-							<h2 id="constraints">Defined Constraints</h2>
-							<div style="text-align:center;">
-								<img src="2.74/motor_constraints.jpg" alt="" height="400" > 
-							</div>
-							<h2 id="plots">Results</h2>
-							<div style="text-align:center;">
-								<img src="2.74/heatmap.png" alt="" height="500" > 
-								<img src="2.74/energyvsspeed.png" alt="" height="500" > 
-							</div>
-
-							<h2 id="sim_code">Simulation Code</h2>
+							<p>The videos show the linkages with the parametric staircase constraint (left), and with rederived generalized coordinates, two additional ones for the floating base  (right)</p>
+							<p>Since we are using 3D printed segmented legs from our lab, we started with code that defined each linkage's mass, position, and center of mass. In this setup code,
+								 the generalized coordinates of the simulation are defined, one for each motor and two for the position of the base in x and y.
+								Then, the euler-lagrangian framework is used to derive the equations of motions for each generalized coordinate. The important information
+								is then stored in helper functions for reference in the dynamic simulation script.
+							</p>
 							<pre><code>
 name = 'twolegs';
 
@@ -332,6 +312,46 @@ matlabFunction(keypoints,'file',['keypoints_' name],'vars',{z p});
 
 								
 							</code></pre>
+					
+							<h2 id="constraints">Defined Constraints</h2>
+							<p>Once the simulation is setup, constraints need to be added to make the behavior more realistic.
+							</p>
+							<ul>
+								<li>staircase constraint: represents the top of stair steps for given parameters. Implemented with impulse response.</li>
+								<li>joint constraints: this restrics the range of motion of the joints, which helps the robot stay upright in the simulation. Implemented with impulse response as well.</li>
+								<li>motor constraints: this represents the dynamics of an electric motor, limiting the possible power output to match the torque speed curve.</li>
+							</ul>
+							<div style="text-align:center;">
+								<img src="2.74/motor_constraints.jpg" alt="" height="400" > 
+							</div>
+							<p>Plots showing the effect of the motor output constrained to the torque speed-curve. Since our simulation ran below 30 rad/s tracking speed, this did not acutally come into play.</p>
+
+							<h2 id="ellipse">Controls</h2>
+							<div style="text-align:center;">
+								<img src="2.74/ellipse_tracking.jpg" alt="" height="500" > 
+							</div>
+							<p>To simulate control, we opted to use a heuristic elliptical tracking method instead of a gradient-based optimizer for the sake of time. We did get practice using CasADi for trajectory optimization in a different exercise however.
+								In the elliptical control scheme, we manually tune a set of ellipse parameters that define a trajectory for the robot's feet to follow. The only parameter that varies with the staircase parameters is the ellipse's slope. 
+								Once the ellipse trajectory is defined, an impedance controller with virtual spring and damper is used to track the trajectory.
+							</p>
+							<div style = "text-align:center;">
+								<video width="auto" height="350" controls>
+								<source src="2.74/sim_videos/ellipse_tracking.mp4" type="video/mp4" >
+								Your browser does not support the video tag.
+							</video>
+								<video width="auto" height="350" controls>
+								<source src="2.74/sim_videos/sneaky_tracking.mp4" type="video/mp4" >
+								Your browser does not support the video tag.
+							</video></div>
+							<p>These videos show how ellipse parameters affect the locomotion of our robot. The chosen parameters are the ones that represent the most natural locomotion (left)</p>
+							<h2 id="plots">Results</h2>
+							<div style="text-align:center;">
+								<img src="2.74/heatmap.png" alt="" height="500" > 
+								<img src="2.74/energyvsspeed.png" alt="" height="500" > 
+							</div>
+
+							<h2 id="sim_code">Simulation Code</h2>
+							
 						
 						</div>
 					</div>
