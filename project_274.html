@@ -80,7 +80,7 @@
 								<source src="2.74/sim_videos/present.mp4" type="video/mp4" >
 								Your browser does not support the video tag.
 							</video>
-							<h1 id="overview">Bio-inspired Robotics</h1>
+							<h1 id="overview">Optimizing speed and slope for stairclimbing using dynamic simulation</h1>
 							<p>This page presents a summary of my final project for 2.74 Bio-inspired Robotics over Fall 2024.</p>
 							<p>The assignment is to find a phenomenon to study using a robotics hardware and dynamic simulation model. As a group of four, we decided to study
 								the optimal speed to climb a set of stairs based on the slope. My role was to implement a dynamics simulation and find estimated results. 
@@ -117,7 +117,8 @@
 							</p>
 							<ul>
 								<li><b>Staircase constraint:</b> this represents the top of stair steps for given parameters. Implemented with impulse response.</li>
-								<li><b>Joint constraints:</b> this restricts the range of motion of the joints, which helps the robot stay upright in the simulation. Implemented with impulse response as well.</li>
+								<li><b>Joint constraints:</b> this restricts the range of motion of the joints. Implemented with impulse response as well.</li>
+								<li><b>Global angle constraints:</b> emulating the gantry used in hardware which keeps the robot upright in the global frame. The joint constraint includes this as well.</li>
 								<li><b>Motor constraints:</b> this represents the dynamics of an electric motor, limiting the possible power output to match the torque speed curve.</li>
 							</ul>
 							<div style="text-align:center;">
