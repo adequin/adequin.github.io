@@ -108,7 +108,9 @@
 								height = '400'> 
 							</span>
 						</div>
-						<p style="text-align:center;">Steel cell array manufactured in part 2</p>
+						<figcaption style="text-align:center;"> <b>Figure:</b> Steel cell array manufactured in <a href="project_metal_origami_manufacturing.html"> modular motors II</a></figcaption><br><br>
+						
+					
 						For this project, I plan to focus on creating a script that generates a 3D structure of plate lattices from an input outer mold surface and to prepare it for manufacturing. This task can be broken down into several segments:
 						<ul>
 						<li>Learning to Interface with a CAD software like Rhino using python scripting
@@ -130,6 +132,7 @@
 							<source src="Cells_models/folding_animation.mp4" type="video/mp4" center>
 							Your browser does not support the video tag.
 						</video></span></div>
+						<figcaption style="text-align:center;"> <b>Figure:</b> Parametric folding using circle intersection in Grasshopper, Rhino 3D</figcaption><br><br>
 						
 						<p>
 							I initially used grasshopper modules to generate the geometry, however, this would quickly become cluttered when moving on to arrays.
@@ -141,8 +144,10 @@
 								height = '400'> 
 							</span>
 						</div>
+						<figcaption style="text-align:center;"> <b>Figure:</b> Parametric cell (left) and Grasshopper script that generates it (right)</figcaption><br><br>
+
 						<iframe src="Cells_models/python/UROP_create_cell.html" width="100%" height="600" style="border:none;"></iframe>
-						
+						<figcaption style="text-align:center;"> <b>Figure:</b> Cell creation code (features added later)</figcaption><br>
 
 						<p>As you can see, I mainly started out by using functions, but I would later rewrite the entirity to be object oriented with a cell and array class.
 							Finally, as a quick first attempt, I generated an array of cells and intersected it with a bounding surface, in this case, a sphere.
@@ -153,6 +158,8 @@
 								height = '400'> 
 							</span>
 						</div>
+						<figcaption style="text-align:center;"> <b>Figure:</b> Python cell creation code (features added later)</figcaption><br>
+
 						<p>I originally thought that this was roughly what I needed to do, but it is actually much more complicated. Instead of simply cutting the cells,
 						I needed to detect the cells that intersected with the boundary surface, and then modify their geometry in a way that they would fit, essentially squishing in the parts that were out of bounds. 
 						<br><b>Developability as a major constraint (foldable from a flat surface).</b> </p>
@@ -168,12 +175,16 @@
 								height = '600'> 
 							</span>
 						</div>
+						<figcaption style="text-align:center;"> <b>Figure:</b> Cube array (top view)</figcaption><br>
+
 						<div style="text-align:center;">
 							<span class="image">
 								<img src="Cells_models/CubeArraySide.jpg" alt="" 
 								height = '600'> 
 							</span>
 						</div>
+						<figcaption style="text-align:center;"> <b>Figure:</b> Cube array (side view)</figcaption><br>
+
 						<p>In this design, the cells are held together using plate support layers. The cells have rectangular flaps to support each face which are then 
 							fastened to the supporting plate layers.
 						</p>
@@ -189,6 +200,8 @@
 								height = '600'> 
 							</span>
 						</div>
+						<figcaption style="text-align:center;"> <b>Figure:</b> Cube array (left) and unfolded equivalent (right)</figcaption><br>
+
 
 						<!-- <div style="text-align:center;">
 							<span class="image">
@@ -203,6 +216,8 @@
 								height = '600'> 
 							</span>
 						</div>
+						<figcaption style="text-align:center;"> <b>Figure:</b> 2D dxf exported from unfolded cell arrays</figcaption><br>
+
 						<p>Here you can see the final lines that were exported for milling a cell prototype. This was later modified for laser cutting outlines out of 
 							stainless steel with stamping as opposed to milling creases and manually folding the cells into place.
 						</p>
@@ -212,6 +227,8 @@
 						<object data= "Cells_models/BoundaryCellScratch.pdf" width="800"
                 		height="500"> 
         				</object> 
+						<figcaption style="text-align:center;"> <b>Figure:</b> Scratch work for determining morphing behavior of boundary cells</figcaption><br>
+
 						<p>	Originally, I had not considered developability when designing the solutions. I later developed a simple function to check that the angles around each vertex add up to 360 degrees or 2pi radians.
 							The approach was simply to find the intersection points and use those as new vertices. If all four top verticies were out of bounds, then three were selected to define a plane, which then defined the fourth vertex.
 							This approach was adapted to many cases where it was applicable. Since creating a program that generates cells and their outline for testing was the main priority, I did not explore the morphing alogrithms to completion. 
@@ -223,6 +240,8 @@
 								height = '600'> 
 							</span>
 						</div>
+						<figcaption style="text-align:center;"> <b>Figure:</b> Morphing array in sphere boundary</figcaption><br>
+
 						<p>This illustrates the approach in action for a sphere boundary surface. Note that cells that satisfied cases that were not implemented were toggled off for visibility</p>
 						<div style="text-align:center;">
 							<span class="image">
@@ -230,6 +249,8 @@
 								height = '600'> 
 							</span>
 						</div>
+						<figcaption style="text-align:center;"> <b>Figure:</b> Morphing array in sphere boundary with some dysfunctional cases activated</figcaption><br>
+
 						<p>Here I attempted implementing the case for side intersection, which caused some self intersection issues or missing vertices.</p>
 						<div style="text-align:center;">
 							<span class="image">
@@ -237,6 +258,8 @@
 								height = '600'> 
 							</span>
 						</div>
+						<figcaption style="text-align:center;"> <b>Figure:</b> Morphing array in sphere boundary (top view)</figcaption><br>
+
 
 						<h2 id="conclusion">Conclusion</h2>
 						<p>In summary,
