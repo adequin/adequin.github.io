@@ -2619,25 +2619,23 @@ input, select, textarea {
 			margin: 2.5em 0 0 2.5em;
 		}
 
+		.tiles article .tag-container {
+			display: flex; /* Enable flexbox layout */
+			flex-wrap: wrap; /* Allow tags to wrap to the next line if needed */
+			gap: 5px; /* Set spacing between tags */
+			position: absolute; /* Position relative to the tile */
+			bottom: 10px; /* Adjust as needed */
+			right: 10px; /* Adjust as needed */
+			z-index: 4; /* Ensure it's above other elements */
+		}
+		
+		/* Individual Tag Style */
 		.tiles article .tag {
-		position: absolute;
-		top: 10px; /* Adjust as needed */
-		font-size: 0.6em; /* Smaller font size */
-		padding: 3px 6px;
-		background-color: rgba(36, 36, 36, 0.138); 
-		color: #fff;
-		border-radius: 3px;
-		z-index: 4; /* Ensure it's above other elements */
-		}
-
-		/* For bottom-right positioning */
-		.tiles article .tag.right {
-		right: 10px;
-		}
-
-		/* For bottom-left positioning */
-		.tiles article .tag.left {
-		left: 10px;
+			font-size: 0.6em; /* Smaller font size */
+			padding: 3px 6px; /* Adjust padding for tags */
+			background-color: rgba(36, 36, 36, 0.4); /* Semi-transparent background */
+			color: #fff; /* Text color */
+			border-radius: 3px; /* Rounded corners */
 		}
 
 			.tiles article > .image {
