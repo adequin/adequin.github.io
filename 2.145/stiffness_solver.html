@@ -1,0 +1,413 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      -->
+<title>stiffness_solver</title>
+<meta name="generator" content="MATLAB 23.2">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.date" content="2024-12-28">
+<meta name="DC.source" content="stiffness_solver.m">
+<style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style>
+</head>
+<body>
+<div class="content">
+<pre class="codeinput">syms <span class="string">E</span> <span class="string">A</span> <span class="string">I</span> <span class="string">L</span> <span class="string">theta_t</span> <span class="string">theta_b</span> <span class="string">Fy6</span> <span class="string">real</span>
+<span class="comment">%assumes all the beams are the same, can be changed.</span>
+beam_config = [1, 3, pi/2+theta_t
+               2, 3, pi/2-theta_t
+               3, 4, pi
+               3, 5, 0
+               4, 6, 0
+               5, 6, pi
+               6, 7, pi
+               6, 8, 0
+               7, 9, 0
+               8, 9, pi
+               9, 10, -pi/2-theta_b
+               9, 11, -pi/2+theta_b];
+K_actual = assemble_stiffness(11, beam_config, E, A, I, L);<span class="comment">% Define stiffness matrix</span>
+
+constrained_nodes = [1, 2, 10, 11]; <span class="comment">% Nodes that are fixed</span>
+constrained_dofs = [];
+<span class="keyword">for</span> node = constrained_nodes
+    constrained_dofs = [constrained_dofs, 3*node-2, 3*node-1, 3*node]; <span class="comment">% x, y, theta DOFs</span>
+<span class="keyword">end</span>
+
+<span class="comment">% Define free DOFs (all DOFs minus constrained DOFs)</span>
+all_dofs = 1:size(K_actual, 1);
+free_dofs = setdiff(all_dofs, constrained_dofs);
+
+<span class="comment">%Define applied Force</span>
+F = sym(zeros(33, 1)); <span class="comment">% Only F17 is nonzero, y6 direction</span>
+F(17) = Fy6;
+
+<span class="comment">% Reduce stiffness matrix and force vector</span>
+K_reduced = K_actual(free_dofs, free_dofs) <span class="comment">% Remove constrained rows/columns</span>
+F_reduced = F(free_dofs); <span class="comment">% Remove constrained rows</span>
+
+
+<span class="comment">% Solve the reduced system</span>
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%% GETS STUCK HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+x_reduced = K_reduced \ F_reduced; <span class="comment">% Solve for displacements at free DOFs</span>
+
+
+<span class="comment">% Reconstruct the full displacement vector</span>
+x_full = zeros(size(K_actual, 1), 1);
+x_full(free_dofs) = x_reduced; <span class="comment">% Fill in free DOFs (constrained DOFs remain zero)</span>
+
+<span class="comment">% Compute effective stiffness</span>
+K_eff = simplify(Fy6 / x_full(17)); <span class="comment">% y6 corresponds to DOF 17</span>
+disp(<span class="string">'Effective stiffness:'</span>);
+disp(K_eff);
+
+clear; clc;
+syms <span class="string">ka</span> <span class="string">kb</span> <span class="string">kc</span> <span class="string">kd</span> <span class="string">ke</span> <span class="string">F5</span>
+<span class="comment">% 5 nodes, example parallel series config:</span>
+<span class="comment">% /| |--&gt;2--&gt;|</span>
+<span class="comment">% /|1|       |4--&gt;5</span>
+<span class="comment">% /| |--&gt;3--&gt;|</span>
+<span class="comment">%</span>
+<span class="comment">% node 1 is constrained.</span>
+<span class="comment">% SOLVE FOR EFFECTIVE X STIFFNESS AT NODE 5</span>
+<span class="comment">%</span>
+<span class="comment">% test solution from series-parallel equations:</span>
+<span class="comment">% K_test = inv(inv(inv(inv(ka)+inv(kb))+inv(inv(kc)+inv(kd)))+inv(ke))</span>
+
+<span class="comment">% Define stiffness matrix</span>
+K = [ka+kc     -ka     -kc     0    0
+     -ka    ka+kb       0   -kb     0
+      -kc     0     kc+kd  -kd      0
+      0       -kb   -kd    kb+kd+ke -ke
+      0       0     0    -ke  ke]
+
+<span class="comment">% Define force vector</span>
+F = [0; 0; 0; 0; F5]; <span class="comment">% Only F5 is nonzero</span>
+
+<span class="comment">% Define constraint matrix (C)</span>
+<span class="comment">% We enforce x1 = 0, so the constraint row is [1 0 0 0]</span>
+C = [1 0 0 0 0];
+N_c = size(C,1)
+<span class="comment">% Define augmented matrix A and augmented RHS vector b</span>
+A = [K, C.'; C, zeros(N_c, N_c)]
+b = [F; zeros(N_c,1)]; <span class="comment">% 0 corresponds to the fixed value of x1</span>
+
+<span class="comment">% Solve the augmented system</span>
+x = A \ b;
+
+<span class="comment">% Extract x5 (displacement at node 5)</span>
+x5 = x(5);
+
+<span class="comment">% Compute effective stiffness</span>
+K_eff = simplify(F5 / x5);
+
+disp(<span class="string">'Effective stiffness K_eff:'</span>);
+disp(K_eff);
+K_test = inv(inv(inv(inv(ka)+inv(kb))+inv(inv(kc)+inv(kd)))+inv(ke))<span class="comment">%from series-parallel equations</span>
+isAlways(K_eff== K_test) <span class="comment">% are they the same?</span>
+
+<span class="keyword">function</span> K_global = assemble_stiffness(num_nodes, beam_data, E, A, I, L)
+    <span class="comment">% Inputs:</span>
+    <span class="comment">% num_nodes - Total number of nodes in the structure</span>
+    <span class="comment">% beam_data - Matrix where each row is [node1, node2, angle (radians)]</span>
+    <span class="comment">% E - Young's modulus</span>
+    <span class="comment">% A - Cross-sectional area</span>
+    <span class="comment">% I - Second moment of area</span>
+    <span class="comment">% L - Length of each beam (assumed the same for simplicity)</span>
+
+    <span class="comment">% Initialize global stiffness matrix</span>
+    K_global = sym(zeros(3 * num_nodes));
+
+    <span class="comment">% Loop through each beam</span>
+    <span class="keyword">for</span> i = 1:size(beam_data, 1)
+        <span class="comment">% Extract beam data</span>
+        node1 = beam_data(i, 1);
+        node2 = beam_data(i, 2);
+        angle = beam_data(i, 3);
+
+        <span class="comment">% Compute local stiffness matrix for the beam</span>
+        K_local = beam_stiffness_matrix(E, A, I, L);
+
+        <span class="comment">% Compute rotation matrix</span>
+        R = rotation_matrix(angle);
+
+        <span class="comment">% Transform local stiffness matrix to global coordinates</span>
+        K_global_beam = R' * K_local * R;
+
+        <span class="comment">% Assemble into the global stiffness matrix</span>
+        dof_indices = [3*node1-2, 3*node1-1, 3*node1, 3*node2-2, 3*node2-1, 3*node2];
+        <span class="keyword">for</span> ii = 1:6
+            <span class="keyword">for</span> jj = 1:6
+                K_global(dof_indices(ii), dof_indices(jj)) = <span class="keyword">...</span>
+                    K_global(dof_indices(ii), dof_indices(jj)) + K_global_beam(ii, jj);
+            <span class="keyword">end</span>
+        <span class="keyword">end</span>
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+<span class="keyword">function</span> K_local = beam_stiffness_matrix(E, A, I, L)
+    <span class="comment">% Returns the 6x6 local stiffness matrix for a beam element</span>
+    K_local = sym([
+        E*A/L,        0,            0,         -E*A/L,        0,          0;
+        0,     12*E*I/L^3,   6*E*I/L^2,        0,   -12*E*I/L^3,   6*E*I/L^2;
+        0,      6*E*I/L^2,    4*E*I/L,         0,    -6*E*I/L^2,    2*E*I/L;
+        -E*A/L,        0,            0,         E*A/L,         0,          0;
+        0,    -12*E*I/L^3,  -6*E*I/L^2,        0,    12*E*I/L^3,  -6*E*I/L^2;
+        0,      6*E*I/L^2,    2*E*I/L,         0,    -6*E*I/L^2,    4*E*I/L;
+    ]);
+<span class="keyword">end</span>
+
+<span class="keyword">function</span> R = rotation_matrix(angle)
+    <span class="comment">% Returns the 6x6 rotation matrix for a beam rotated by `angle`</span>
+    c = cos(angle);
+    s = sin(angle);
+
+    <span class="comment">% Rotation matrix for 2D with moments</span>
+    R = [
+        c,  s,  0,  0,  0,  0;
+       -s,  c,  0,  0,  0,  0;
+        0,  0,  1,  0,  0,  0;
+        0,  0,  0,  c,  s,  0;
+        0,  0,  0, -s,  c,  0;
+        0,  0,  0,  0,  0,  1;
+    ];
+<span class="keyword">end</span>
+</pre>
+<p class="footer">
+<br>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2023b</a>
+<br>
+</p>
+</div>
+<!--
+##### SOURCE BEGIN #####
+syms E A I L theta_t theta_b Fy6 real
+%assumes all the beams are the same, can be changed.
+beam_config = [1, 3, pi/2+theta_t
+               2, 3, pi/2-theta_t
+               3, 4, pi
+               3, 5, 0
+               4, 6, 0
+               5, 6, pi
+               6, 7, pi
+               6, 8, 0
+               7, 9, 0
+               8, 9, pi
+               9, 10, -pi/2-theta_b
+               9, 11, -pi/2+theta_b];
+K_actual = assemble_stiffness(11, beam_config, E, A, I, L);% Define stiffness matrix
+
+constrained_nodes = [1, 2, 10, 11]; % Nodes that are fixed
+constrained_dofs = [];
+for node = constrained_nodes
+    constrained_dofs = [constrained_dofs, 3*node-2, 3*node-1, 3*node]; % x, y, theta DOFs
+end
+
+% Define free DOFs (all DOFs minus constrained DOFs)
+all_dofs = 1:size(K_actual, 1);
+free_dofs = setdiff(all_dofs, constrained_dofs);
+
+%Define applied Force
+F = sym(zeros(33, 1)); % Only F17 is nonzero, y6 direction
+F(17) = Fy6;
+
+% Reduce stiffness matrix and force vector
+K_reduced = K_actual(free_dofs, free_dofs) % Remove constrained rows/columns
+F_reduced = F(free_dofs); % Remove constrained rows
+
+
+% Solve the reduced system 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% GETS STUCK HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+x_reduced = K_reduced \ F_reduced; % Solve for displacements at free DOFs
+
+
+% Reconstruct the full displacement vector
+x_full = zeros(size(K_actual, 1), 1);
+x_full(free_dofs) = x_reduced; % Fill in free DOFs (constrained DOFs remain zero)
+
+% Compute effective stiffness
+K_eff = simplify(Fy6 / x_full(17)); % y6 corresponds to DOF 17
+disp('Effective stiffness:');
+disp(K_eff);
+
+clear; clc;
+syms ka kb kc kd ke F5
+% 5 nodes, example parallel series config: 
+% /| |REPLACE_WITH_DASH_DASH>2REPLACE_WITH_DASH_DASH>|
+% /|1|       |4REPLACE_WITH_DASH_DASH>5
+% /| |REPLACE_WITH_DASH_DASH>3REPLACE_WITH_DASH_DASH>|
+%
+% node 1 is constrained. 
+% SOLVE FOR EFFECTIVE X STIFFNESS AT NODE 5
+%
+% test solution from series-parallel equations:
+% K_test = inv(inv(inv(inv(ka)+inv(kb))+inv(inv(kc)+inv(kd)))+inv(ke)) 
+
+% Define stiffness matrix 
+K = [ka+kc     -ka     -kc     0    0
+     -ka    ka+kb       0   -kb     0   
+      -kc     0     kc+kd  -kd      0   
+      0       -kb   -kd    kb+kd+ke -ke
+      0       0     0    -ke  ke]
+
+% Define force vector
+F = [0; 0; 0; 0; F5]; % Only F5 is nonzero
+
+% Define constraint matrix (C)
+% We enforce x1 = 0, so the constraint row is [1 0 0 0]
+C = [1 0 0 0 0];
+N_c = size(C,1)
+% Define augmented matrix A and augmented RHS vector b
+A = [K, C.'; C, zeros(N_c, N_c)]
+b = [F; zeros(N_c,1)]; % 0 corresponds to the fixed value of x1
+
+% Solve the augmented system
+x = A \ b;
+
+% Extract x5 (displacement at node 5)
+x5 = x(5);
+
+% Compute effective stiffness
+K_eff = simplify(F5 / x5);
+
+disp('Effective stiffness K_eff:');
+disp(K_eff);
+K_test = inv(inv(inv(inv(ka)+inv(kb))+inv(inv(kc)+inv(kd)))+inv(ke))%from series-parallel equations
+isAlways(K_eff== K_test) % are they the same?
+
+function K_global = assemble_stiffness(num_nodes, beam_data, E, A, I, L)
+    % Inputs:
+    % num_nodes - Total number of nodes in the structure
+    % beam_data - Matrix where each row is [node1, node2, angle (radians)]
+    % E - Young's modulus
+    % A - Cross-sectional area
+    % I - Second moment of area
+    % L - Length of each beam (assumed the same for simplicity)
+
+    % Initialize global stiffness matrix
+    K_global = sym(zeros(3 * num_nodes));
+
+    % Loop through each beam
+    for i = 1:size(beam_data, 1)
+        % Extract beam data
+        node1 = beam_data(i, 1);
+        node2 = beam_data(i, 2);
+        angle = beam_data(i, 3);
+
+        % Compute local stiffness matrix for the beam
+        K_local = beam_stiffness_matrix(E, A, I, L);
+
+        % Compute rotation matrix
+        R = rotation_matrix(angle);
+
+        % Transform local stiffness matrix to global coordinates
+        K_global_beam = R' * K_local * R;
+
+        % Assemble into the global stiffness matrix
+        dof_indices = [3*node1-2, 3*node1-1, 3*node1, 3*node2-2, 3*node2-1, 3*node2];
+        for ii = 1:6
+            for jj = 1:6
+                K_global(dof_indices(ii), dof_indices(jj)) = ...
+                    K_global(dof_indices(ii), dof_indices(jj)) + K_global_beam(ii, jj);
+            end
+        end
+    end
+end
+
+function K_local = beam_stiffness_matrix(E, A, I, L)
+    % Returns the 6x6 local stiffness matrix for a beam element
+    K_local = sym([
+        E*A/L,        0,            0,         -E*A/L,        0,          0;
+        0,     12*E*I/L^3,   6*E*I/L^2,        0,   -12*E*I/L^3,   6*E*I/L^2;
+        0,      6*E*I/L^2,    4*E*I/L,         0,    -6*E*I/L^2,    2*E*I/L;
+        -E*A/L,        0,            0,         E*A/L,         0,          0;
+        0,    -12*E*I/L^3,  -6*E*I/L^2,        0,    12*E*I/L^3,  -6*E*I/L^2;
+        0,      6*E*I/L^2,    2*E*I/L,         0,    -6*E*I/L^2,    4*E*I/L;
+    ]);
+end
+
+function R = rotation_matrix(angle)
+    % Returns the 6x6 rotation matrix for a beam rotated by `angle`
+    c = cos(angle);
+    s = sin(angle);
+
+    % Rotation matrix for 2D with moments
+    R = [
+        c,  s,  0,  0,  0,  0;
+       -s,  c,  0,  0,  0,  0;
+        0,  0,  1,  0,  0,  0;
+        0,  0,  0,  c,  s,  0;
+        0,  0,  0, -s,  c,  0;
+        0,  0,  0,  0,  0,  1;
+    ];
+end
+
+
+##### SOURCE END #####
+-->
+</body>
+</html>

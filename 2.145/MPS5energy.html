@@ -1,0 +1,227 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      -->
+<title>MPS5energy</title>
+<meta name="generator" content="MATLAB 23.2">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.date" content="2024-12-28">
+<meta name="DC.source" content="MPS5energy.m">
+<style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style>
+</head>
+<body>
+<div class="content">
+<pre class="codeinput">syms <span class="string">beta</span> <span class="string">alpha</span> <span class="string">L</span> <span class="string">L2</span> <span class="string">x</span> <span class="string">gamma</span> <span class="string">real</span>
+
+g = 0.85;
+Kt = 2.65;
+E = 19e9; <span class="comment">% Pa</span>
+b = 1/4*0.0254;
+
+<span class="comment">% CHANGE THESE PARAMETERS %%%%%%%%</span>
+l = 8e-2; <span class="comment">%rigid part, should be less than 85% of l2</span>
+l2 = 15e-2; <span class="comment">% compliant part</span>
+h = 0.5e-2; <span class="comment">%5mm</span>
+I = b*h^3/12;
+K = 4*g*Kt*E*I/l2;<span class="comment">% 2x stiffness of one beam to account for both sides</span>
+
+<span class="comment">%find angle of flexure relative to x (vertical)</span>
+eq1 = L/sin(beta) == gamma*L2/sin(alpha+beta); <span class="comment">%use law of sines to solve for beta</span>
+eq2 = L/sin(beta) == ((gamma*L2 - L) + x)/sin(alpha);
+sol = solve([eq1, eq2], [beta, alpha]);
+
+a = subs(abs(sol.alpha), [L, L2, gamma], [l, l2, g]);
+b1 = subs((sol.beta(1)), [L, L2, gamma], [l, l2, g]); <span class="comment">% angle for PRBM</span>
+b2 = subs((sol.beta(2)), [L, L2, gamma], [l, l2, g]);
+a_func = matlabFunction(a)
+b1_func = matlabFunction(b1) <span class="comment">%convert symbolic solution to function</span>
+b2_func = matlabFunction(b2)
+
+dx = 0.001;
+xspan = 0:dx:2*l-dx;
+
+<span class="comment">%calculate angle of rigid component relative to x (vertical)</span>
+th =  b1 + a ; <span class="comment">%only outputs -pi/2 to pi/2 and we need 0 to pi so need to split</span>
+th_func = matlabFunction(th);
+hold <span class="string">off</span>;
+plot(xspan, th_func(xspan))
+hold <span class="string">on</span>
+<span class="comment">% plot(xspan, b1_func(xspan));legend('th', 'beta')</span>
+[~,bound] = max(th_func(xspan)); <span class="comment">%% find spliting point</span>
+xspan1 = 0:dx:xspan(bound);
+xspan2 = xspan(bound)+dx:dx:2*l-dx;
+
+Theta = [max(th_func(xspan1)), max(pi-th_func(xspan2))]; <span class="comment">% make a lookup table for theta values then interpolate</span>
+Theta_func = @(xq) interp1(xspan,Theta, xq) ; <span class="comment">%interpolate</span>
+
+U = @(x) K.*b1_func(x).^2/2 <span class="comment">%energy</span>
+F = @(x) K.*b1_func(x) <span class="comment">% force exerted by flexure onto rigid component at linkage</span>
+Fx = @(x) F(x).*cos(Theta_func(x)) <span class="comment">% force exerted by rigid component</span>
+Kx = @(x) -diff(Fx(xspan)) <span class="comment">%numerically differentiate force to get stiffness</span>
+
+hold <span class="string">off</span>;
+figure;
+plot(xspan, U(xspan))
+xlabel(<span class="string">'x'</span>)
+ylabel(<span class="string">'Energy (J)'</span>)
+
+figure;
+plot(xspan, Fx(xspan))
+xlabel(<span class="string">'x'</span>)
+ylabel(<span class="string">'Force (N)'</span>)
+
+figure;
+plot(xspan, abs(F(xspan).*l2.*(h/2)./I./2).*10^(-9)) <span class="comment">%My/I = FL(t/2)/I then divide by 2 since the force is for both beams</span>
+xlabel(<span class="string">'x'</span>)
+ylabel(<span class="string">'bending stress (GPa)'</span>)
+
+figure;
+plot(xspan(1:end-1), Kx(xspan))
+xlabel(<span class="string">'x'</span>)
+ylabel(<span class="string">'Stiffness (N/m)'</span>)
+</pre>
+<p class="footer">
+<br>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2023b</a>
+<br>
+</p>
+</div>
+<!--
+##### SOURCE BEGIN #####
+syms beta alpha L L2 x gamma real
+
+g = 0.85;
+Kt = 2.65;
+E = 19e9; % Pa
+b = 1/4*0.0254;
+
+% CHANGE THESE PARAMETERS %%%%%%%%
+l = 8e-2; %rigid part, should be less than 85% of l2
+l2 = 15e-2; % compliant part
+h = 0.5e-2; %5mm
+I = b*h^3/12;
+K = 4*g*Kt*E*I/l2;% 2x stiffness of one beam to account for both sides
+
+%find angle of flexure relative to x (vertical)
+eq1 = L/sin(beta) == gamma*L2/sin(alpha+beta); %use law of sines to solve for beta
+eq2 = L/sin(beta) == ((gamma*L2 - L) + x)/sin(alpha);
+sol = solve([eq1, eq2], [beta, alpha]);
+
+a = subs(abs(sol.alpha), [L, L2, gamma], [l, l2, g]);
+b1 = subs((sol.beta(1)), [L, L2, gamma], [l, l2, g]); % angle for PRBM
+b2 = subs((sol.beta(2)), [L, L2, gamma], [l, l2, g]);
+a_func = matlabFunction(a)
+b1_func = matlabFunction(b1) %convert symbolic solution to function
+b2_func = matlabFunction(b2)
+
+dx = 0.001;
+xspan = 0:dx:2*l-dx;
+
+%calculate angle of rigid component relative to x (vertical)
+th =  b1 + a ; %only outputs -pi/2 to pi/2 and we need 0 to pi so need to split
+th_func = matlabFunction(th);
+hold off;
+plot(xspan, th_func(xspan))
+hold on
+% plot(xspan, b1_func(xspan));legend('th', 'beta')
+[~,bound] = max(th_func(xspan)); %% find spliting point
+xspan1 = 0:dx:xspan(bound);
+xspan2 = xspan(bound)+dx:dx:2*l-dx;
+
+Theta = [max(th_func(xspan1)), max(pi-th_func(xspan2))]; % make a lookup table for theta values then interpolate
+Theta_func = @(xq) interp1(xspan,Theta, xq) ; %interpolate
+
+U = @(x) K.*b1_func(x).^2/2 %energy
+F = @(x) K.*b1_func(x) % force exerted by flexure onto rigid component at linkage
+Fx = @(x) F(x).*cos(Theta_func(x)) % force exerted by rigid component 
+Kx = @(x) -diff(Fx(xspan)) %numerically differentiate force to get stiffness
+
+hold off;
+figure;
+plot(xspan, U(xspan))
+xlabel('x')
+ylabel('Energy (J)')
+
+figure;
+plot(xspan, Fx(xspan))
+xlabel('x')
+ylabel('Force (N)')
+
+figure;
+plot(xspan, abs(F(xspan).*l2.*(h/2)./I./2).*10^(-9)) %My/I = FL(t/2)/I then divide by 2 since the force is for both beams
+xlabel('x')
+ylabel('bending stress (GPa)')
+
+figure;
+plot(xspan(1:end-1), Kx(xspan))
+xlabel('x')
+ylabel('Stiffness (N/m)')
+##### SOURCE END #####
+-->
+</body>
+</html>

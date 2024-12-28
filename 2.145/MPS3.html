@@ -1,0 +1,224 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      -->
+<title>MPS3</title>
+<meta name="generator" content="MATLAB 23.2">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.date" content="2024-12-28">
+<meta name="DC.source" content="MPS3.m">
+<style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style>
+</head>
+<body>
+<div class="content">
+<pre class="codeinput">clear
+syms <span class="string">wb</span> <span class="string">x</span> <span class="string">real</span>
+
+<span class="comment">% Parameters</span>
+lb = 5.5e-2; <span class="comment">% beam length</span>
+lf = 70e-3; <span class="comment">% flexure length</span>
+wf = 1e-3; <span class="comment">% flexure width</span>
+theta = deg2rad(60); <span class="comment">% angle between padding beams</span>
+r_egg = 21.5e-3; <span class="comment">% egg radius along horizontal plane</span>
+dx_beam = 1e-3; <span class="comment">% max deflection of one padding beam</span>
+dx_beam_eff = dx_beam * (1 + cos(theta / 2));
+xrange = 7.088e-2; <span class="comment">% distance between gripper peak and base padding</span>
+egg_contact = r_egg * (1 + 1 / sin(theta / 2)); <span class="comment">% distance from base padding to egg contact</span>
+x_contact = xrange - egg_contact;
+x_max = x_contact + dx_beam_eff;
+
+<span class="comment">% Define material and constants</span>
+t = 0.00635; <span class="comment">% thickness of ABS in meters</span>
+E = 1.9e9; <span class="comment">% Young's modulus for ABS</span>
+gamma = 0.85147;
+ktheta = 2.65;
+
+<span class="comment">% Derived parameters</span>
+Ib = t * wb^3 / 12; <span class="comment">% Moment of inertia for beam</span>
+If = t * wf^3 / 12; <span class="comment">% Moment of inertia for flexure</span>
+Lcp = (1 - gamma) * lf / 2; <span class="comment">% characteristic length of flexure</span>
+B = asin(x / lf); <span class="comment">% flexure angle as a function of x</span>
+
+<span class="comment">% Stiffness constants</span>
+kbeam = 192 * E * Ib / lb^3; <span class="comment">% stiffness of base padding beam</span>
+kbeam2 = kbeam * sin(theta / 2) / 2; <span class="comment">% stiffness of single tilted padding beam</span>
+kgripper = 1 / (1 / kbeam + 1 / (2 * kbeam2)); <span class="comment">% total gripper stiffness</span>
+
+<span class="comment">% Flexure stiffness</span>
+kt = gamma * ktheta * E * If / lf;
+
+<span class="comment">% Energy stored in the flexure</span>
+Ustored = 2 * kt * B^2;
+Fstored = diff(Ustored, x);
+Kstored = diff(Fstored, x);
+
+<span class="comment">% Energy in the gripper (exerted force)</span>
+x_eff = @(x_in) max(0, x_in - x_contact); <span class="comment">% effective displacement</span>
+K_exert = @(wb_in) double(subs(kgripper, wb, wb_in)); <span class="comment">% convert kgripper to numeric based on wb</span>
+F_exert = @(x_in, wb_in) K_exert(wb_in) * x_eff(x_in); <span class="comment">% force exerted on x based on wb</span>
+
+<span class="comment">% Setting up the grid for x and wb</span>
+n = 50;
+x_vals = linspace(x_contact, x_max, n);
+wb_vals = linspace(0, 5e-3, n);
+[WB, X] = meshgrid( wb_vals,x_vals);
+
+<span class="comment">% Compute Z values using F_exert over the grid</span>
+Z = arrayfun(@(x, wb) F_exert(x, wb), X, WB);
+
+<span class="comment">% 3D surface plot</span>
+figure;
+surf(X,WB, Z);
+xlabel(<span class="string">'x (m)'</span>);
+ylabel(<span class="string">'wb (m)'</span>);
+zlabel(<span class="string">'F_{exert}(x, wb) (N)'</span>);
+title(<span class="string">'3D Plot of F_{exert}(x, wb)'</span>);
+shading <span class="string">interp</span>;
+colormap <span class="string">winter</span>;
+colorbar;
+view(3);
+</pre>
+<p class="footer">
+<br>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2023b</a>
+<br>
+</p>
+</div>
+<!--
+##### SOURCE BEGIN #####
+clear
+syms wb x real
+
+% Parameters
+lb = 5.5e-2; % beam length
+lf = 70e-3; % flexure length
+wf = 1e-3; % flexure width
+theta = deg2rad(60); % angle between padding beams
+r_egg = 21.5e-3; % egg radius along horizontal plane
+dx_beam = 1e-3; % max deflection of one padding beam
+dx_beam_eff = dx_beam * (1 + cos(theta / 2));
+xrange = 7.088e-2; % distance between gripper peak and base padding
+egg_contact = r_egg * (1 + 1 / sin(theta / 2)); % distance from base padding to egg contact
+x_contact = xrange - egg_contact;
+x_max = x_contact + dx_beam_eff;
+
+% Define material and constants
+t = 0.00635; % thickness of ABS in meters
+E = 1.9e9; % Young's modulus for ABS
+gamma = 0.85147;
+ktheta = 2.65;
+
+% Derived parameters
+Ib = t * wb^3 / 12; % Moment of inertia for beam
+If = t * wf^3 / 12; % Moment of inertia for flexure
+Lcp = (1 - gamma) * lf / 2; % characteristic length of flexure
+B = asin(x / lf); % flexure angle as a function of x
+
+% Stiffness constants
+kbeam = 192 * E * Ib / lb^3; % stiffness of base padding beam
+kbeam2 = kbeam * sin(theta / 2) / 2; % stiffness of single tilted padding beam
+kgripper = 1 / (1 / kbeam + 1 / (2 * kbeam2)); % total gripper stiffness
+
+% Flexure stiffness
+kt = gamma * ktheta * E * If / lf;
+
+% Energy stored in the flexure
+Ustored = 2 * kt * B^2;
+Fstored = diff(Ustored, x);
+Kstored = diff(Fstored, x);
+
+% Energy in the gripper (exerted force)
+x_eff = @(x_in) max(0, x_in - x_contact); % effective displacement
+K_exert = @(wb_in) double(subs(kgripper, wb, wb_in)); % convert kgripper to numeric based on wb
+F_exert = @(x_in, wb_in) K_exert(wb_in) * x_eff(x_in); % force exerted on x based on wb
+
+% Setting up the grid for x and wb
+n = 50;
+x_vals = linspace(x_contact, x_max, n);
+wb_vals = linspace(0, 5e-3, n);
+[WB, X] = meshgrid( wb_vals,x_vals);
+
+% Compute Z values using F_exert over the grid
+Z = arrayfun(@(x, wb) F_exert(x, wb), X, WB);
+
+% 3D surface plot
+figure;
+surf(X,WB, Z);
+xlabel('x (m)');
+ylabel('wb (m)');
+zlabel('F_{exert}(x, wb) (N)');
+title('3D Plot of F_{exert}(x, wb)');
+shading interp;
+colormap winter;
+colorbar;
+view(3);
+
+##### SOURCE END #####
+-->
+</body>
+</html>
