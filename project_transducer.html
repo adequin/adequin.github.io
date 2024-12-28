@@ -49,36 +49,63 @@
 						<span class="symbol"><img src="images/logo.svg" alt="" /></span><span class="title">Andy Dequin</span>
 					</a>
 					
-					<!-- <a href="#material_tests">
-					Material Tests
+					<a href="#intro">
+					Introduction
 					</a>
-					<a href="#deployment">
-					Deployment
-						</a>
-					<a href="#selective_hardening">
-					Selective Hardening
-					</a> -->
-				
-					<!-- <a href="#conclusion">
-					  Conclusion
-					</a> -->
+					<a href="#overview">
+					Process Overview
+					</a>
+					<a href="#next">
+					Next Steps
+					</a>
 		  </div>
 
 				<!-- Main -->
 					<div id="main">
 						<div class="inner with-sidebar">
+								<span class="image">
+									<img src="Transducer_Design/drawbar.jpeg" alt="" height="550" >
+								</span>
+							<h1 id="intro">Drawbar Transducer</h1>
+							<p>This page presents a summary of my work designing a drawbar transducer as an intern at the John Deere Product Engineering Center in the summer of 2024.</p>
+							<p>What is a drawbar? The drawbar is a bar on the tractor, or any vehicle to which things like farming tools can be attached to and pulled. A transducer converts a mechanical signal like strain into an electrical signal. The drawbar modified into a transducer through the use of strain gauges.
+							In this case, designing a drawbar transducer entails modifying the drawbar geometry for optimal sensitivity to strain while staying below the stress limit. Since drawbars are the connection point between the vehicle and the pulling load, 
+							it can provide useful information in the case of failures or the state of the tractor in general.</p>
 							<div style="text-align:center;">
 								<span class="image">
-									<img src="Transducer_Design/drawbar.jpeg" alt="" height="700" >
+									<img src="Transducer_Design/drawbar_location.jpg" alt="" height="400" >
 								</span>
-							</div>
-							<h1 id="intro">Drawbar Transducer</h1>
-							<p>This page will provide a summary of my work designing a drawbar transducer as a John Deere product engineering intern in the summer of 2024</p>
+							</div>		
+							<figcaption style="text-align:center;"> <b>Figure:</b> Drawbar location on an 8R 410 tractor from <a href="https://partscatalog.deere.com/jdrc/navigation/equipment/13135/level/3/snp/ODkyMTI6Q0hBUFRFUl8yWzEwNjE6I0JVU0lORVNTX1JFR0lPTiwyODUyOiNDQVRBTE9HLDEzMTM1OkVRVUlQTUVOVCw4OTIwMDpDSEFQVEVSXQ%3D%3D">John Deere Parts Catalog</a></figcaption><br>
+						
+							<h2 id="overview">Project Overview</h2>
+							<p>Unfortunately, I don't have much media to present as much of it is confidential, but I can outline the general process.</p>
+							<ul>
+								<li><b>Gathering information:</b> task details, loading conditions, harshness of conditions, material properties, relevant contacts and processes, etc.</li>
+								<li><b>Modeling Excel Spreadsheet:</b> modeling bending, shear, and axial stress and wheatstone bridge sensitivity</li>
+								<li><b>Designing Geometry:</b> learning CREO and modifying the drawbar geometry according to stress and strain models</li>
+								<li><b>FEA Analysis:</b> coordinating with the simulation department for more accurate stress and sensitivity results</li>
+								<li><b>Mentor Feedback:</b> ask for mentor feedback to confirm design</li>
+								<li><b>Iterate:</b> consider multiple strain-bridge placements and cross-section geometries</li>
+								<li><b>Work Order:</b> submit a work order with technical drawing and coordinate with technicians</li>
+							</ul>
 							<div style="text-align:center;">
 								<span class="image">
 									<img src="Transducer_Design/close_up.jpeg" alt="" height="500" >
 								</span>
-							</div>			
+							</div>	
+							<figcaption style="text-align:center;"> <b>Figure:</b> Modified drawbar </figcaption><br>
+							
+							<h2 id="next">Next Steps </h2>
+							<p>Due to many weeks of significant project contacts being out of office and four weeks of lead time, the drawbar was only machined at the end of my internship time. However, the next step would involve coordinating with technicians for the following parts.
+								</p>
+								<ul>
+									<li><b>Attaching strain gauges:</b> applying at the specified locations on the modified geometry</li>
+									<li><b>Wiring:</b>connecting the shear bridge, bending bridge, and axial bridge to a data acquisition system</li>
+									<li><b>Protection:</b>covering the components with silicon epoxy or additonal caseing if necessary</li>
+									<li><b>Shipping:</b>following international shipping regulations for packaging</li>
+								</ul>
+							</p>	
 						</div>
 					</div>
 
