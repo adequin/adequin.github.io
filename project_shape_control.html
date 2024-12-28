@@ -134,6 +134,8 @@
 									height = '400'> 
 								</span>
 							</div>
+							<figcaption style="text-align:center;"> <b>Figure:</b> Breadboard voltage divider with strain sensor</figcaption><br><br>
+
 							<p>
 							It looks like using "A7" for the D7 pin compiled but was not actually being used and the readings were just stray voltage. I confirmed this by switching to the A0 pin and reading ground and 3.3V values and it changed from ~0 to ~1023.
 							I'm not sure why A7 doesn't work since it was referenced <a href="https://wiki.seeedstudio.com/Seeeduino-XIAO/">here</a>, but I will just use A0 for now.
@@ -157,6 +159,8 @@
 								height = '400'> 
 							</span>
 						</div>
+						<figcaption style="text-align:center;"> <b>Figure:</b> Wheatstone bridge voltage output formula</figcaption><br><br>
+
 					<p>
 							I used 3 100ohm resisitors in series to get closer to the resistivity of the strain gauge. 
 							For some reason the pin next to A0 is A10 and not A1 like in the documentaion. also D3->A8
@@ -168,20 +172,26 @@
 								height = '400'> 
 							</span>
 						</div>
-						<video width="auto" height="600" controls="" muted="">
+						<figcaption style="text-align:center;"> <b>Figure:</b> Breadboard Wheatstone quarter-bridge with strain sensor</figcaption><br><br>
+
+						<div style="text-align:center;">
+						<video width="auto" height="400" controls="" muted="">
 							<source src="shape_control_files/documentation_images/tests/wheatstone_breadboard_test.mp4" type="video/mp4">
 							Your browser does not support the video tag.
 						</video>
-						
+						</div>
+						<figcaption style="text-align:center;"> <b>Figure:</b> Live output readings of Wheatstone quearter-bridge on arduino serial monitor</figcaption><br><br>
+
 						<h3 style="text-align:left" id="week2">WEEK 2 Jan 16-19</h3>
 					<p>
 							Next, I'll move on to testing on a pcb board using some resistors instead of strain gauges.
 							<div style="text-align:center;">
 								<span class="image" >
-									<img src="shape_control_files/documentation_images/samd21_breakout_bridge_pcb.jpg" alt="" 
-									height = '400'> 
+									<img src="shape_control_files/documentation_images/samd21_breakout_bridge_pcb.jpg" alt="" height = '400'> 
 								</span>
 							</div>
+							<figcaption style="text-align:center;"> <b>Figure:</b> PCB design in Eagle CAD of the Wheatstone bridge</figcaption><br><br>
+
 							Here is the initial test. This should let me reuse the same xiao breakout board to test different setups.
 							The first test is to see if the resistors react differently in tension vs compression and to see if I can maybe
 							read the values without an amplifier.
@@ -204,6 +214,8 @@
 									height = '400'> 
 								</span>
 							</div>
+							<figcaption style="text-align:center;"> <b>Figure:</b> Milled traces FR4 PCB (left), soldering components (center), and final board (right)</figcaption><br><br>
+
 							<p>
 							Now back to arduino code. Here is what I got when printing the variables A0-A9: <br>
 							<pre><code>
@@ -233,13 +245,15 @@
 								<div style="text-align:center;">
 									<span class="image" >
 										<img src="shape_control_files/documentation_images/amp_bridge_pcb.jpg" alt="" 
-										width = '600'> 
+										height = '250'> 
 									</span>
 									<span class="image" >
 										<img src="shape_control_files/documentation_images/amp_circuit.jpg" alt="" 
-										height = '400'> 
+										height = '250'> 
 									</span>
 								</div>
+								<figcaption style="text-align:center;"> <b>Figure:</b> Initial amplifier and bridge design (left), circuit design (right)</figcaption><br><br>
+
 								
 							<p>
 							
@@ -270,6 +284,8 @@
 								height = '400'> 
 							</span>
 						</div>
+						<figcaption style="text-align:center;"> <b>Figure:</b> PCB Schematic for amplifier with bridge</figcaption><br><br>
+
 
 							<h4 id="add_components"> adding capacitors, unity gain buffer, fixing resistor values, calculating CMRR </h4>
 							<p>
@@ -281,13 +297,15 @@
 							<div style="text-align:center;">
 								<span class="image">
 									<img src="shape_control_files/documentation_images/amp_bridge_cap_pcb.jpg" alt="" 
-									height = '400'> 
+									height = '300'> 
 								</span>
 								<span class="image" >
 									<img src="shape_control_files/documentation_images/amp_bridge_cap_schem.jpg" alt="" 
-									height = '400'> 
+									height = '300'> 
 								</span>
 							</div>
+							<figcaption style="text-align:center;"> <b>Figure:</b> Second bridge amplifier design with added unity gain followers, routing (left) and schematics (right)</figcaption><br><br>
+
 							<div style="text-align:center;">
 								<span class="image">
 									<img src="shape_control_files/documentation_images/boards/amp_board_milled.jpeg" alt="" 
@@ -298,6 +316,8 @@
 									height = '400'> 
 								</span>
 							</div>
+							<figcaption style="text-align:center;"> <b>Figure:</b> Milled board with bridge and amplifier (left), soldered components (rights)</figcaption><br><br>
+
 							<p>
 							After some inital tests its clear that there are still issues. After spending some time simulating in circuit lab, talking to gpt and reading datasheets, (and debugging my simulations)
 							it looks like the main issues are that I didn't account for the CMRR, common mode rejection ratio, and that my forumla for the diff amp was wrong. 
@@ -306,15 +326,17 @@
 						<div style="text-align:center;">
 							<span class="image">
 								<img src="shape_control_files/documentation_images/circuitlab_sim.jpg" alt="" 
-								height = '400'> 
+								height = '300'> 
 							</span>
 							<span class="image" >
 								<img src="shape_control_files/documentation_images/datasheet_CMRR_opamp.jpg" alt="" 
-								height = '400'> 
+								height = '300'> 
 							</span>
 						</div>
+						<figcaption style="text-align:center;"> <b>Figure:</b> Circuit analysis in CircuitLab (left) and Common Mode Rejection Ratio plot from op-amp documentation (right)</figcaption><br><br>
+
 						<p>
-							The CMRR is a ratio in decibells that follow this formula: 20log(gain_cm/gain_diff) with common values of 70-80 db. Higher value means better rejection
+							The CMRR is a ratio in decibells that follow this formula: 20log(gain_cm/gain_diff) with common values of 70-80 db. Higher value means better rejection.
 							Since this ratio scales with the gain factor of my setup, maybe I can minimize the common mode voltage gain by maximizing the gain of the diff amp circuit.
 						</p>
 							<p>
@@ -356,6 +378,8 @@
 									height = '400'> 
 								</span>
 							</div> 
+							<figcaption style="text-align:center;"> <b>Figure:</b> Internet resources on bridge configurations from <a href="https://www.transducertechniques.com/wheatstone-bridge.aspx">transducertechniques.com</a></figcaption><br><br>
+							
 							<p>
 							I need to verify if the resistors do actually act differently depending on orientation and what the actual range of value is. I broke the board at around 0.6V reading. 
 							Definitely not near the 4ohm difference from Miana's test. 
@@ -374,16 +398,18 @@
 							configuration instead of the quarter version from before. The difference is that I am straining two resistors, from opposite sides of the wheatstone bridge diamond, 
 							which doubles the signal. One thing I didn't expect is how well the direction of bending is captured. I think I need to isolate the VCC- for the op amp to capture both bending directions.
 						</p>
-						<video width="auto" height="600" controls="" muted="">
+						<div style="text-align:center;">
+						<video width="auto" height="350" controls="" muted="">
 							<source src="shape_control_files/documentation_images/tests/testing_bridge.mp4" type="video/mp4">
 							Your browser does not support the video tag.
 						</video>
-						<div style="text-align:center;">
 							<span class="image">
 								<img src="shape_control_files/documentation_images/boards/amp_board2.jpeg" alt="" 
-								height = '400'> 
+								height = '350'> 
 							</span>
 						</div>
+						<figcaption style="text-align:center;"> <b>Figure:</b> Milled PCB (left) and testing responsiveness of strain-sensing PCB (right)</figcaption><br><br>
+							
 							<h4 id="instron"> instron testing </h4>
 						<p>
 							Once I isolated the negative VCC input to the differential amplifier, I realized I could just flip the inputs for now.
@@ -402,7 +428,8 @@
 								height = '400'> 
 							</span>
 						</div>
-
+						<figcaption style="text-align:center;"> <b>Figure:</b> Milling failure (left) and longer strain-sensing PCB for increased sensistivity (right)</figcaption><br><br>
+							
 						<p>
 							For the instron testing, I plan to synchronize the instron measurements with the data from the xiao samd21 analog read. It looks like that with the longer test board, there is a lot more noise in the signal, so the votage difference actually starts at 1.2V and goes to 4.7 when strained.
 							Since the ref voltage of the xiao I am using is 3.3V, I'll use 3.3V instead of 5V to power the circuit, which should scale everything down into the operating range.  
@@ -412,13 +439,15 @@
 						<div style="text-align:center;">
 							<span class="image">
 								<img src="shape_control_files/documentation_images/tests/instron_pcb_setup2.jpeg" alt="" 
-								height = '400'> 
+								height = '300'> 
 							</span>
 							<span class="image" >
 								<img src="shape_control_files/documentation_images/tests/instron_test_interface.jpeg" alt="" 
-								height = '400'> 
+								height = '300'> 
 							</span>
 						</div>
+						<figcaption style="text-align:center;"> <b>Figure:</b> Three-point bending test (left) and Instron readings (right)</figcaption><br><br>
+							
 
 							<p>
 							We used a 3 point bending setup and place the pcb with the resistors on the bottom, directly centered with the middle bending rod. 
@@ -431,13 +460,15 @@
 							<div style="text-align:center;">
 								<span class="image">
 									<img src="shape_control_files/documentation_images/volts_vs_displacement.png" alt="" 
-									height = '400'> 
+									height = '350'> 
 								</span>
 								<span class="image" >
 									<img src="shape_control_files/documentation_images/volts_vs_force.png" alt="" 
-									height = '400'> 
+									height = '350'> 
 								</span>
 							</div>
+							<figcaption style="text-align:center;"> <b>Figure:</b> Plots generated from Instron test data, voltage vs displacement (left) and voltage vs load (right)</figcaption><br><br>
+							
 
 							<h3 id="conclusion"> Conclusion</h3>
 						<p>
@@ -478,6 +509,8 @@
 									height = '400'> 
 								</span>
 							</div>
+							<figcaption style="text-align:center;"> <b>Figure:</b> flex PCB design for stain sensor in Eagle CAD </figcaption><br><br>
+							
 							<p>
 								The design of the strain sensor flex pcb was fairly straight forward since the amount of components is minimal. 
 								The processing of the signal however, requires passing through the amplifier before going into one of the SAMD21 controller inputs. 
@@ -489,6 +522,7 @@
 								height = '400'> 
 							</span>
 							</div>
+							<figcaption style="text-align:center;"> <b>Figure:</b> Trying to duplicate amplifier ten times in Eagle CAD</figcaption><br><br>
 							For future reference, the general design involved an external -5V rail with a ribon cable port for the amp inputs, and the outputs connecting to one of the SAMD21 ports. 
 						</div>
 						</div>
