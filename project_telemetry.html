@@ -48,7 +48,9 @@
 					<a href="index.html" class="logo">
 						<span class="symbol"><img src="images/logo.svg" alt="" /></span><span class="title">Andy Dequin</span>
 					</a>
-					
+					<a href="#intro">
+						Introduction
+						</a>
 					<a href="#system_design">
 					System Design
 					</a>
@@ -74,9 +76,9 @@
 								Your browser does not support the video tag.
 								</video>
 							<h1 id="intro">Telemetry System</h1>
-							<p>This page presents my work designing a telemetry system as a John Deere product engineering intern in the summer of 2024.</p>
+							<p>This page summarizes my work designing a telemetry system as a John Deere product engineering intern in the summer of 2024.</p>
 							<p>
-								The system was constrained to fit on the 2x2 inch area of a drawbar pin and needed to cost significantly less than the current $10,000 solution. As the only person on the team working on this project, over the course of a few weeks, I did the component selection, system design, hardware integration, wrote the firmware, fixed the libraries, designed the housing, wrote 70+ pages of documentation, and validated the device by testing it on a tractor. 
+								A telemetry generally allows data collection of data in hard to reach or rotating sources. This custom telemetry system was constrained to fit on the 2x2 inch area of a drawbar pin and needed to cost significantly less than the current $10,000 solution. As the only person on the team working on this project, over the course of a few weeks, I did the component selection, system design, hardware integration, wrote the firmware, fixed the libraries, designed the housing, wrote 70+ pages of documentation, and validated the device by testing it on a tractor. 
 								The system used ESP32C3 for Bluetooth communication between receiver and transmitter, two HX711 amplifiers, and a Serial-CAN module to connect to the tractor’s CAN bus. </p>
 								<p>
 								My solution not only fit on the pin, but also was a 100x cost reduction from the current method. With a 10-week timeline, even with a four-week setback due to issues with ordering components and juggling multiple projects, I was able to make the system, test it, and write thorough documentation. 
@@ -84,32 +86,42 @@
 								<div style="text-align:center;">
 									<img src="Telemetry_System/tractor_location.jpg" alt="" height="400" > 
 								</div>
+								<figcaption style="text-align:center;" ><b>Figure:</b> Location of the telemetry system on the tractor</figcaption><br><br>
+						
 								<h2 id="system_design">System Design</h2>
 							<div style="text-align:center;">
 								<img src="Telemetry_System/flow_diagram.jpg" alt="" height="400" > 
 							</div>
+							<figcaption style="text-align:center;" ><b>Figure:</b> Flow diagram of the data source (pin) to the collection point (tractor controller)</figcaption><br><br>
+						
 							
 							<h2 id="components">Components</h2>
 							<div style="text-align:center;">
 								<img src="Telemetry_System/components.png" alt="" height="300" > 
 							</div>
+							<figcaption style="text-align:center;" ><b>Figure:</b> Overview chart of components and their roles</figcaption><br><br>
+						
 							<div style="text-align:center;">
 								<img src="Telemetry_System/electronics.jpg" alt="" height="400" > 
 							</div>
+							<figcaption style="text-align:center;" ><b>Figure:</b> All the components used in the telemetry system</figcaption><br><br>
+						
 							<h2 id="housing_design">Housing Design</h2>
 							<div style="text-align:center;">
 								<img src="Telemetry_System/cad_constraints.jpg" alt="" height="300">
 								<img src="Telemetry_System/swept_blend.jpg" alt="" height="300" > 
 							</div>
+							<figcaption style="text-align:center;" ><b>Figure:</b> Housing design with space constrained sketch (right) and swept blend surface (right) in Creo</figcaption><br><br>
+						
 							<div style="text-align:center;">
 							<video width="auto" height="500" controls>
 								<source src="Telemetry_System/housing.mp4" type="video/mp4" center>
 								Your browser does not support the video tag.
 								</video></span></div>
-
-
+							<figcaption style="text-align:center;" ><b>Figure:</b> Showing that all components fit inside 3D printed PETG housing</figcaption><br><br>
+						
 							<h2 id="tractor_testing">Tractor Testing</h2>
-							
+							<div style="text-align:center;">
 								<video width="auto" height="500" controls>
 								<source src="Telemetry_System/transmitter.mp4" type="video/mp4" center>
 								Your browser does not support the video tag.
@@ -123,6 +135,8 @@
 								Your browser does not support the video tag.
 								</video></span>
 							</div>
+							<figcaption style="text-align:center;" ><b>Figure:</b> Showing transmitter location (left), receiver location (center), and succesful data readings from transducer (right)</figcaption><br><br>
+						
 						
 						
 						</div>
