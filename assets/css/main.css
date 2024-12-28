@@ -2624,7 +2624,7 @@ input, select, textarea {
 			flex-wrap: wrap; /* Allow tags to wrap to the next line if needed */
 			gap: 5px; /* Set spacing between tags */
 			position: absolute; /* Position relative to the tile */
-			bottom: 10px; /* Adjust as needed */
+			top: 10px; /* Adjust as needed */
 			right: 10px; /* Adjust as needed */
 			z-index: 4; /* Ensure it's above other elements */
 		}
@@ -2633,7 +2633,7 @@ input, select, textarea {
 		.tiles article .tag {
 			font-size: 0.6em; /* Smaller font size */
 			padding: 3px 6px; /* Adjust padding for tags */
-			background-color: rgba(36, 36, 36, 0.4); /* Semi-transparent background */
+			background-color: rgba(36, 36, 36, 0.3); /* Semi-transparent background */
 			color: #fff; /* Text color */
 			border-radius: 3px; /* Rounded corners */
 		}
