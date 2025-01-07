@@ -97,11 +97,11 @@
 							
 							<h2 id="setup">Simulation Setup</h2>
 							<div style = "text-align:center;">
-								<video width="auto" height="400" controls>
+								<video width="auto" height="400" loop autoplay muted>
 								<source src="2.74/sim_videos/stair_constraint+2legs.mp4" type="video/mp4" >
 								Your browser does not support the video tag.
 							</video>
-							<video width="auto" height="400" controls>
+							<video width="auto" height="400" loop autoplay muted>
 								<source src="2.74/sim_videos/free_base+joints.mp4" type="video/mp4" >
 								Your browser does not support the video tag.
 							</video></div>
@@ -140,11 +140,11 @@
 								Once the ellipse trajectory is defined, an impedance controller with virtual spring and damper is used to track the trajectory.
 							</p>
 							<div style = "text-align:center;">
-								<video width="auto" height="350" controls>
+								<video width="auto" height="350" loop autoplay muted>
 								<source src="2.74/sim_videos/ellipse_tracking.mp4" type="video/mp4" >
 								Your browser does not support the video tag.
 							</video>
-								<video width="auto" height="350" controls>
+								<video width="auto" height="350" loop autoplay muted>
 								<source src="2.74/sim_videos/sneaky_tracking.mp4" type="video/mp4" >
 								Your browser does not support the video tag.
 							</video></div>
@@ -170,11 +170,11 @@
 							<p> From the simulation results, it appears that the optimal speed is around 11 rad/s at a 50 degree staircase angle. While the simulation may appear to show a consistent tradeoff, there are some caveats. It may have been useful to find the traveling speed by dividing the distance covered over time, as there are instances where tracking speed actually decreases effective traveling speed. The heuristic nature of the control scheme means that it was not truely optimal. In fact, it may be that the trajectory was optimized for steeper slope, and thus simulations with steeper slopes perfomed better. Some simulations ran into some failure cases due to low or high gain as well.
 							Given the timeframe of four weeks to implement and run both simulation and hardware experiments, this was reasonable outcome, and certainly instructive. With more time however, there are many aspects that can be improved upon.</p>
 							<div style = "text-align:center;">
-								<video width="auto" height="300" controls>
+								<video width="auto" height="300" loop autoplay muted>
 								<source src="2.74/sim_videos/through_stairs.mp4" type="video/mp4" >
 								Your browser does not support the video tag.
 							</video>
-								<video width="auto" height="300" controls>
+								<video width="auto" height="300" loop autoplay muted>
 								<source src="2.74/sim_videos/skipping_failure.mp4" type="video/mp4" >
 								Your browser does not support the video tag.
 							</video></div>
